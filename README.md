@@ -2,7 +2,7 @@
 
 Funkar git clone för alla?
 
-"Catherine"
+Catherine
 Disa
 
 Yvonne
