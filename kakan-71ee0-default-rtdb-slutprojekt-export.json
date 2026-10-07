@@ -1,59 +1,59 @@
 {
-  "medlem": {
+  "member": {
     "kjahdiuyd98ykhf": {
-      "kategori": {
+      "category": {
         "backend": false,
         "frontend": true,
         "ux": false
       },
-      "namn": "Bruno Snygg",
-      "projekt": {
+      "name": "Bruno Snygg",
+      "project": {
         "lsjghv0p9yhf": "",
         "oidhg09yh4einvfg": ""
       },
-      "uppgifter": 3
+      "tasks": 3
     }
   },
-  "projekt": {
+  "project": {
     "iuhfsiuh984": {
-      "beskrivning": "Det är ett projekt som vi jobbar på för att göra en hemsida",
+      "description": "Det är ett projekt som vi jobbar på för att göra en hemsida",
       "deadline": "09/10",
-      "medlemmar": {
+      "members": {
         "sdjkfhsh093hn": "",
         "uskhf0whnfss": ""
       },
-      "namn": "Ett projekt",
-      "uppgifter": {
+      "name": "Ett projekt",
+      "tasks": {
         "sjkhf9s83d": "",
         "uishfiuhf93h": ""
       }
     }
   },
-  "uppgift": {
+  "task": {
     "jshfiuh984hf": {
-      "beskrivning": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
+      "description": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
       "deadline": "10/10",
-      "kategori": {
+      "category": {
         "backend": false,
         "frontend": true,
         "ux": false
       },
-      "medlem": "ksjdfhksjfh339h",
-      "prioritering": 1,
-      "skapad ": "07/10",
+      "member": "ksjdfhksjfh339h",
+      "priority": 1,
+      "created": "07/10",
       "status": {
-        "ny ": false,
-        "pågående": false,
-        "slutförd": true
+        "new": false,
+        "ongoing": false,
+        "done": true
       },
-      "subuppgift": {
+      "subtask": {
         "hfsih994tgijdfi": {
-          "beskrivning": "Gör fina gröna symboler",
+          "description": "Gör fina gröna symboler",
           "done": false,
-          "medlem": "hbsjf9fgy9w83yhf"
+          "member": "hbsjf9fgy9w83yhf"
         }
       },
-      "titel": "Designa knappar"
+      "title": "Designa knappar"
     }
   }
 }
