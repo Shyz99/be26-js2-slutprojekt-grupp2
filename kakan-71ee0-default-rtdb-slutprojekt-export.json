@@ -1,0 +1,59 @@
+{
+  "medlem": {
+    "kjahdiuyd98ykhf": {
+      "kategori": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "namn": "Bruno Snygg",
+      "projekt": {
+        "lsjghv0p9yhf": "",
+        "oidhg09yh4einvfg": ""
+      },
+      "uppgifter": 3
+    }
+  },
+  "projekt": {
+    "iuhfsiuh984": {
+      "beskrivning": "Det är ett projekt som vi jobbar på för att göra en hemsida",
+      "deadline": "09/10",
+      "medlemmar": {
+        "sdjkfhsh093hn": "",
+        "uskhf0whnfss": ""
+      },
+      "namn": "Ett projekt",
+      "uppgifter": {
+        "sjkhf9s83d": "",
+        "uishfiuhf93h": ""
+      }
+    }
+  },
+  "uppgift": {
+    "jshfiuh984hf": {
+      "beskrivning": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
+      "deadline": "10/10",
+      "kategori": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "medlem": "ksjdfhksjfh339h",
+      "prioritering": 1,
+      "skapad ": "07/10",
+      "status": {
+        "ny ": false,
+        "pågående": false,
+        "slutförd": true
+      },
+      "subuppgift": {
+        "hfsih994tgijdfi": {
+          "beskrivning": "Gör fina gröna symboler",
+          "done": false,
+          "medlem": "hbsjf9fgy9w83yhf"
+        }
+      },
+      "titel": "Designa knappar"
+    }
+  }
+}
