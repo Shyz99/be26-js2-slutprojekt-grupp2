@@ -87,3 +87,5 @@ function renderProjects(project: Project): void {
 }
 
 getProjectFromFirebase().then(renderProjectAllTitles);
+
+//kommentar
