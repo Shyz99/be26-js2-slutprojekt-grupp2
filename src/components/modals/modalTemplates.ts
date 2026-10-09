@@ -1,4 +1,4 @@
-interface formConfigurations {
+export interface formConfigurations {
     title: string; 
     postEndpoint: string; 
     elements: string; 

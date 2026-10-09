@@ -1,9 +1,10 @@
 import { formViews } from "./modalTemplates.ts";
+import type { formConfigurations } from "./modalTemplates.ts";
 export class Modal {
     // static used here to ensure there is only ever one Modal open / saved in memory
     private static instance: Modal;
     private dialog: HTMLDialogElement;
-    private activeView: keyof typeof formViews | null = null;
+    private activeView: formConfigurations | null = null;
 
 
     private constructor() {
@@ -47,8 +48,27 @@ export class Modal {
             console.log("ID finns inte bland våra formViews")
             return; 
         }
-
         this.activeView = configForm; 
+
+        this.renderFormView(); 
+        this.dialog.showModal(); 
+
+    }
+    public renderFormView(): void {
+        if(!this.activeView){
+            return;
+        }
+
+        this.dialog.innerHTML = `
+      <h3 style="margin: 0 0 16px 0;">${this.activeView.title}</h3>
+      <form id="modal-form">
+        ${this.activeView.postEndpoint}
+        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" id="modal-cancel-btn" style="padding: 8px 12px; cursor: pointer;">Avbryt</button>
+          <button type="submit" style="padding: 8px 16px; cursor: pointer; background: #0076ff; color: #fff; border: none; border-radius: 4px;">Skicka</button>
+        </div>
+      </form>
+    `;
 
     }
 
