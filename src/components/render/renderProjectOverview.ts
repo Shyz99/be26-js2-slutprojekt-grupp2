@@ -10,6 +10,15 @@ const projectDescription = document.getElementById(
 const projectMembersUl = document.getElementById(
   "project-members-ul",
 ) as HTMLUListElement;
+const newTasksList = document.getElementById(
+  "new-tasks-list",
+) as HTMLUListElement;
+const ongoingTasksList = document.getElementById(
+  "ongoing-tasks-list",
+) as HTMLUListElement;
+const finishedTasksList = document.getElementById(
+  "finished-tasks-list",
+) as HTMLUListElement;
 
 //temp:
 const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
@@ -38,22 +47,35 @@ async function renderProjectOverview(project: Project): Promise<void> {
 
   for (const task in project.tasks) {
     const projectTask = await getCategoryDataFirebase("task", task);
-    renderProjectMembers(projectTask);
+    renderTasks(projectTask);
   }
 }
 
-function renderProjectMembers(projectmember: Member): void {
+function renderProjectMembers(projectMember: Member): void {
   let activeRole: string = "";
 
-  for (const role in projectmember.category) {
-    if (projectmember.category[role] === true) {
-      activeRole = role;
-    }
+  if (projectMember.category.frontend === true) {
+    activeRole = "Frontend";
+  } else if (projectMember.category.backend === true) {
+    activeRole = "Backend";
+  } else if (projectMember.category.ux === true) {
+    activeRole = "Ux";
   }
 
   const li = document.createElement("li");
-  li.textContent = `Namn: ${projectmember.name}. Roll: ${activeRole}. Antal uppgifter: ${projectmember.tasks}.`;
+  li.textContent = `Namn: ${projectMember.name}. Roll: ${activeRole}. Antal uppgifter: ${projectMember.tasks}.`;
   projectMembersUl.append(li);
 }
 
-function renderSCRUMBoard(tasks: Task): void {}
+function renderTasks(task: Task): void {
+  const li = document.createElement("li");
+  li.innerText = task.title;
+
+  if (task.status.new === true) {
+    newTasksList.append(li);
+  } else if (task.status.ongoing === true) {
+    ongoingTasksList.append(li);
+  } else if (task.status.done === true) {
+    finishedTasksList.append(li);
+  }
+}

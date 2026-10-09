@@ -10,13 +10,11 @@ export type Member = {
   name: string;
   tasks: number;
   project: string[];
-  category: boolean[];
-};
-
-export type Subtask = {
-  description: string;
-  member: string;
-  done: boolean;
+  category: {
+    backend: boolean;
+    frontend: boolean;
+    ux: boolean;
+  };
 };
 
 export type Task = {
@@ -26,7 +24,21 @@ export type Task = {
   description: string;
   member: string;
   priority: number;
-  category: boolean[];
-  status: boolean[];
+  category: {
+    backend: boolean;
+    frontend: boolean;
+    ux: boolean;
+  };
+  status: {
+    new: boolean;
+    ongoing: boolean;
+    done: boolean;
+  };
   subtask: Subtask[];
+};
+
+export type Subtask = {
+  description: string;
+  member: string;
+  done: boolean;
 };
