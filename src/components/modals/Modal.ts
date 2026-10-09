@@ -1,5 +1,7 @@
 import { formViews } from "./modalTemplates.ts";
 import type { formConfigurations } from "./modalTemplates.ts";
+import { posts } from "../../firebase/dynamicPostCheck.ts";
+
 export class Modal {
     // static used here to ensure there is only ever one Modal open / saved in memory
     private static instance: Modal;
@@ -82,12 +84,21 @@ export class Modal {
 
         const formElement = event.target as HTMLFormElement; 
         const formData = new FormData(formElement); 
-
         const postObj = Object.fromEntries(formData.entries());
 
-        // TODO koppla Post till ID och skicka in formulär 
-        // this.dialog.innerHTML = '<p style= "text-align: center;"> Laddar... </p>';
-        // TODO koppla ett status meddelande!
+        this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
+
+        const postSuccess = await posts(postObj, this.activeView.postForm); 
+        this.renderStatus(postSuccess);
+        
+    }
+    private renderStatus(isSuccess:boolean): void {
+        if(isSuccess){
+            this.dialog.innerHTML = '<p>Lyckades posta!</p>'
+        }
+        else{
+            this.dialog.innerHTML = '<p>Lyckades inte posta!</p>'
+        }
     }
 
     public close(): void {

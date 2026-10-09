@@ -6,9 +6,15 @@ export interface formConfigurations {
 
 export const formViews: Record<string, formConfigurations> = {
     // IDs for each view we want - feel free to add more gang!
+    'test': {
+        title: 'test', 
+        postForm: '', 
+        elements: ''
+    },
     'add-member': {
         title: 'Lägg till en ny medlem',
-        // postForm does not require <form> - only add the inputs needed
+        // postForm adds link .... change name? 
+        // TODO change name 
         postForm: '',
         elements: ''
 
