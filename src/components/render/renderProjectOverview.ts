@@ -1,13 +1,30 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 
+const projectTitle = document.getElementById(
+  "project-title",
+) as HTMLHeadingElement;
+const projectDescription = document.getElementById(
+  "project-description",
+) as HTMLParagraphElement;
+const projectMembersContainer = document.getElementById(
+  "project-members-container",
+) as HTMLDivElement;
+
 //temp:
 const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
+const addProjectMemberBtn = document.getElementById(
+  "add-project-member-button",
+) as HTMLButtonElement;
 
-tempBtn.addEventListener("click", () => {
-  const chosenProject = getCategoryDataFirebase("project", "iudshg98dy");
+tempBtn.addEventListener("click", async () => {
+  const chosenProject = await getCategoryDataFirebase("project", "iudshg98dy");
   renderProjectOverview(chosenProject);
 });
+
+addProjectMemberBtn.addEventListener("click", async () => {});
 // end temp
+
+//RENDER
 
 type Project = {
   id: string;
@@ -18,20 +35,35 @@ type Project = {
   tasks: string[];
 };
 
-function renderProjectOverview(project: Project) {}
+function renderProjectOverview(project: Project): void {
+  projectTitle.innerHTML = "";
+  projectDescription.innerHTML = "";
+  projectMembersContainer.innerHTML = "";
 
-// const projectTitle = document.getElementById(
-//   "project-title",
-// ) as HTMLHeadingElement;
-// const projectDescription = document.getElementById(
-//   "project-description",
-// ) as HTMLParagraphElement;
-// const projectMembersContainer = document.getElementById(
-//   "project-members-container",
-// ) as HTMLDivElement;
-// const tempAllprojects = document.getElementById(
-//   "temp-allprojects",
-// ) as HTMLDivElement;
+  projectTitle.textContent = project.name;
+  projectDescription.textContent = project.description;
+
+  const ul = document.createElement("ul");
+  for (const member in project.members) {
+    const li = document.createElement("li");
+    li.textContent = member;
+    ul.append(li);
+  }
+  projectMembersContainer.append(ul);
+}
+
+//EVENTLISTENERS
+
+// function renderProjects(project: Project): void {
+//   projectTitle.innerHTML = "";
+//   projectDescription.innerHTML = "";
+//   projectMembersContainer.innerHTML = "";
+
+//   projectTitle.textContent = project.name;
+//   projectDescription.textContent = project.description;
+// }
+
+// getProjectFromFirebase().then(renderProjectAllTitles);
 
 //GET
 
@@ -85,14 +117,3 @@ function renderProjectOverview(project: Project) {}
 // }
 
 // //end temp.
-
-// function renderProjects(project: Project): void {
-//   projectTitle.innerHTML = "";
-//   projectDescription.innerHTML = "";
-//   projectMembersContainer.innerHTML = "";
-
-//   projectTitle.textContent = project.name;
-//   projectDescription.textContent = project.description;
-// }
-
-// getProjectFromFirebase().then(renderProjectAllTitles);
