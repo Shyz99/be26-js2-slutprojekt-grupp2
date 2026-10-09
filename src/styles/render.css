@@ -1,6 +1,29 @@
-#renderSection {
+#renderAllMembersSection {
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  background-color: rgb(203, 195, 180);
   max-width: 60%;
+  border-radius: 0.8rem;
+  margin-top: 1rem;
+}
+
+.memberContainer {
+  border: 1px solid blue;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.memberProjetsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.memberProjet {
+  border: 1px solid blue;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  max-width: 80px;
 }
