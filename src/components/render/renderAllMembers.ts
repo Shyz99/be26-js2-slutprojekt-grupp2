@@ -1,11 +1,11 @@
 import { Member } from "./Member.ts";
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 
-export async function renderAllMembers() {
+export async function renderIndex() {
   const memberObj = await getCategoryDataFirebase("member");
 
   for (const id in memberObj) {
     const tempMember = new Member(id, memberObj[id]);
-    tempMember.render();
+    tempMember.renderAllDataIndex();
   }
 }

@@ -1,3 +1,3 @@
-import { renderAllMembers } from "./components/render/renderAllMembers.ts";
+import { renderIndex } from "./components/render/renderAllMembers.ts";
 
-renderAllMembers();
+renderIndex();

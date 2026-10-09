@@ -3,9 +3,9 @@ export class Member {
   public readonly name: string;
   public readonly tasks: string;
   public readonly category: {
-    backend: boolean;
-    frontend: boolean;
-    ux: boolean;
+    Backend: boolean;
+    Frontend: boolean;
+    Ux: boolean;
   };
   public readonly backend: boolean;
   public readonly frontend: boolean;
@@ -16,9 +16,9 @@ export class Member {
     name: string;
     tasks: string;
     category: {
-      backend: boolean;
-      frontend: boolean;
-      ux: boolean;
+      Backend: boolean;
+      Frontend: boolean;
+      Ux: boolean;
     };
     projects: {};
   };
@@ -30,9 +30,9 @@ export class Member {
       name: string;
       tasks: string;
       category: {
-        backend: boolean;
-        frontend: boolean;
-        ux: boolean;
+        Backend: boolean;
+        Frontend: boolean;
+        Ux: boolean;
       };
       projects: {};
     },
@@ -42,13 +42,13 @@ export class Member {
     this.name = memberObj.name;
     this.tasks = memberObj.tasks;
     this.category = memberObj.category;
-    this.backend = this.category.backend;
-    this.frontend = this.category.frontend;
-    this.ux = this.category.ux;
+    this.backend = this.category.Backend;
+    this.frontend = this.category.Frontend;
+    this.ux = this.category.Ux;
     this.projects = memberObj.projects;
   }
 
-  render() {
+  renderAllDataIndex() {
     console.log("LOOP ID: ", this.id);
     console.log("LOOP cat: ", this.backend);
 
