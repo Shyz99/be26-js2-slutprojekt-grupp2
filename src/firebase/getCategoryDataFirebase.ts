@@ -16,7 +16,7 @@ export async function getCategoryDataFirebase(category: string, id?: string) {
     }
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     throw error;
