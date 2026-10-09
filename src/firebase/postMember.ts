@@ -1,4 +1,4 @@
-
+// TODO: take paragrams from dynamic function
 export async function postNewMember(PostObj: Record<string, any>, URL: string):Promise<boolean>{
     const options = {
         method: 'POST', 
