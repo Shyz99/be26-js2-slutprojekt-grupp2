@@ -1,0 +1,17 @@
+#new-tasks-container {
+  background-color: red;
+}
+#ongoing-tasks-container {
+  background-color: yellow;
+}
+#finished-tasks-container {
+  background-color: greenyellow;
+}
+
+.SCRUM-board-container {
+  display: flex;
+}
+
+.column {
+  width: 200px;
+}
