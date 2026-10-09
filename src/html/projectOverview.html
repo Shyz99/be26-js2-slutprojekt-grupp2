@@ -7,14 +7,28 @@
       src="../components/render/renderProjectOverview.ts"
       type="module"
     ></script>
-    <link rel="stylesheet" href="./src/styles/global.css" />
+    <link rel="stylesheet" href="../styles/projectOverview.css" />
     <title>Project</title>
   </head>
   <body>
-    <h1>Project Overview</h1>
-    <button id="temp-button">Render project</button>
-    <h1 id="project-title"></h1>
-    <p id="project-description"></p>
-    <div><ul id="project-members-ul"></ul></div>
+    <div>
+      <h1>Project Overview</h1>
+      <button id="temp-button">Render project</button>
+      <h1 id="project-title"></h1>
+      <p id="project-description"></p>
+      <div><ul id="project-members-ul"></ul></div>
+    </div>
+
+    <div class="SCRUM-board-container">
+      <div id="new-tasks-container" class="column"><h3>New Tasks</h3></div>
+
+      <div id="ongoing-tasks-container" class="column">
+        <h3>Ongoing Tasks</h3>
+      </div>
+
+      <div id="finished-tasks-container" class="column">
+        <h3>Finished Tasks</h3>
+      </div>
+    </div>
   </body>
 </html>

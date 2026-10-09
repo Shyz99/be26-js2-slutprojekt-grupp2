@@ -1,4 +1,5 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
+import type { Project, Member, Subtask, Task } from "../../models/models.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -22,21 +23,6 @@ tempBtn.addEventListener("click", async () => {
 
 //RENDER
 
-type Project = {
-  name: string;
-  deadline: string;
-  description: string;
-  members: string[];
-  tasks: string[];
-};
-
-type Member = {
-  name: string;
-  tasks: number;
-  project: string[];
-  category: boolean[];
-};
-
 async function renderProjectOverview(project: Project): Promise<void> {
   projectTitle.innerHTML = "";
   projectDescription.innerHTML = "";
@@ -46,8 +32,13 @@ async function renderProjectOverview(project: Project): Promise<void> {
   projectDescription.textContent = project.description;
 
   for (const member in project.members) {
-    const projectmembers = await getCategoryDataFirebase("member", member);
-    renderProjectMembers(projectmembers);
+    const projectMember = await getCategoryDataFirebase("member", member);
+    renderProjectMembers(projectMember);
+  }
+
+  for (const task in project.tasks) {
+    const projectTask = await getCategoryDataFirebase("task", task);
+    renderProjectMembers(projectTask);
   }
 }
 
@@ -64,3 +55,5 @@ function renderProjectMembers(projectmember: Member): void {
   li.textContent = `Namn: ${projectmember.name}. Roll: ${activeRole}. Antal uppgifter: ${projectmember.tasks}.`;
   projectMembersUl.append(li);
 }
+
+function renderSCRUMBoard(tasks: Task): void {}
