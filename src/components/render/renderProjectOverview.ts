@@ -10,12 +10,7 @@ const projectDescription = document.getElementById(
 const projectMembersUl = document.getElementById(
   "project-members-ul",
 ) as HTMLUListElement;
-const ongoingTasksList = document.getElementById(
-  "ongoing-tasks-list",
-) as HTMLUListElement;
-const finishedTasksList = document.getElementById(
-  "finished-tasks-list",
-) as HTMLUListElement;
+
 
 //temp:
 const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
@@ -93,6 +88,13 @@ function renderTasks(task: Task): void {
   "done-tasks-list-prio-three",
   ) as HTMLUListElement;
 
+  const taskmodalContainer = document.querySelector(
+  "taskmodal-container",
+  ) as HTMLDivElement;
+  const taskmodal = document.querySelector(
+  "task-modal",
+  ) as HTMLDivElement;
+
   const li = document.createElement("li");
   li.innerText = task.title;
 
@@ -111,12 +113,14 @@ function renderTasks(task: Task): void {
   } else if (task.status.done === true && task.priority === 1) {
     doneTasksListOne.append(li);
   } else if (task.status.done === true && task.priority === 2) {
-    doneTasksListOne.append(li);
+    doneTasksListTwo.append(li);
   } else if (task.status.done === true && task.priority === 3) {
-    doneTasksListOne.append(li);
+    doneTasksListThree.append(li);
   }
   
-  
-  
+  li.addEventListener("click", (e) => {
+    e.preventDefault()
+    taskmodalContainer.style.display = "flex"
+  })
   
 }
