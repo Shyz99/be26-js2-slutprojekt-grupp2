@@ -4,7 +4,7 @@
 #ongoing-tasks-container {
   background-color: yellow;
 }
-#finished-tasks-container {
+#done-tasks-container {
   background-color: greenyellow;
 }
 
@@ -15,3 +15,8 @@
 .column {
   width: 200px;
 }
+
+.prio-list {
+  border: solid black 1px;
+}
+
