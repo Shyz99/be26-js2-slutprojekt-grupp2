@@ -70,7 +70,7 @@ export class Modal {
         }
         let hiddenInput = "";
         if (this.potentialTaskID !== null) {
-            hiddenInput = `<input type="hidden" name="parent_task_id" value="${this.potentialTaskID}">`
+            hiddenInput = `<input type="hidden" name="taskID" value="${this.potentialTaskID}">`
         }
         // creating the form 
         this.dialog.innerHTML = `

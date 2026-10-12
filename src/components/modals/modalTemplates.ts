@@ -50,7 +50,7 @@ export const formViews: Record<string, formConfigurations> = {
     },
     'post-new-project': {
         modalTitle: 'Lägg till ett nytt projekt:',
-        URLEndPoint: '/projects',
+        URLEndPoint: '/project',
         HTMLElements: `
         <fieldset>
             <legend>Projekt Namn</legend>
@@ -118,7 +118,7 @@ export const formViews: Record<string, formConfigurations> = {
 
     'add-new-subtask': {
         modalTitle: 'Lägg till en ny subuppgift',
-        // TODO - subtasks take ID from their task first. How do we get access to that? 
+        
         URLEndPoint: '/subtask',
         HTMLElements:` <fieldset>
             <legend> Subuppgift </legend>
