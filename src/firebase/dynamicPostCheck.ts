@@ -5,10 +5,20 @@
 //         case '': 
 //         return await 
 //     }
-// }
+// } 
 
-export async function dynamicPostCheck (data: Record<string, any>, URLEndPoint: string): Promise<boolean>{
+import { postNewMember } from "./postNewMember.ts";
+
+export async function dynamicPostCheck (data: Record<string, any>, URLEndPoint: string){
     switch (URLEndPoint){
-        
+        case "":
+            const success = await postNewMember(data, URLEndPoint);
+            if(success){
+                return true; 
+            }
+            else {
+                return false;
+            }
+            
     }
 }
