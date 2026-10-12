@@ -3,10 +3,11 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgb(203, 195, 180);
+  background-color: rgb(235, 211, 175);
   max-width: 80%;
   border-radius: 0.8rem;
   margin-top: 1rem;
+  padding: 1rem;
 }
 
 #renderAllMembersSection {
@@ -14,31 +15,32 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgb(203, 195, 180);
+  background-color: rgb(235, 211, 175);
   max-width: 60%;
   border-radius: 0.8rem;
   margin-top: 1rem;
+  padding: 1rem;
 }
 
 .H2Title {
   padding-left: 1rem;
-  color: brown;
+  color: rgb(126, 58, 10);
 }
 
 .H3Title {
-  color: brown;
+  color: rgb(126, 58, 10);
   text-decoration: underline;
 }
 
 .memberContainer {
-  border: 1px solid blue;
+  border: 4px groove rgb(174, 129, 88);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
 }
 
 .projectContainer {
-  border: 1px solid blue;
+  border: 4px groove rgb(174, 129, 88);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
@@ -51,13 +53,13 @@
 }
 
 .projectMembersContainer {
-  border: 1px solid blue;
+  border: 3px groove rgb(174, 129, 88);
   border-radius: 1rem;
   padding: 1rem;
 }
 
 .memberProjet {
-  border: 1px solid blue;
+  border: 3px groove rgb(174, 129, 88);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
