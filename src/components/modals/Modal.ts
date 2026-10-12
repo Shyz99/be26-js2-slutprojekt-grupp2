@@ -72,6 +72,9 @@ export class Modal {
         if (this.potentialTaskID !== null) {
             hiddenInput = `<input type="hidden" name="taskID" value="${this.potentialTaskID}">`
         }
+        else {
+            hiddenInput = ""; 
+        }
         // creating the form 
         this.dialog.innerHTML = `
             <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
