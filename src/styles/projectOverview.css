@@ -4,7 +4,7 @@
 #ongoing-tasks-container {
   background-color: yellow;
 }
-#finished-tasks-container {
+#done-tasks-container {
   background-color: greenyellow;
 }
 
@@ -14,4 +14,33 @@
 
 .column {
   width: 200px;
+}
+
+.prio-list {
+  border: solid black 1px;
+}
+
+.taskmodal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.605);
+
+  display: none;
+}
+
+.taskmodal {
+  background-color: rgb(255, 0, 0);
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

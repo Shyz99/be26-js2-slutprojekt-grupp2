@@ -10,15 +10,7 @@ const projectDescription = document.getElementById(
 const projectMembersUl = document.getElementById(
   "project-members-ul",
 ) as HTMLUListElement;
-const newTasksList = document.getElementById(
-  "new-tasks-list",
-) as HTMLUListElement;
-const ongoingTasksList = document.getElementById(
-  "ongoing-tasks-list",
-) as HTMLUListElement;
-const finishedTasksList = document.getElementById(
-  "finished-tasks-list",
-) as HTMLUListElement;
+
 
 //temp:
 const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
@@ -68,14 +60,67 @@ function renderProjectMembers(projectMember: Member): void {
 }
 
 function renderTasks(task: Task): void {
+  const newTasksListOne = document.getElementById(
+  "new-tasks-list-prio-one",
+  ) as HTMLUListElement;
+  const newTasksListTwo = document.getElementById(
+  "new-tasks-list-prio-two",
+  ) as HTMLUListElement;
+  const newTasksListThree = document.getElementById(
+  "new-tasks-list-prio-three",
+  ) as HTMLUListElement;
+  const ongoingTasksListOne = document.getElementById(
+  "ongoing-tasks-list-prio-one",
+  ) as HTMLUListElement;
+  const ongoingTasksListTwo = document.getElementById(
+  "ongoing-tasks-list-prio-two",
+  ) as HTMLUListElement;
+  const ongoingTasksListThree = document.getElementById(
+  "ongoing-tasks-list-prio-three",
+  ) as HTMLUListElement;
+    const doneTasksListOne = document.getElementById(
+  "done-tasks-list-prio-one",
+  ) as HTMLUListElement;
+  const doneTasksListTwo = document.getElementById(
+  "done-tasks-list-prio-two",
+  ) as HTMLUListElement;
+  const doneTasksListThree = document.getElementById(
+  "done-tasks-list-prio-three",
+  ) as HTMLUListElement;
+
+  const taskmodalContainer = document.querySelector(
+  "taskmodal-container",
+  ) as HTMLDivElement;
+  const taskmodal = document.querySelector(
+  "task-modal",
+  ) as HTMLDivElement;
+
   const li = document.createElement("li");
   li.innerText = task.title;
 
-  if (task.status.new === true) {
-    newTasksList.append(li);
-  } else if (task.status.ongoing === true) {
-    ongoingTasksList.append(li);
-  } else if (task.status.done === true) {
-    finishedTasksList.append(li);
+  if (task.status.new === true && task.priority === 1) {
+    newTasksListOne.append(li);
+  } else if (task.status.new === true && task.priority === 2) {
+    newTasksListTwo.append(li);
+  } else if (task.status.new === true && task.priority === 3) {
+    newTasksListThree.append(li);
+  } else if (task.status.ongoing === true && task.priority === 1) {
+    ongoingTasksListOne.append(li);
+  } else if (task.status.ongoing === true && task.priority === 2) {
+    ongoingTasksListTwo.append(li);
+  } else if (task.status.ongoing === true && task.priority === 3) {
+    ongoingTasksListThree.append(li);
+  } else if (task.status.done === true && task.priority === 1) {
+    doneTasksListOne.append(li);
+  } else if (task.status.done === true && task.priority === 2) {
+    doneTasksListTwo.append(li);
+  } else if (task.status.done === true && task.priority === 3) {
+    doneTasksListThree.append(li);
   }
+  
+  li.addEventListener("click", (e) => {
+    e.preventDefault()
+    taskmodalContainer.style.display = "flex"
+  })
+  
 }
