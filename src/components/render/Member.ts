@@ -1,24 +1,27 @@
+import { getProjectsWithID } from "../../firebase/getProjectsWithID.ts";
+import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
+
 export class Member {
   public readonly id: string;
   public readonly name: string;
   public readonly tasks: string;
   public readonly category: {
-    Backend: boolean;
-    Frontend: boolean;
-    Ux: boolean;
+    backend: boolean;
+    frontend: boolean;
+    ux: boolean;
   };
   public readonly backend: boolean;
   public readonly frontend: boolean;
   public readonly ux: boolean;
-  public readonly projects: {};
+  public projects: Record<string, unknown> | undefined;
   public readonly memberObj: {
     id: string;
     name: string;
     tasks: string;
     category: {
-      Backend: boolean;
-      Frontend: boolean;
-      Ux: boolean;
+      backend: boolean;
+      frontend: boolean;
+      ux: boolean;
     };
     projects: {};
   };
@@ -30,9 +33,9 @@ export class Member {
       name: string;
       tasks: string;
       category: {
-        Backend: boolean;
-        Frontend: boolean;
-        Ux: boolean;
+        backend: boolean;
+        frontend: boolean;
+        ux: boolean;
       };
       projects: {};
     },
@@ -42,21 +45,27 @@ export class Member {
     this.name = memberObj.name;
     this.tasks = memberObj.tasks;
     this.category = memberObj.category;
-    this.backend = this.category.Backend;
-    this.frontend = this.category.Frontend;
-    this.ux = this.category.Ux;
-    this.projects = memberObj.projects;
+    this.backend = this.category.backend;
+    this.frontend = this.category.frontend;
+    this.ux = this.category.ux;
+    this.projects = undefined;
+    void this.loadProjects();
   }
 
-  renderAllDataIndex() {
-    console.log("LOOP ID: ", this.id);
-    console.log("LOOP cat: ", this.backend);
+  private async loadProjects(): Promise<void> {
+    this.projects = await getProjectsWithID(this.id);
+  }
+
+  async renderAllDataIndex() {
+    if (this.projects === undefined) {
+      await this.loadProjects();
+    }
 
     const renderAllMembersContainer = document.getElementById(
       "renderAllMembersSection",
     ) as HTMLElement;
     const memberContainer = document.createElement("section") as HTMLElement;
-    const memberName = document.createElement("p") as HTMLElement;
+    const memberName = document.createElement("h2") as HTMLElement;
     const memberTasks = document.createElement("p") as HTMLElement;
     const memberCategory = document.createElement("p") as HTMLElement;
     const memberProjetsContainer = document.createElement(
@@ -74,17 +83,35 @@ export class Member {
       }
     }
 
-    console.log(typeof this.projects);
-
-    if (!this.projects === null || undefined) {
-      console.log("PRO KEY");
+    if (
+      this.projects === undefined ||
+      Object.keys(this.projects).length === 0
+    ) {
+      const memberProjets = document.createElement("p") as HTMLElement;
+      memberProjets.innerText = "No projects available for this member";
+      memberProjetsContainer.append(memberProjets);
     } else {
-      for (let i: number = 1; i < 8; i++) {
-        const memberProjets = document.createElement("p") as HTMLElement;
+      for (const projectId in this.projects) {
+        const memberProjets = document.createElement("section") as HTMLElement;
+        const memberProjetName = document.createElement("h3") as HTMLElement;
+        const memberProjetDeadline = document.createElement("p") as HTMLElement;
+        const memberProjetLink = document.createElement("a") as HTMLElement;
+        const memberProjetDescription = document.createElement(
+          "p",
+        ) as HTMLElement;
+        const projectData = await getCategoryDataFirebase("project", projectId);
+
+        memberProjetLink.innerText = "Link to project [WIP]";
+        memberProjetName.innerText = projectData.name;
+        memberProjetDescription.innerText = projectData.description;
+        memberProjetDeadline.innerText = projectData.deadline;
         memberProjets.classList.add("memberProjet");
-        memberProjets.innerText =
-          "No projects available for this member - " + i;
-        console.log("No projects available for this member.");
+        memberProjets.append(
+          memberProjetName,
+          memberProjetDescription,
+          memberProjetDeadline,
+          memberProjetLink,
+        );
         memberProjetsContainer.append(memberProjets);
       }
     }
