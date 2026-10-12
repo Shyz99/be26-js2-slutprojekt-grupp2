@@ -72,7 +72,7 @@ export class Modal {
         this.dialog.innerHTML = `
       <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
       <form id="modal-form">
-        ${this.activeView.URLEndPoint}
+        ${this.activeView.HTMLElements}
         <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
           <button type="button" id="modal-cancel-btn" style="padding: 8px 12px; cursor: pointer;">Avbryt</button>
           <button type="submit" style="padding: 8px 16px; cursor: pointer; background: #ff3300ae; color: #fff; border: none; border-radius: 4px;">Skicka</button>
