@@ -6,3 +6,9 @@
 //         return await 
 //     }
 // }
+
+export async function dynamicPostCheck (data: Record<string, any>, URLEndPoint: string): Promise<boolean>{
+    switch (URLEndPoint){
+        
+    }
+}
