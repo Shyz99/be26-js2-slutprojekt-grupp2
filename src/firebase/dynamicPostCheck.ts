@@ -5,4 +5,59 @@
 //         case '': 
 //         return await 
 //     }
-// }
+// } 
+
+import { postNewMember } from "./postNewMember.ts";
+import { postNewProject } from "./postNewProject.ts"; 
+import { postNewTask } from "./postNewTask.ts";
+import { postNewSubtask } from "./postNewSubtask.ts";
+
+export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: string) {
+    if (URLEndPoint === "/member") {
+        const success = await postNewMember(data, URLEndPoint);
+        if (success) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    if (URLEndPoint === "/project") {
+        const success = await postNewProject(data, URLEndPoint);
+        if (success) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    if (URLEndPoint === "/task") {
+        const success = await postNewTask(data, URLEndPoint);
+        if (success) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    if (URLEndPoint === "/subtask") {
+        if (data.taskID) {
+            const correctEndPointURL = `${data.taskID}/subtask`;
+            const success = await postNewSubtask(data, correctEndPointURL);
+            if (success) {
+                return true
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+
+    }
+
+}
