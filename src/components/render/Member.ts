@@ -1,4 +1,4 @@
-import { getProjectsWithID } from "../../firebase/getProjectsWithID.ts";
+import { getProjectsWithID } from "../../firebase/getProjectOrMembersDataWithID.ts";
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 
 export class Member {
@@ -56,7 +56,7 @@ export class Member {
     this.projects = await getProjectsWithID(this.id);
   }
 
-  async renderAllDataIndex() {
+  async renderAllMemberDataIndex() {
     if (this.projects === undefined) {
       await this.loadProjects();
     }

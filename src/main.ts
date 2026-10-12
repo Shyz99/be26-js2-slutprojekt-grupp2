@@ -1,5 +1,3 @@
-import { renderIndex } from "./components/render/renderAllMembers.ts";
-import { getProjectsWithID } from "./firebase/getProjectsWithID.ts";
+import { renderIndex } from "./components/render/renderIndex.ts";
 
-renderIndex();
-getProjectsWithID("kjahdiuyd98ykhf");
+await renderIndex();
