@@ -78,6 +78,7 @@ export const formViews: Record<string, formConfigurations> = {
         <fieldset>
             <legend>Uppgift</legend>
 
+            <input type"text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
             <input type="text" name="member" required placeholder="Ansvarig medlem...">
@@ -118,8 +119,29 @@ export const formViews: Record<string, formConfigurations> = {
     'add-new-subtask': {
         modalTitle: 'Lägg till en ny subuppgift',
         // TODO - subtasks take ID from their task first. How do we get access to that? 
-        URLEndPoint: '',
-        HTMLElements: ''
+        URLEndPoint: '/subtask',
+        HTMLElements:` <fieldset>
+            <legend> Subuppgift </legend>
+
+            <input type="text" name="description" required placeholder="Beskrivning...">
+            <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
+            <input type="text" name="priority" required placeholder="Prioritets nummer...">
+            <input type="hidden" name="created" value="${date}">
+        </fieldset>
+
+        <fieldset>
+            <legend>Kategorier</legend>
+    
+            <input type="hidden" name="backend" value="false">
+            <label><input type="checkbox" name="backend" value="true"> Backend </label>
+    
+            <input type="hidden" name="frontend" value="false">
+            <label><input type="checkbox" name="frontend" value="true"> Frontend </label>
+    
+            <input type="hidden" name="ux" value="false">
+            <label><input type="checkbox" name="ux" value="true"> UX </label>
+        </fieldset>
+        `
     }
 }
 

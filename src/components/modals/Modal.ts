@@ -7,7 +7,7 @@ export class Modal {
     private static instance: Modal;
     private dialog: HTMLDialogElement;
     private activeView: formConfigurations | null = null;
-
+    private potentialTaskID: string | null = null;
 
     private constructor() {
         this.dialog = document.createElement('dialog');
@@ -43,15 +43,15 @@ export class Modal {
         }
         return Modal.instance;
     }
-    
-    public trigger(element: HTMLElement, formType: string) {
+
+    public trigger(element: HTMLElement, formType: string, potentialTaskID?: string) {
         element.addEventListener('click', (event) => {
             event.preventDefault();
-            this.open(formType);
+            this.open(formType, potentialTaskID);
         });
     }
 
-    public open(formID: string) {
+    public open(formID: string, potentialTaskID?: string) {
         const configForm = formViews[formID];
 
         if (!configForm) {
@@ -59,7 +59,7 @@ export class Modal {
             return;
         }
         this.activeView = configForm;
-
+        this.potentialTaskID = potentialTaskID || null;
         this.renderFormView();
         this.dialog.showModal();
 
@@ -68,17 +68,22 @@ export class Modal {
         if (!this.activeView) {
             return;
         }
-
+        let hiddenInput = "";
+        if (this.potentialTaskID !== null) {
+            hiddenInput = `<input type="hidden" name="parent_task_id" value="${this.potentialTaskID}">`
+        }
+        // creating the form 
         this.dialog.innerHTML = `
-      <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
-      <form id="modal-form">
-        ${this.activeView.HTMLElements}
-        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
-          <button type="button" id="modal-cancel-btn" style="padding: 8px 12px; cursor: pointer;">Avbryt</button>
-          <button type="submit" style="padding: 8px 16px; cursor: pointer; background: #ff3300ae; color: #fff; border: none; border-radius: 4px;">Skicka</button>
-        </div>
-      </form>
-    `;
+            <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
+            <form id="modal-form">
+                ${hiddenInput}
+                ${this.activeView.HTMLElements}
+                <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" id="modal-cancel-btn" style="padding: 8px 12px; cursor: pointer;">Avbryt</button>
+                    <button type="submit" style="padding: 8px 16px; cursor: pointer; background: #ff3300ae; color: #fff; border: none; border-radius: 4px;">Skicka</button>
+                </div>
+            </form>
+        `;
 
         this.dialog.querySelector('#modal-cancel-btn')?.addEventListener('click', () => this.close());
         this.dialog.querySelector('#modal-form')?.addEventListener('submit', (event) => this.submitEvent(event));
@@ -97,13 +102,13 @@ export class Modal {
         this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
 
         const postSuccess = await dynamicPostCheck(postObj, this.activeView.URLEndPoint);
-        if(postSuccess){
+        if (postSuccess) {
             this.renderStatus(true);
         }
         else {
             this.renderStatus(false);
         }
-       
+
 
     }
     private renderStatus(isSuccess: boolean) {
