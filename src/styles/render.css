@@ -1,8 +1,10 @@
 #renderAllProjectsSection {
   display: flex;
   flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
   background-color: rgb(203, 195, 180);
-  max-width: 60%;
+  max-width: 80%;
   border-radius: 0.8rem;
   margin-top: 1rem;
 }
@@ -10,6 +12,8 @@
 #renderAllMembersSection {
   display: flex;
   flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
   background-color: rgb(203, 195, 180);
   max-width: 60%;
   border-radius: 0.8rem;
@@ -21,7 +25,19 @@
   color: brown;
 }
 
+.H3Title {
+  color: brown;
+  text-decoration: underline;
+}
+
 .memberContainer {
+  border: 1px solid blue;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.projectContainer {
   border: 1px solid blue;
   border-radius: 1rem;
   padding: 1rem;
@@ -34,10 +50,16 @@
   flex-wrap: wrap;
 }
 
+.projectMembersContainer {
+  border: 1px solid blue;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
 .memberProjet {
   border: 1px solid blue;
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
-  max-width: 80px;
+  max-width: 30%;
 }

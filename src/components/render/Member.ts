@@ -101,10 +101,11 @@ export class Member {
         ) as HTMLElement;
         const projectData = await getCategoryDataFirebase("project", projectId);
 
+        memberProjetName.classList.add("H3Title");
         memberProjetLink.innerText = "Link to project [WIP]";
         memberProjetName.innerText = projectData.name;
         memberProjetDescription.innerText = projectData.description;
-        memberProjetDeadline.innerText = projectData.deadline;
+        memberProjetDeadline.innerText = "Deadline: " + projectData.deadline;
         memberProjets.classList.add("memberProjet");
         memberProjets.append(
           memberProjetName,

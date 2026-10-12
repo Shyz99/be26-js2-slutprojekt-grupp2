@@ -64,7 +64,9 @@ export class Project {
     ) as HTMLElement;
 
     projectMembersContainerTitle.innerText = "Members";
+    projectMembersContainerTitle.classList.add("H3Title");
     projectMembersContainer.append(projectMembersContainerTitle);
+    projectMembersContainer.classList.add("projectMembersContainer");
 
     for (const memberId in this.members) {
       const membersData = await getCategoryDataFirebase("member", memberId);
@@ -74,10 +76,12 @@ export class Project {
       projectMembersContainer.append(memberName);
     }
 
-    projectName.innerText = "Project Name: " + this.name;
+    projectName.innerText = "♥ " + this.name;
     projectTasks.innerText = "Amount of tasks: " + tasksLength;
     projectDeadline.innerText = "Deadline: " + this.deadline;
     projectDescription.innerText = "Description: " + this.description;
+
+    projectContainer.classList.add("projectContainer");
 
     projectContainer.append(
       projectName,
