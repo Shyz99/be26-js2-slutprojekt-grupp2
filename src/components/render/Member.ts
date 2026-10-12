@@ -95,15 +95,20 @@ export class Member {
         const memberProjets = document.createElement("section") as HTMLElement;
         const memberProjetName = document.createElement("h3") as HTMLElement;
         const memberProjetDeadline = document.createElement("p") as HTMLElement;
-        const memberProjetLink = document.createElement("a") as HTMLElement;
+        const memberProjetLink = document.createElement(
+          "a",
+        ) as HTMLAnchorElement;
         const memberProjetDescription = document.createElement(
           "p",
         ) as HTMLElement;
         const projectData = await getCategoryDataFirebase("project", projectId);
 
         memberProjetName.classList.add("H3Title");
-        memberProjetLink.innerText = "Link to project [WIP]";
+        memberProjetLink.innerText = "[WIP] -->";
+        memberProjetLink.classList.add("linkButton");
         memberProjetName.innerText = projectData.name;
+        // memberProjetLink.href = `/project/${encodeURIComponent(projectId)}`;
+        memberProjetLink.href = "./src/html/projectOverview.html";
         memberProjetDescription.innerText = projectData.description;
         memberProjetDeadline.innerText = "Deadline: " + projectData.deadline;
         memberProjets.classList.add("memberProjet");

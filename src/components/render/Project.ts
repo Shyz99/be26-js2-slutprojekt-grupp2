@@ -62,6 +62,11 @@ export class Project {
     const projectMembersContainerTitle = document.createElement(
       "h4",
     ) as HTMLElement;
+    const projetLink = document.createElement("a") as HTMLAnchorElement;
+
+    projetLink.innerText = "[WIP] -->";
+    projetLink.classList.add("linkButton");
+    projetLink.href = "./src/html/projectOverview.html";
 
     projectMembersContainerTitle.innerText = "Members";
     projectMembersContainerTitle.classList.add("H3Title");
@@ -89,6 +94,7 @@ export class Project {
       projectTasks,
       projectDeadline,
       projectMembersContainer,
+      projetLink,
     );
     renderAllProjectsSection.append(projectContainer);
   }

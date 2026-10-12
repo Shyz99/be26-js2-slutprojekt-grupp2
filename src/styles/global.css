@@ -2,21 +2,25 @@ html {
   background-color: blanchedalmond;
 }
 
+h1 {
+  padding-left: 2rem;
+}
+
 header {
   background-color: rgb(227, 198, 155);
-  padding: 1.4rem;
+  padding: 1rem;
   border-radius: 1.2rem;
   margin: 1rem;
 }
 
 header a {
   text-decoration: none;
-  padding-bottom: 1.28rem;
-  padding-top: 1.2rem;
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   color: black;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   border: 3px solid rgb(185, 151, 101);
   border-radius: 4px 4px 14px 14px;
 }
@@ -24,6 +28,18 @@ header a {
 header a:hover {
   background-color: rgb(177, 144, 94);
   color: antiquewhite;
-  padding-bottom: 0.9rem;
-  padding-top: 0.9rem;
+}
+
+footer {
+  background-color: rgb(240, 218, 186);
+  margin: 1rem;
+  margin-top: 2rem;
+  padding-bottom: 0.2rem;
+  padding-top: 0.2rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  color: rgb(107, 85, 57);
+  font-size: 0.9rem;
+  font-style: italic;
+  border-radius: 1.2rem;
 }
