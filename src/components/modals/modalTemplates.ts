@@ -111,7 +111,6 @@ export const formViews: Record<string, formConfigurations> = {
 
     'add-new-subtask': {
         modalTitle: 'Lägg till en ny subuppgift',
-
         URLEndPoint: '/subtask',
         HTMLElements: ` 
         
@@ -150,7 +149,23 @@ export const formViews: Record<string, formConfigurations> = {
             </select>
         </fieldset>
     `
+    },
+
+    'patch-member-to-task': {
+        modalTitle: 'Välj medlem:',
+        URLEndPoint: '/task',
+        HTMLElements: `
+        
+        <fieldset>
+            <select id="member-selector" name="memberID" required>
+                <option value="">Laddar medlemmar...</option>
+            </select>
+        </fieldset>
+        
+        `
     }
+
+
 }
 
 

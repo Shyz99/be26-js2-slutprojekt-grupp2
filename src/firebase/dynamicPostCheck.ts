@@ -12,68 +12,43 @@ import { postNewProject } from "./postNewProject.ts";
 import { postNewTask } from "./postNewTask.ts";
 import { postNewSubtask } from "./postNewSubtask.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
+import { patchMemberToProject } from "./patchMemberToProject.ts";
 
 export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: string, options: ModalOptions) {
+    
+    if (URLEndPoint === "/project" && options.projectID && data.memberID){
+        return await patchMemberToProject(data, URLEndPoint, options);            
+    }
+
+    if (URLEndPoint === "/task" && options.taskID && data.memberID){
+        // patch to add member to task 
+        
+    }
+
     if (URLEndPoint === "/member") {
-        const success = await postNewMember(data, URLEndPoint);
-        if (success) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return await postNewMember(data, URLEndPoint);        
     }
 
     if (URLEndPoint === "/project") {
-        const success = await postNewProject(data, URLEndPoint);
-        if (success) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return await postNewProject(data, URLEndPoint);       
     }
 
     if (URLEndPoint === "/task") {
-        
-        const success = await postNewTask(data, URLEndPoint, options);
-
-        if (success) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return await postNewTask(data, URLEndPoint, options);
     }
 
     if (URLEndPoint === "/subtask") {
-
-        if (data.taskID) {
-            const correctEndPointURL = `${data.taskID}/subtask`;
-            const success = await postNewSubtask(data, correctEndPointURL, options);
-
-            if (success) {
-                return true
-            }
-            else {
-                return false;
-            }
+        if (options.taskID) {
+            const correctEndPointURL = `${options.taskID}/subtask`;
+            return await postNewSubtask(data, correctEndPointURL, options);
         }
         else {
             return false;
         }
-
     }
 
-    if (URLEndPoint === "/project" && options.projectID){
-        // patch for adding member to a project 
 
-        
-    }
-
-    if (URLEndPoint === "/task" && m){
-        // patch to add member to task 
-    }
+    
 
     
 
