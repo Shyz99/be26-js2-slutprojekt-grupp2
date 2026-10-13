@@ -32,11 +32,14 @@ export async function renderProjectSubTaskCount(projectID: string) {
 
   for (const key in taskProject.subtask) {
     for (const id in allTasks) {
-      // console.log("ID in Tasks", id);
-      // console.log("ID in SUB", id.subtask);
+      const temp: object = await getCategoryDataFirebase("task", id);
+      for (const subID in temp.subtask) {
+        if (key === subID) {
+          subTaskCount = subTaskCount + 1;
+        }
+      }
     }
   }
   const data = subTaskCount;
-  console.log(allTasks);
   return data;
 }

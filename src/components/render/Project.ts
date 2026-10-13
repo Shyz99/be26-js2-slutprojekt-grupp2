@@ -52,7 +52,7 @@ export class Project {
 
     const tasksCount = await renderProjectTaskCount(this.id);
     const subTasksCount = await renderProjectSubTaskCount(this.id);
-    console.log("ProjectName", this.name, " Subtasks: ", subTasksCount);
+    // console.log("ProjectName", this.name, " Subtasks: ", subTasksCount);
 
     const renderAllProjectsSection = document.getElementById(
       "renderAllProjectsSection",
