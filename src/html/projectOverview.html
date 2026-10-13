@@ -18,7 +18,14 @@
       <button id="temp-button">Render project</button>
       <h1 id="project-title"></h1>
       <p id="project-description"></p>
-      <div><ul id="project-members-ul"></ul></div>
+      <div>
+        <ul id="project-members-ul"></ul>
+      </div>
+      <p>Add member to project:</p>
+      <div id="add-member-to-project-container"></div>
+      </div>
+      <p>Add new task:</p>
+      <button id="new-task-button">New task</button>
     </div>
 
     <div class="SCRUM-board-container">
@@ -65,10 +72,18 @@
         </div>
         <button id="task-done-button">Task done</button>
         <button id="delete-task-button">Delete task</button>
-        <div id="subtask-container">
+
+        <div id="new-subtask-container">
           <h4>Subtasks:</h4>
+          <form id="new-subtask-form">
+            <label>Skriv ny subtask:</label>
+            <input type="text" id="new-subtask" />
+            <button type="submit" id="add-subtask-button">Lägg till</button>
+          </form>
+        </div>
+        <div id="subtask-container">
           <label>
-            <input type="checkbox" id="task1" />
+            <input type="checkbox" />
             <span>Gör en header</span>
           </label>
         </div>

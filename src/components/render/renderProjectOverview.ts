@@ -1,5 +1,6 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
-import type { Project, Member, Subtask, Task } from "../../models/models.ts";
+import type { Project, Member, Task } from "../../models/models.ts";
+import { renderTaskCard } from "./renderTaskCards.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -10,30 +11,12 @@ const projectDescription = document.getElementById(
 const projectMembersUl = document.getElementById(
   "project-members-ul",
 ) as HTMLUListElement;
-
 const taskmodalContainer = document.querySelector(
   ".taskmodal-container",
 ) as HTMLDivElement;
-const closeTaskCardBtn = document.getElementById(
-  "close-button",
-) as HTMLButtonElement;
-const saveNewTaskCardChanges = document.getElementById(
-  "save-button",
-) as HTMLButtonElement;
-const taskDoneBtn = document.getElementById(
-  "task-done-button",
-) as HTMLButtonElement;
-const deleteTaskBtn = document.getElementById(
-  "delete-task-button",
-) as HTMLButtonElement;
-const delegateToMember = document.getElementById(
-  "delegate-to-member",
-) as HTMLSelectElement;
-const delegateContainer = document.getElementById(
-  "delegate-member-container",
-) as HTMLDivElement;
-const subtaskContainer = document.getElementById(
-  "subtask-container",
+const newTaskBtn = document.getElementById("new-task-button") as HTMLDivElement;
+const addMemberToProjectContainer = document.getElementById(
+  "add-member-to-project-container",
 ) as HTMLDivElement;
 
 //temp:
@@ -65,6 +48,9 @@ async function renderProjectOverview(project: Project): Promise<void> {
     const projectTask = await getCategoryDataFirebase("task", task);
     renderTasksList(projectTask);
   }
+
+  const allMembers = await getCategoryDataFirebase("member");
+  selectAllMembers(allMembers);
 }
 
 function renderProjectMembers(projectMember: Member): void {
@@ -83,7 +69,7 @@ function renderProjectMembers(projectMember: Member): void {
   projectMembersUl.append(li);
 }
 
-function renderTasksList(task: Task): void {
+export function renderTasksList(task: Task): void {
   //translates the ID
   const translateKey: Record<number, string> = {
     1: "one",
@@ -123,104 +109,27 @@ function renderTasksList(task: Task): void {
   });
 }
 
-async function renderTaskCard(task: Task): Promise<void> {
-  const cardTitle = document.getElementById(
-    "card-task-title",
-  ) as HTMLUListElement;
-  const cardInfoContainer = document.getElementById(
-    "card-info-container",
-  ) as HTMLDivElement;
-  const taskModal = document.getElementById("taskmodal") as HTMLDivElement;
+function selectAllMembers(allMembers: Member[]): void {
+  const selectNewMember = document.createElement("select");
+  const addMemberToProjectBtn = document.createElement("button");
+  addMemberToProjectBtn.innerText = "Add member";
 
-  //Rensa
-  delegateToMember.innerHTML = "";
-  cardTitle.innerHTML = "";
-  cardInfoContainer.innerHTML = "";
-  taskModal.classList.remove(
-    "new-task-modal",
-    "ongoing-task-modal",
-    "done-task-modal",
-  );
-  delegateContainer.classList.add("hidden");
-  taskDoneBtn.classList.add("hidden");
-  deleteTaskBtn.classList.add("hidden");
-  subtaskContainer.classList.add("hidden");
-  //
-  //Lägg till kategori
-  let delegatedRole: string = "";
+  const membersArray = Object.values(allMembers);
 
-  if (task.category.frontend === true) {
-    delegatedRole = "Frontend";
-  } else if (task.category.backend === true) {
-    delegatedRole = "Backend";
-  } else if (task.category.ux === true) {
-    delegatedRole = "Ux";
-  }
-  //
-  //Hämta members och kolla deras kategori
-  const allMembers = await getCategoryDataFirebase("member");
-
-  let taskMemberName = "";
-
-  for (const key in allMembers) {
-    const member: Member = allMembers[key];
-
-    const matchingCategory =
-      member.category.backend === task.category.backend &&
-      member.category.frontend === task.category.frontend &&
-      member.category.ux === task.category.ux;
-
-    if (matchingCategory) {
-      const option = document.createElement("option");
-      option.value = key;
-      option.append(member.name);
-      delegateToMember.append(option);
-    }
-
-    if (key === task.member) {
-      taskMemberName = member.name;
-    }
+  for (const member of membersArray) {
+    const memberName = member.name;
+    const memberOption = document.createElement("option");
+    memberOption.innerText = memberName;
+    selectNewMember.append(memberOption);
   }
 
-  //
+  addMemberToProjectBtn.addEventListener("click", () => {
+    //Insert patch-function here
+  });
 
-  if (task.status.new === true) {
-    taskModal.classList.add("new-task-modal");
-    cardTitle.innerHTML = `${task.title}`;
-    delegateContainer.classList.remove("hidden");
-
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Priority: ${task.priority} <button>Change</button></p>`;
-  } else if (task.status.ongoing === true) {
-    taskModal.classList.add("ongoing-task-modal");
-    cardTitle.innerHTML = `${task.title}`;
-    taskDoneBtn.classList.remove("hidden");
-    subtaskContainer.classList.remove("hidden");
-
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Priority: ${task.priority} <button>Change</button></p><p>Delegated member: ${taskMemberName}</p>`;
-  } else if (task.status.done === true) {
-    taskModal.classList.add("done-task-modal");
-    cardTitle.innerHTML = `<h3>Task done!</h3> ${task.title}`;
-    deleteTaskBtn.classList.remove("hidden");
-
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Delegated member: ${taskMemberName}</p>`;
-  }
+  addMemberToProjectContainer.append(selectNewMember, addMemberToProjectBtn);
 }
 
-//Eventlisteners
-
-closeTaskCardBtn.addEventListener("click", () => {
-  taskmodalContainer.style.display = "none";
-});
-
-saveNewTaskCardChanges.addEventListener("click", () => {
-  const selectedMember = delegateToMember.value;
-  //Insert patch-function here
-});
-
-taskDoneBtn.addEventListener("click", () => {
-  //Insert patch-function here
-});
-
-deleteTaskBtn.addEventListener("click", () => {
-  //Insert delete-function here
+newTaskBtn.addEventListener("click", () => {
+  //Insert post-function here
 });
