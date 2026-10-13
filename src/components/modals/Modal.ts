@@ -64,6 +64,7 @@ export class Modal {
         });
     }
 
+
     private async populateMemberSelector() {
         const selector = this.dialog.querySelector("#member-selector") as HTMLSelectElement | null;
 
@@ -81,31 +82,34 @@ export class Modal {
             option.textContent = member.name;
             selector.appendChild(option);
         }
-        
+
     }
 
     public open(formID: string, options: ModalOptions = {}) {
-    const configForm = formViews[formID];
+        const configForm = formViews[formID];
 
-    if (!configForm) {
-        console.log("ID finns inte bland våra formViews")
-        return;
+        if (!configForm) {
+            console.log("ID finns inte bland våra formViews")
+            return;
+        }
+        this.activeView = configForm;
+        this.options = options;
+        this.renderFormView();
+        this.dialog.showModal();
+        if (formID === "patch-member-to-task" || formID === "patch-member-to-project") {
+            void this.populateMemberSelector();
+        }
+
+
     }
-    this.activeView = configForm;
-    this.options = options;
-    this.renderFormView();
-    this.dialog.showModal();
-    void this.populateMemberSelector();
-
-}
 
     private renderFormView() {
-    if (!this.activeView) {
-        return;
-    }
+        if (!this.activeView) {
+            return;
+        }
 
-    // creating the form 
-    this.dialog.innerHTML = `
+        // creating the form 
+        this.dialog.innerHTML = `
             <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
             <form id="modal-form">
                
@@ -117,53 +121,53 @@ export class Modal {
             </form>
         `;
 
-    this.dialog.querySelector('#modal-cancel-btn')?.addEventListener('click', () => this.close());
-    this.dialog.querySelector('#modal-form')?.addEventListener('submit', (event) => this.submitEvent(event));
+        this.dialog.querySelector('#modal-cancel-btn')?.addEventListener('click', () => this.close());
+        this.dialog.querySelector('#modal-form')?.addEventListener('submit', (event) => this.submitEvent(event));
 
-}
+    }
 
     private async submitEvent(event: Event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    if (!this.activeView) return;
+        if (!this.activeView) return;
 
-    this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
+        this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
 
-    const formElement = event.target as HTMLFormElement;
-    const formData = new FormData(formElement);
-    const postObj: Record<string, any> = Object.fromEntries(formData.entries());
+        const formElement = event.target as HTMLFormElement;
+        const formData = new FormData(formElement);
+        const postObj: Record<string, any> = Object.fromEntries(formData.entries());
 
-    for (const category of ["backend", "frontend", "ux"]) {
-        postObj[category] = formData.getAll(category).includes("true");
+        for (const category of ["backend", "frontend", "ux"]) {
+            postObj[category] = formData.getAll(category).includes("true");
+        }
+
+        for (const status of ["new", "ongoing", "done"]) {
+            postObj[status] = formData.getAll(status).includes("true");
+        }
+
+        const postSuccess = await dynamicPostCheck(postObj, this.activeView.URLEndPoint, this.options);
+        if (postSuccess) {
+            this.renderStatus(true);
+        }
+        else {
+            this.renderStatus(false);
+        }
+
+
     }
-
-    for (const status of ["new", "ongoing", "done"]) {
-        postObj[status] = formData.getAll(status).includes("true");
-    }
-
-    const postSuccess = await dynamicPostCheck(postObj, this.activeView.URLEndPoint, this.options);
-    if (postSuccess) {
-        this.renderStatus(true);
-    }
-    else {
-        this.renderStatus(false);
-    }
-
-
-}
     private renderStatus(isSuccess: boolean) {
-    if (isSuccess) {
-        this.dialog.innerHTML = '<p>Lyckades posta!</p>'
+        if (isSuccess) {
+            this.dialog.innerHTML = '<p>Lyckades posta!</p>'
+        }
+        else {
+            this.dialog.innerHTML = '<p>Lyckades inte posta!</p>'
+        }
     }
-    else {
-        this.dialog.innerHTML = '<p>Lyckades inte posta!</p>'
-    }
-}
 
     public close() {
-    this.dialog.close();
-    this.activeView = null;
-}
+        this.dialog.close();
+        this.activeView = null;
+    }
 
 
 }

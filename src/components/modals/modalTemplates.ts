@@ -163,6 +163,26 @@ export const formViews: Record<string, formConfigurations> = {
         </fieldset>
         
         `
+    },
+
+    'patch-task-status': {
+        modalTitle: 'Välj status:', 
+        URLEndPoint: '/task', 
+        HTMLElements: `
+        
+        <fieldset>
+        
+            <select id="status-selector" name="status" required>
+                <option value="">Välj status...</option>
+                <option value="new">Ny</option>
+                <option value="ongoing">Pågående</option>
+                <option value="done">Färdig</option>
+            </select>
+            
+        </fieldset>
+    
+
+        `
     }
 
 
