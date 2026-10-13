@@ -1,14 +1,46 @@
+#renderAllProjectsSection {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(235, 211, 175);
+  max-width: 80%;
+  border-radius: 0.8rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
 #renderAllMembersSection {
   display: flex;
   flex-direction: column;
-  background-color: rgb(203, 195, 180);
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(235, 211, 175);
   max-width: 60%;
   border-radius: 0.8rem;
   margin-top: 1rem;
+  padding: 1rem;
+}
+
+.H2Title {
+  padding-left: 1rem;
+  color: rgb(126, 58, 10);
+}
+
+.H3Title {
+  color: rgb(126, 58, 10);
+  text-decoration: underline;
 }
 
 .memberContainer {
-  border: 1px solid blue;
+  border: 4px groove rgb(174, 129, 88);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.projectContainer {
+  border: 4px groove rgb(174, 129, 88);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
@@ -20,10 +52,31 @@
   flex-wrap: wrap;
 }
 
+.projectMembersContainer {
+  border: 3px groove rgb(174, 129, 88);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+}
+
 .memberProjet {
-  border: 1px solid blue;
+  border: 3px groove rgb(174, 129, 88);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
-  max-width: 80px;
+  max-width: 30%;
+}
+
+.linkButton {
+  border: 3px groove rgb(174, 129, 88);
+  padding: 0.3rem;
+  padding-bottom: 0.4rem;
+  border-radius: 1rem;
+  background-color: rgb(177, 144, 94);
+  color: antiquewhite;
+}
+
+.linkButton:hover {
+  background-color: rgb(134, 100, 49);
+  color: rgb(241, 215, 182);
 }
