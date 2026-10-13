@@ -6,11 +6,7 @@ interface Subtask {
     done: boolean;
     member: {placeholder: true};
 }
-export async function postNewSubtask(data: Record<string, any>, URLEndPoint: string, options: ModalOptions){
-    // TODO: code lol 
-    // ! remember: the subtasks take a different endpoint then the others
-
-    const taskID = options.taskID; 
+export async function postNewSubtask(data: Record<string, any>, correctURLEndPoint: string){
 
     const task: Subtask = {
         description: data.description, 
@@ -27,7 +23,7 @@ export async function postNewSubtask(data: Record<string, any>, URLEndPoint: str
     }
 
     try{
-        const response = await fetch(`${baseURL}/task/${URLEndPoint}.json`, postOptions);
+        const response = await fetch(`${baseURL}/task/${correctURLEndPoint}.json`, postOptions);
         if(!response.ok){
             throw 'Something went wrong'; 
         }
