@@ -1,4 +1,5 @@
-import { baseURL } from "./firebaseRequestURL";
+import { baseURL } from "./firebaseRequestURL"; 
+import { showToast } from "../components/errors/toast.ts";
 
 export async function getCategoryDataFirebase(category: string, id?: string) {
   //! Do I need to do all checks or only undefined?
@@ -19,6 +20,8 @@ export async function getCategoryDataFirebase(category: string, id?: string) {
     // console.log(data);
     return data;
   } catch (error) {
+    console.error("Firebase error:", error);
+    showToast("Kunde inte hämta data. Kontrollera din internetanslutning och testa igen.");
     throw error;
   }
 }
