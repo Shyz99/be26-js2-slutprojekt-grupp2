@@ -2,12 +2,18 @@ import { formViews } from "./modalTemplates.ts";
 import type { formConfigurations } from "./modalTemplates.ts";
 import { dynamicPostCheck } from "../../firebase/dynamicPostCheck.ts";
 
+interface ModalOptions {
+    taskID?: string;
+    projectID?: string;
+    memberID?: string;
+}
+
 export class Modal {
     // static used here to ensure there is only ever one Modal open / saved in memory
     private static instance: Modal;
     private dialog: HTMLDialogElement;
     private activeView: formConfigurations | null = null;
-    private potentialTaskID: string | null = null;
+    private options: ModalOptions = {};
 
     private constructor() {
         this.dialog = document.createElement('dialog');
@@ -34,8 +40,13 @@ export class Modal {
     // const testBtn = document.createElement('button'); 
     // testBtn.innerText = "test av modal"; 
     // const testModal = Modal.getInstance(); 
-    // testModal.trigger(testBtn, 'test'); 
+    // testModal.trigger(testBtn, 'test', id för projekt, member, task, etc); 
     // document.body.appendChild(testBtn);
+    // eller: 
+    //const modal = Modal.getInstance();
+    // modal.trigger(addTaskButton, "add-new-task", {projectID: "project123"};
+
+
     // TODO remove comments lol 
     public static getInstance(): Modal {
         if (!Modal.instance) {
@@ -44,14 +55,14 @@ export class Modal {
         return Modal.instance;
     }
 
-    public trigger(element: HTMLElement, formType: string, potentialTaskID?: string) {
+    public trigger(element: HTMLElement, formType: string, options: ModalOptions = {}) {
         element.addEventListener('click', (event) => {
             event.preventDefault();
-            this.open(formType, potentialTaskID);
+            this.open(formType, options);
         });
     }
 
-    public open(formID: string, potentialTaskID?: string) {
+    public open(formID: string, options: ModalOptions = {}) {
         const configForm = formViews[formID];
 
         if (!configForm) {
@@ -59,27 +70,40 @@ export class Modal {
             return;
         }
         this.activeView = configForm;
-        this.potentialTaskID = potentialTaskID || null;
+        this.options = options;
         this.renderFormView();
         this.dialog.showModal();
 
+    }
+    private generateOptions(): string {
+        let hiddenInputs = "";
+
+        if (this.options.taskID) {
+            hiddenInputs += `<input type="hidden" name="taskID" value="${this.options.taskID}">`;
+        }
+
+        if (this.options.projectID) {
+            hiddenInputs += `<input type="hidden" name="projectID" value="${this.options.projectID}">`;
+        }
+
+        if (this.options.memberID) {
+            hiddenInputs += `<input type="hidden" name="memberID" value="${this.options.memberID}">`;
+        }
+
+        return hiddenInputs; 
     }
     private renderFormView() {
         if (!this.activeView) {
             return;
         }
-        let hiddenInput = "";
-        if (this.potentialTaskID !== null) {
-            hiddenInput = `<input type="hidden" name="taskID" value="${this.potentialTaskID}">`
-        }
-        else {
-            hiddenInput = "";
-        }
+        const hiddenInputs = this.generateOptions();
+
+        
         // creating the form 
         this.dialog.innerHTML = `
             <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
             <form id="modal-form">
-                ${hiddenInput}
+                ${hiddenInputs}
                 ${this.activeView.HTMLElements}
                 <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" id="modal-cancel-btn" style="padding: 8px 12px; cursor: pointer;">Avbryt</button>
