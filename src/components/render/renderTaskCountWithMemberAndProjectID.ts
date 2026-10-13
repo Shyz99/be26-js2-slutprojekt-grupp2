@@ -14,11 +14,6 @@ export async function renderTaskCount(memberID: string, projectID: string) {
   let taskCount: number = 0;
 
   for (const id in memberProject.project) {
-    if (id == projectID) {
-      console.log("Project matched Member: ", memberProject.name);
-    } else {
-      console.log("Did not match");
-    }
   }
   const data = taskCount;
   return data;

@@ -11,7 +11,7 @@ export async function renderProjectTaskCount(projectID: string) {
 
   for (const key in taskProject.tasks) {
     for (const id in allTasks) {
-      if (key == id) {
+      if (key === id) {
         taskCount = taskCount + 1;
       }
     }
@@ -30,13 +30,13 @@ export async function renderProjectSubTaskCount(projectID: string) {
 
   let subTaskCount: number = 0;
 
-  for (const key in taskProject.tasks) {
+  for (const key in taskProject.subtask) {
     for (const id in allTasks) {
-      if (key == id.subtask) {
-        subTaskCount = subTaskCount + 1;
-      }
+      // console.log("ID in Tasks", id);
+      // console.log("ID in SUB", id.subtask);
     }
   }
   const data = subTaskCount;
+  console.log(allTasks);
   return data;
 }
