@@ -8,29 +8,29 @@
 // } 
 
 import { postNewMember } from "./postNewMember.ts";
-import { postNewProject } from "./postNewProject.ts"; 
+import { postNewProject } from "./postNewProject.ts";
 import { postNewTask } from "./postNewTask.ts";
 import { postNewSubtask } from "./postNewSubtask.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 import { patchMemberToProject } from "./patchMemberToProject.ts";
+import { patchMemberToTask } from "./patchMembertoTask.ts"
 
 export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: string, options: ModalOptions) {
-    
-    if (URLEndPoint === "/project" && options.projectID && data.memberID){
-        return await patchMemberToProject(data, URLEndPoint, options);            
+
+    if (URLEndPoint === "/project" && options.projectID && data.memberID) {
+        return await patchMemberToProject(data, URLEndPoint, options);
     }
 
-    if (URLEndPoint === "/task" && options.taskID && data.memberID){
-        // patch to add member to task 
-        
+    if (URLEndPoint === "/task" && options.taskID && data.memberID) {
+        return await patchMemberToTask(data, URLEndPoint, options);
     }
 
     if (URLEndPoint === "/member") {
-        return await postNewMember(data, URLEndPoint);        
+        return await postNewMember(data, URLEndPoint);
     }
 
     if (URLEndPoint === "/project") {
-        return await postNewProject(data, URLEndPoint);       
+        return await postNewProject(data, URLEndPoint);
     }
 
     if (URLEndPoint === "/task") {
@@ -48,8 +48,8 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
     }
 
 
-    
 
-    
+
+
 
 }
