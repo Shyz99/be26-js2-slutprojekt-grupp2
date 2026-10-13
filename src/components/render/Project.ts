@@ -1,5 +1,9 @@
 import { getMembersWithID } from "../../firebase/getProjectOrMembersDataWithID.ts";
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
+import {
+  renderProjectTaskCount,
+  renderProjectSubTaskCount,
+} from "../render/renderTaskCountWithProjectID.ts";
 
 //getMemnersWithID
 
@@ -46,7 +50,8 @@ export class Project {
   async renderAllProjectDataIndex() {
     await this.loadMembers();
 
-    const tasksLength = Object.keys(this.tasks ?? {}).length;
+    const tasksCount = await renderProjectTaskCount(this.id);
+    const subTasksCount = await renderProjectSubTaskCount(this.id);
 
     const renderAllProjectsSection = document.getElementById(
       "renderAllProjectsSection",
@@ -54,6 +59,7 @@ export class Project {
     const projectContainer = document.createElement("section") as HTMLElement;
     const projectName = document.createElement("h3") as HTMLElement;
     const projectTasks = document.createElement("p") as HTMLElement;
+    const projectSubTasks = document.createElement("p") as HTMLElement;
     const projectDeadline = document.createElement("p") as HTMLElement;
     const projectDescription = document.createElement("p") as HTMLElement;
     const projectMembersContainer = document.createElement(
@@ -82,7 +88,8 @@ export class Project {
     }
 
     projectName.innerText = "♥ " + this.name;
-    projectTasks.innerText = "Amount of tasks: " + tasksLength;
+    projectTasks.innerText = "Tasks: " + tasksCount;
+    projectSubTasks.innerText = "Sub-tasks: " + subTasksCount;
     projectDeadline.innerText = "Deadline: " + this.deadline;
     projectDescription.innerText = "Description: " + this.description;
 
@@ -92,6 +99,7 @@ export class Project {
       projectName,
       projectDescription,
       projectTasks,
+      projectSubTasks,
       projectDeadline,
       projectMembersContainer,
       projetLink,

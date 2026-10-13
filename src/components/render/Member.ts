@@ -1,5 +1,9 @@
 import { getProjectsWithID } from "../../firebase/getProjectOrMembersDataWithID.ts";
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
+import {
+  renderTaskCount,
+  renderSubTaskCount,
+} from "../render/renderTaskCountWithMemberAndProjectID.ts";
 
 export class Member {
   public readonly id: string;
@@ -66,7 +70,10 @@ export class Member {
     ) as HTMLElement;
     const memberContainer = document.createElement("section") as HTMLElement;
     const memberName = document.createElement("h2") as HTMLElement;
+    let taskCount: number = 0;
+    let subTaskCount: number = 0;
     const memberTasks = document.createElement("p") as HTMLElement;
+    const memberSubTasks = document.createElement("p") as HTMLElement;
     const memberCategory = document.createElement("p") as HTMLElement;
     const memberProjetsContainer = document.createElement(
       "section",
@@ -119,19 +126,32 @@ export class Member {
           memberProjetLink,
         );
         memberProjetsContainer.append(memberProjets);
+        //! maybe remove if not wrking
+        const newTaskCount = await renderTaskCount(this.id, projectId);
+        const newSubTaskCount = await renderSubTaskCount(this.id, projectId);
+        taskCount = taskCount + newTaskCount;
+        subTaskCount = subTaskCount + newSubTaskCount;
+
+        // console.log("User: ", this.name);
+        // console.log("newtaskCount Function: ", newTaskCount);
+        // console.log("taskCount: ", taskCount);
+        // console.log("subTaskCount: ", subTaskCount);
       }
     }
 
     memberProjetsContainer.classList.add("memberProjetsContainer");
 
     memberName.innerText = this.name;
-    memberTasks.innerText = "Tasks: " + this.tasks;
+    //! memberTasks.innerText = "Total Tasks: " + this.tasks;
+    memberTasks.innerText = "Total Tasks: " + taskCount;
+    memberSubTasks.innerText = "Total Sub-Tasks: " + subTaskCount;
 
     memberContainer.classList.add("memberContainer");
     memberContainer.append(
       memberName,
       memberCategory,
       memberTasks,
+      memberSubTasks,
       memberProjetsContainer,
     );
     renderAllMembersContainer.append(memberContainer);

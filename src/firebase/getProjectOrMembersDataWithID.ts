@@ -2,9 +2,7 @@ import { baseURL } from "./firebaseRequestURL";
 
 export async function getProjectsWithID(memberID: string) {
   try {
-    const response = await fetch(
-      baseURL + "/member/" + memberID + "/project/.json",
-    );
+    const response = await fetch(`${baseURL}/member/${memberID}/project/.json`);
     if (!response.ok) {
       throw new Error("Fetching data from Firebased failed");
     }

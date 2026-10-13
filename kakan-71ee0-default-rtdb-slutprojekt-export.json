@@ -1,5 +1,17 @@
 {
   "member": {
+    "isughfih03j": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "name": "Anita Bath",
+      "project": {
+        "iuhfsiuh984": ""
+      },
+      "tasks": 1
+    },
     "kjahdiuyd98ykhf": {
       "category": {
         "backend": false,
@@ -8,52 +20,127 @@
       },
       "name": "Bruno Snygg",
       "project": {
-        "lsjghv0p9yhf": "",
-        "oidhg09yh4einvfg": ""
+        "iudshg98dy": "",
+        "iuhfsiuh984": ""
       },
-      "tasks": 3
+      "tasks": 5
     }
   },
   "project": {
-    "iuhfsiuh984": {
-      "description": "Det är ett projekt som vi jobbar på för att göra en hemsida",
-      "deadline": "09/10",
+    "iudshg98dy": {
+      "deadline": "17/12",
+      "description": "Ett projekt som handlar om vänskap och att den riktiga skatten är de vi lärde känna längst vägen.",
       "members": {
-        "sdjkfhsh093hn": "",
-        "uskhf0whnfss": ""
+        "isughfih03j": "",
+        "kjahdiuyd98ykhf": ""
+      },
+      "name": "Cykelprojektet",
+      "subtask": {
+        "hfsih994tgijdfi": "",
+        "sujfhihsf8": ""
+      },
+      "tasks": {
+        "jshfiuh984hf": "",
+        "kjhgius8": ""
+      }
+    },
+    "iuhfsiuh984": {
+      "deadline": "09/10",
+      "description": "Det är ett projekt som vi jobbar på för att göra en hemsida",
+      "members": {
+        "kjahdiuyd98ykhf": "",
+        "isughfih03j": ""
       },
       "name": "Ett projekt",
+      "subtask": {
+        "adsasdas": "",
+        "feafesfsa": ""
+      },
       "tasks": {
-        "sjkhf9s83d": "",
-        "uishfiuhf93h": ""
+        "enjlsfwd": ""
       }
     }
   },
   "task": {
-    "jshfiuh984hf": {
-      "description": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
-      "deadline": "10/10",
+    "enjlsfwd": {
       "category": {
         "backend": false,
         "frontend": true,
         "ux": false
       },
-      "member": "ksjdfhksjfh339h",
-      "priority": 1,
       "created": "07/10",
+      "deadline": "10/10",
+      "description": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
+      "member": "isughfih03j",
+      "priority": 1,
       "status": {
+        "done": true,
         "new": false,
-        "ongoing": false,
-        "done": true
+        "ongoing": false
+      },
+      "subtask": {
+        "adsasdas": {
+          "description": "Gör fina gröna symboler",
+          "done": false,
+          "member": "kjahdiuyd98ykhf"
+        },
+        "feafesfsa": {
+          "description": "Gör fina gröna symboler",
+          "done": false,
+          "member": "isughfih03j"
+        }
+      },
+      "title": "Designa knappar"
+    },
+    "jshfiuh984hf": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "07/10",
+      "deadline": "10/10",
+      "description": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
+      "member": "isughfih03j",
+      "priority": 1,
+      "status": {
+        "done": true,
+        "new": false,
+        "ongoing": false
       },
       "subtask": {
         "hfsih994tgijdfi": {
           "description": "Gör fina gröna symboler",
           "done": false,
-          "member": "hbsjf9fgy9w83yhf"
+          "member": "isughfih03j"
         }
       },
       "title": "Designa knappar"
+    },
+    "kjhgius8": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "04/03",
+      "deadline": "30/02",
+      "description": "Göra en eventlistener som funkar med knapparna",
+      "member": "kjahdiuyd98ykhf",
+      "priority": 3,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "subtask": {
+        "sujfhihsf8": {
+          "description": "Sätt upp allt i VS Code",
+          "done": true,
+          "member": "kjahdiuyd98ykhf"
+        }
+      },
+      "title": "Gör en eventlistener"
     }
   }
 }
