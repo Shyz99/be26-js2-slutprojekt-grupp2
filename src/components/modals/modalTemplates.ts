@@ -43,6 +43,7 @@ export const formViews: Record<string, formConfigurations> = {
         modalTitle: 'Lägg till ett nytt projekt:',
         URLEndPoint: '/project',
         HTMLElements: `
+        
         <fieldset>
             <legend>Projekt Namn</legend>
 
@@ -66,6 +67,7 @@ export const formViews: Record<string, formConfigurations> = {
         URLEndPoint: '/task',
         // TODO: Add the ability to add subtasks
         HTMLElements: `
+        
         <fieldset>
             <legend>Uppgift</legend>
 
@@ -73,7 +75,7 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
             <input type="text" name="member" required placeholder="Ansvarig medlem...">
-            <input type="text" name="priority" required placeholder="Prioritets nummer...">
+            <input type="number" name="priority" required placeholder="Prioritets nummer...">
             <input type="hidden" name="created" value="${date}">
             <input type="hidden" name="subtask" value="{}">
 
@@ -109,9 +111,11 @@ export const formViews: Record<string, formConfigurations> = {
 
     'add-new-subtask': {
         modalTitle: 'Lägg till en ny subuppgift',
-        
+
         URLEndPoint: '/subtask',
-        HTMLElements:` <fieldset>
+        HTMLElements: ` 
+        
+        <fieldset>
             <legend> Subuppgift </legend>
 
             <input type="text" name="description" required placeholder="Beskrivning...">
@@ -133,6 +137,19 @@ export const formViews: Record<string, formConfigurations> = {
             <label><input type="checkbox" name="ux" value="true"> UX </label>
         </fieldset>
         `
+    },
+
+    'patch-member-to-project': {
+        modalTitle: 'Välj en medlem:',
+        URLEndPoint: '/project',
+        HTMLElements: `
+
+        <fieldset>
+            <select id="member-selector" name="memberID" required>
+                <option value="">Laddar medlemmar...</option>
+            </select>
+        </fieldset>
+    `
     }
 }
 

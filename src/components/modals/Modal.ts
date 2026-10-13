@@ -1,8 +1,9 @@
 import { formViews } from "./modalTemplates.ts";
 import type { formConfigurations } from "./modalTemplates.ts";
 import { dynamicPostCheck } from "../../firebase/dynamicPostCheck.ts";
+// ! IMPORT FUNCTION / TYPE FOR GETTING ALL MEMBERS AND THEIR IDS
 
-interface ModalOptions {
+export interface ModalOptions {
     taskID?: string;
     projectID?: string;
     memberID?: string;
@@ -20,7 +21,7 @@ export class Modal {
         document.body.appendChild(this.dialog);
         // TODO CSS styles
 
-        // makes sure the user can click outside the box to close
+        // makes sure the user can click outside the box to close 
         // TODO: a X to close? 
         this.dialog.addEventListener('click', (e: MouseEvent) => {
             const border = this.dialog.getBoundingClientRect();
@@ -45,6 +46,7 @@ export class Modal {
     // eller: 
     //const modal = Modal.getInstance();
     // modal.trigger(addTaskButton, "add-new-task", {projectID: "project123"};
+    // project id will be sent in to certain POST functions later, it is vital this is added, gang 
 
 
     // TODO remove comments lol 
@@ -62,6 +64,23 @@ export class Modal {
         });
     }
 
+    private async populateMemberSelector() {
+        const selector = this.dialog.querySelector("#member-selector") as HTMLSelectElement | null;
+
+        if (!selector) return;
+
+        // ! const members = await FUNCTION OR TYPE
+
+        selector.innerHTML = '<option value="">Välj en medlem...</option>';
+
+        for (const memberID in members) {
+            const option = document.createElement("option");
+            option.value = memberID;
+            option.textContent = members[memberID].name;
+            selector.appendChild(option);
+        }
+    }
+
     public open(formID: string, options: ModalOptions = {}) {
         const configForm = formViews[formID];
 
@@ -73,37 +92,20 @@ export class Modal {
         this.options = options;
         this.renderFormView();
         this.dialog.showModal();
+        void this.populateMemberSelector();
 
     }
-    private generateOptions(): string {
-        let hiddenInputs = "";
 
-        if (this.options.taskID) {
-            hiddenInputs += `<input type="hidden" name="taskID" value="${this.options.taskID}">`;
-        }
-
-        if (this.options.projectID) {
-            hiddenInputs += `<input type="hidden" name="projectID" value="${this.options.projectID}">`;
-        }
-
-        if (this.options.memberID) {
-            hiddenInputs += `<input type="hidden" name="memberID" value="${this.options.memberID}">`;
-        }
-
-        return hiddenInputs; 
-    }
     private renderFormView() {
         if (!this.activeView) {
             return;
         }
-        const hiddenInputs = this.generateOptions();
 
-        
         // creating the form 
         this.dialog.innerHTML = `
             <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
             <form id="modal-form">
-                ${hiddenInputs}
+               
                 ${this.activeView.HTMLElements}
                 <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" id="modal-cancel-btn" style="padding: 8px 12px; cursor: pointer;">Avbryt</button>
@@ -136,7 +138,7 @@ export class Modal {
             postObj[status] = formData.getAll(status).includes("true");
         }
 
-        const postSuccess = await dynamicPostCheck(postObj, this.activeView.URLEndPoint);
+        const postSuccess = await dynamicPostCheck(postObj, this.activeView.URLEndPoint, this.options);
         if (postSuccess) {
             this.renderStatus(true);
         }
