@@ -3,9 +3,9 @@ import { baseURL } from "./firebaseRequestURL.ts";
 interface Project {
     description: string; 
     deadline: string; 
-    members: {}; 
+    members: {placeholder: boolean}; 
     name: string; 
-    tasks: {}; 
+    tasks: {placeholder: boolean}; 
 }
 
 export async function postNewProject(data: Record<string, any>, URLEndPoint:string): Promise<boolean>{
@@ -13,9 +13,9 @@ export async function postNewProject(data: Record<string, any>, URLEndPoint:stri
     const project: Project = {
         description: data.description, 
         deadline: data.deadline, 
-        members: {}, 
+        members: {"placeholder": true}, 
         name: data.name, 
-        tasks: {}
+        tasks: {"placeholder": true}
     }
 
     const options = {

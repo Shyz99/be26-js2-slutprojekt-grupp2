@@ -47,9 +47,4 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
         }
     }
 
-
-
-
-
-
 }

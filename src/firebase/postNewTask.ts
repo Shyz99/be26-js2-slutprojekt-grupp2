@@ -57,12 +57,19 @@ export async function postNewTask(data: Record<string, any>, URLEndPoint:string,
     }
 
     try{
-        const response = await fetch(`${baseURL}/${projectID}${URLEndPoint}.json`, postOptions);
-        if(!response.ok){
+        const responseProject = await fetch(`${baseURL}/project/${projectID}${URLEndPoint}.json`, postOptions);
+        if(!responseProject.ok){
             throw 'Something went wrong'
         }
-        const data = await response.json(); 
-        if(data){
+        const dataProject = await responseProject.json(); 
+
+        const responseTask = await fetch(`${baseURL}${URLEndPoint}.json`, postOptions); 
+        if(!responseTask.ok){
+            throw 'Something went wrong'
+        }
+        const dataTask = await responseTask.json(); 
+
+        if(dataProject && dataTask){
             return true; 
         }
         else{
@@ -73,5 +80,7 @@ export async function postNewTask(data: Record<string, any>, URLEndPoint:string,
         console.log('POST gick fel', error);
         return false; 
     }
+
+    
 
 }

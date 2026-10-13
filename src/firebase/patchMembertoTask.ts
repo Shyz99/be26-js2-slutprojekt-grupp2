@@ -21,12 +21,18 @@ export async function patchMemberToTask(data: Record<string, any>, URLEndPoint: 
     }
 
     try {
-        const response = await fetch(`${baseURL}${URLEndPoint}/${taskID}.json`, patchOptions);
-        if (!response.ok) {
+        const responseTask = await fetch(`${baseURL}${URLEndPoint}/${taskID}.json`, patchOptions);
+        if (!responseTask.ok) {
             return false;
         }
-        const data = await response.json();
-        if (data) {
+        const dataTask = await responseTask.json();
+        
+        const responseProject = await fetch(`${baseURL}/project/tasks/${taskID}.json`, patchOptions);
+        if(!responseProject.ok) {
+            return false; 
+        }
+        const dataProject = await responseProject.json(); 
+        if (dataTask && dataProject) {
             return true;
         }
         else {

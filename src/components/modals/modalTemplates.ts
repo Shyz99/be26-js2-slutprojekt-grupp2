@@ -55,8 +55,6 @@ export const formViews: Record<string, formConfigurations> = {
 
             <input type="text" name="description" required placeholder="Beskrivning...">
             <input type="text" name="deadline" required placeholder="Deadline...">
-            <input type="hidden" name="members" value="{}">
-            <input type="text" name="members" placeholder="Medlemmar...">
                         
         </fieldset>
         `
@@ -74,7 +72,6 @@ export const formViews: Record<string, formConfigurations> = {
             <input type"text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
-            <input type="text" name="member" required placeholder="Ansvarig medlem...">
             <input type="number" name="priority" required placeholder="Prioritets nummer...">
             <input type="hidden" name="created" value="${date}">
             <input type="hidden" name="subtask" value="{}">

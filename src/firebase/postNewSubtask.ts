@@ -4,7 +4,7 @@ import type { ModalOptions } from "../components/modals/Modal.ts";
 interface Subtask {
     description: string; 
     done: boolean;
-    member: string;
+    member: {placeholder: true};
 }
 export async function postNewSubtask(data: Record<string, any>, URLEndPoint: string, options: ModalOptions){
     // TODO: code lol 
@@ -15,7 +15,7 @@ export async function postNewSubtask(data: Record<string, any>, URLEndPoint: str
     const task: Subtask = {
         description: data.description, 
         done: data.done, 
-        member: data.member
+        member: {placeholder: true}
     }
 
     const postOptions = {
@@ -27,7 +27,7 @@ export async function postNewSubtask(data: Record<string, any>, URLEndPoint: str
     }
 
     try{
-        const response = await fetch(`${baseURL}/${taskID}${URLEndPoint}.json`, postOptions);
+        const response = await fetch(`${baseURL}/task/${URLEndPoint}.json`, postOptions);
         if(!response.ok){
             throw 'Something went wrong'; 
         }
