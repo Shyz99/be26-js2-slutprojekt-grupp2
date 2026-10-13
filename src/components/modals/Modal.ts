@@ -73,7 +73,7 @@ export class Modal {
             hiddenInput = `<input type="hidden" name="taskID" value="${this.potentialTaskID}">`
         }
         else {
-            hiddenInput = ""; 
+            hiddenInput = "";
         }
         // creating the form 
         this.dialog.innerHTML = `
@@ -98,11 +98,19 @@ export class Modal {
 
         if (!this.activeView) return;
 
+        this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
+
         const formElement = event.target as HTMLFormElement;
         const formData = new FormData(formElement);
-        const postObj = Object.fromEntries(formData.entries());
+        const postObj: Record<string, any> = Object.fromEntries(formData.entries());
 
-        this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
+        for (const category of ["backend", "frontend", "ux"]) {
+            postObj[category] = formData.getAll(category).includes("true");
+        }
+
+        for (const status of ["new", "ongoing", "done"]) {
+            postObj[status] = formData.getAll(status).includes("true");
+        }
 
         const postSuccess = await dynamicPostCheck(postObj, this.activeView.URLEndPoint);
         if (postSuccess) {

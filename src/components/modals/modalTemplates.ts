@@ -36,15 +36,6 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="hidden" name="ux" value="false">
             <label><input type="checkbox" name="ux" value="true"> UX </label>
         </fieldset>
-
-        <fieldset>
-
-            <legend>Projekt</legend>
-    
-            <input type="hidden" name="projekt-title" value="{}">
-            <input type="text" name="project-title" placeholder="Projekt namn...">
-
-        </fieldset>
         `
 
     },
