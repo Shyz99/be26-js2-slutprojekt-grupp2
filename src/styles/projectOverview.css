@@ -4,7 +4,7 @@
 #ongoing-tasks-container {
   background-color: yellow;
 }
-#finished-tasks-container {
+#done-tasks-container {
   background-color: greenyellow;
 }
 
@@ -14,4 +14,48 @@
 
 .column {
   width: 200px;
+}
+
+.prio-list {
+  border: solid black 1px;
+}
+
+.taskmodal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.605);
+
+  display: none;
+}
+
+#taskmodal {
+  width: 400px;
+  height: auto;
+  display: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-task-modal {
+  background-color: rgb(255, 17, 17);
+}
+
+.ongoing-task-modal {
+  background-color: rgb(255, 239, 17);
+}
+
+.done-task-modal {
+  background-color: rgb(0, 197, 0);
+}
+
+.hidden {
+  display: none !important;
 }
