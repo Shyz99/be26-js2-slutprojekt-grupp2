@@ -52,8 +52,24 @@
     </div>
 
     <div class="taskmodal-container">
-      <div id="new-task-modal" class="taskmodal">
-      <p>test test</p>
+      <div id="taskmodal">
+        <button id="close-button">X</button>
+        <h2 id="card-task-title"></h2>
+        <div id="card-info-container"></div>
+        <div id="delegate-member-container">
+          <h3>Delegate to:</h3>
+          <select id="delegate-to-member"></select>
+          <button id="save-button">Save</button>
+        </div>
+        <button id="task-done-button">Task done</button>
+        <button id="delete-task-button">Delete task</button>
+        <div id="subtask-container">
+          <h4>Subtasks:</h4>
+          <label>
+            <input type="checkbox" id="task1" />
+            <span>Gör en header</span>
+          </label>
+        </div>
       </div>
     </div>
   </body>
