@@ -1,7 +1,7 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import type { Project, Member, Task } from "../../models/models.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
-import { renderTaskCount } from "./renderTaskCountWithMemberAndProjectID.ts";
+import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
 
 const projectTitle = document.getElementById(
@@ -80,7 +80,10 @@ async function renderProjectMembers(
     activeRole = "Ux";
   }
 
-  const membersProjectTasks = await renderTaskCount(memberID, projectId);
+  const membersProjectTasks = await renderMemberTaskCountInProject(
+    memberID,
+    projectId,
+  );
   console.log(membersProjectTasks);
 
   const li = document.createElement("li");
