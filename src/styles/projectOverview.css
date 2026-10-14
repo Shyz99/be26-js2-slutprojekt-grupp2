@@ -60,7 +60,7 @@
   display: none !important;
 }
 
-.disabled-button {
+.disable-button {
   pointer-events: none;
   opacity: 0.5;
   cursor: not-allowed;
