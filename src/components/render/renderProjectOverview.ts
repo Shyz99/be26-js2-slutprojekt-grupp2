@@ -1,6 +1,7 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import type { Project, Member, Task } from "../../models/models.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
+import { renderTaskCount } from "./renderTaskCountWithMemberAndProjectID.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -24,14 +25,18 @@ const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
 
 tempBtn.addEventListener("click", async () => {
   const chosenProject = await getCategoryDataFirebase("project", "iudshg98dy");
-  renderProjectOverview(chosenProject);
+  const projectId = "iudshg98dy";
+  renderProjectOverview(chosenProject, projectId);
 });
 
 // end temp
 
 //RENDER
 
-async function renderProjectOverview(project: Project): Promise<void> {
+async function renderProjectOverview(
+  project: Project,
+  projectId: string,
+): Promise<void> {
   projectTitle.innerHTML = "";
   projectDescription.innerHTML = "";
   projectMembersUl.innerHTML = "";
@@ -39,21 +44,27 @@ async function renderProjectOverview(project: Project): Promise<void> {
   projectTitle.textContent = project.name;
   projectDescription.textContent = project.description;
 
+  console.log(projectId);
+
   for (const member in project.members) {
     const projectMember = await getCategoryDataFirebase("member", member);
-    renderProjectMembers(projectMember);
+    renderProjectMembers(projectMember, projectId, member);
   }
 
   for (const task in project.tasks) {
     const projectTask = await getCategoryDataFirebase("task", task);
-    renderTasksList(projectTask);
+    renderTasksList(projectTask, task);
   }
 
   const allMembers = await getCategoryDataFirebase("member");
   selectAllMembers(allMembers);
 }
 
-function renderProjectMembers(projectMember: Member): void {
+async function renderProjectMembers(
+  projectMember: Member,
+  projectId: string,
+  memberID: string,
+): Promise<void> {
   let activeRole: string = "";
 
   if (projectMember.category.frontend === true) {
@@ -64,12 +75,15 @@ function renderProjectMembers(projectMember: Member): void {
     activeRole = "Ux";
   }
 
+  const membersProjectTasks = await renderTaskCount(memberID, projectId);
+  console.log(membersProjectTasks);
+
   const li = document.createElement("li");
-  li.textContent = `Name: ${projectMember.name}. Role: ${activeRole}. Number of tasks: ${projectMember.tasks}.`;
+  li.textContent = `Name: ${projectMember.name}. Role: ${activeRole}. Number of tasks: ${membersProjectTasks}.`;
   projectMembersUl.append(li);
 }
 
-export function renderTasksList(task: Task): void {
+export function renderTasksList(task: Task, taskID: string): void {
   //translates the ID
   const translateKey: Record<number, string> = {
     1: "one",
@@ -99,7 +113,7 @@ export function renderTasksList(task: Task): void {
 
   li.addEventListener("click", () => {
     taskmodalContainer.style.display = "flex";
-    renderTaskCard(task);
+    renderTaskCard(task, taskID);
   });
 
   taskmodalContainer.addEventListener("click", (e) => {
