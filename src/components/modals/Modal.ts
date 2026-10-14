@@ -27,7 +27,7 @@ export class Modal {
         if (e.target === this.dialog) {
             this.close();
         }
-    });
+        });
 
     }
     // for us all to use like this: 
