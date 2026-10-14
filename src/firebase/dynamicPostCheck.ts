@@ -40,7 +40,7 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
     if (URLEndPoint === "/subtask") {
         if (options.taskID) {
             const correctEndPointURL = `${options.taskID}/subtask`;
-            return await postNewSubtask(data, correctEndPointURL, options);
+            return await postNewSubtask(data, correctEndPointURL);
         }
         else {
             return false;
