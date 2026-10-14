@@ -27,6 +27,7 @@ export async function deleteTask(taskID:string, projectID:string):Promise<any>{
         }
         const dataDelTaskFromProject = await responseDelTaskFromProject.json(); 
         if(dataDelTask && dataDelTaskFromProject){
+            // call on patch function 
             return; 
         }
     }

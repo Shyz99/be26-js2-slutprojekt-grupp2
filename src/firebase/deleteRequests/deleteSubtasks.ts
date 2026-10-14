@@ -28,6 +28,7 @@ export async function deleteSubtask(subtaskID:string, taskID:string, projectID:s
         }
         const dataDelSubtaskFromProject = await responseDelSubtaskFromProject.json(); 
         if(dataDelSubtask && dataDelSubtaskFromProject){
+            // call on patch function for member numbers 
             return; 
         }
     }
