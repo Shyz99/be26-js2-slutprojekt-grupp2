@@ -69,7 +69,7 @@ export const formViews: Record<string, formConfigurations> = {
         <fieldset>
             <legend>Uppgift</legend>
 
-            <input type"text" name="title" required placeholder="Titel...">
+            <input type="text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
             <input type="number" name="priority" required placeholder="Prioritets nummer...">
@@ -189,7 +189,7 @@ export const formViews: Record<string, formConfigurations> = {
         
         <fieldset>
         
-            <input type="number" name="deadline" required placeholder="Ny deadline...>
+            <input type="text" name="deadline" required placeholder="Ny deadline...>
             
         </fieldset>
     

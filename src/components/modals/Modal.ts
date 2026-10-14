@@ -22,20 +22,13 @@ export class Modal {
         // TODO CSS styles
 
         // makes sure the user can click outside the box to close 
-        // TODO: a X to close? 
-        this.dialog.addEventListener('click', (e: MouseEvent) => {
-            const border = this.dialog.getBoundingClientRect();
-            const clickedInside = (
-                e.clientX >= border.left &&
-                e.clientX <= border.right &&
-                e.clientY >= border.top &&
-                e.clientY <= border.bottom
-            );
+        // TODO: a X to close?
+        this.dialog.addEventListener("click", (e: MouseEvent) => {
+        if (e.target === this.dialog) {
+            this.close();
+        }
+    });
 
-            if (!clickedInside) {
-                this.close();
-            }
-        });
     }
     // for us all to use like this: 
     // const testBtn = document.createElement('button'); 
@@ -131,11 +124,12 @@ export class Modal {
 
         if (!this.activeView) return;
 
-        this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
+        
 
         const formElement = event.target as HTMLFormElement;
         const formData = new FormData(formElement);
         const postObj: Record<string, any> = Object.fromEntries(formData.entries());
+        this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
 
         for (const category of ["backend", "frontend", "ux"]) {
             postObj[category] = formData.getAll(category).includes("true");
