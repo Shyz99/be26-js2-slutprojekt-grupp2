@@ -1,6 +1,9 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import type { Member, Subtask, Task } from "../../models/models.ts";
 import { Modal } from "../modals/Modal.ts";
+import { deleteTask } from "../../firebase/deleteRequests/deleteTask.ts";
+import { deleteSubtask } from "../../firebase/deleteRequests/deleteSubtasks.ts";
+import { patchMemberToTask } from "../../firebase/patchMembertoTask.ts";
 
 const closeTaskCardBtn = document.getElementById(
   "close-button",
@@ -32,10 +35,14 @@ const newSubtaskForm = document.getElementById(
 const taskmodalContainer = document.querySelector(
   ".taskmodal-container",
 ) as HTMLDivElement;
+const saveMemberToTaskBtn = document.getElementById(
+  "save-member-to-task-button",
+) as HTMLButtonElement;
 
 export async function renderTaskCard(
   task: Task,
   taskID: string,
+  projectID: string,
 ): Promise<void> {
   const cardTitle = document.getElementById(
     "card-task-title",
@@ -94,18 +101,51 @@ export async function renderTaskCard(
     if (key === task.member) {
       taskMemberName = member.name;
     }
+
+    //
+
+    //Hämta patch-funktion task-status (!!!!)
+    const chosenMember = delegateToMember.value;
+
+    saveMemberToTaskBtn.addEventListener("click", () => {
+      patchMemberToTask(taskID, chosenMember);
+      console.log(taskID, chosenMember);
+    });
   }
 
-  //Hämta patch-funktion task-status
-  saveNewTaskCardChanges.addEventListener("click", (e) => {
-    e.preventDefault();
-    const modal = Modal.getInstance();
-    modal.trigger(saveNewTaskCardChanges, "patch-task-status", {
-      taskID: taskID,
-    });
-    console.log("hej");
+  const modalOne = Modal.getInstance();
+  modalOne.trigger(taskDoneBtn, "patch-task-status", {
+    taskID: taskID,
+  });
+
+  const modalTwo = Modal.getInstance();
+  modalTwo.trigger(saveNewTaskCardChanges, "patch-task-status", {
+    taskID: taskID,
+  });
+
+  const changeDeadline = document.createElement("button");
+  changeDeadline.innerText = "Change deadline";
+  taskModal.append(changeDeadline);
+
+  const modalThree = Modal.getInstance();
+  modalThree.trigger(changeDeadline, "patch-task-deadline", {
+    taskID: taskID,
+  });
+
+  const changePriority = document.createElement("button");
+  changePriority.innerText = "Change Priority";
+  taskModal.append(changePriority);
+
+  const modalFour = Modal.getInstance();
+  modalFour.trigger(changePriority, "patch-task-priority", {
+    taskID: taskID,
   });
   //
+
+  //Hämta delete-funktion
+  deleteTaskBtn.addEventListener("click", () => {
+    deleteTask(taskID, projectID);
+  });
 
   //
   //Rendera innuti modalerna
@@ -114,7 +154,7 @@ export async function renderTaskCard(
     cardTitle.innerHTML = `${task.title}`;
     delegateContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Priority: ${task.priority} <button>Change</button></p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Priority: ${task.priority}</p>`;
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
     cardTitle.innerHTML = `${task.title}`;
@@ -122,13 +162,13 @@ export async function renderTaskCard(
     subtaskContainer.classList.remove("hidden");
     newSubtaskContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Priority: ${task.priority} <button>Change</button></p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Priority: ${task.priority}</p><p>Delegated member: ${taskMemberName}</p>`;
   } else if (task.status.done === true) {
     taskModal.classList.add("done-task-modal");
     cardTitle.innerHTML = `<h3>Task done!</h3> ${task.title}`;
     deleteTaskBtn.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Delegated member: ${taskMemberName}</p>`;
   }
 
   renderSubtasks(task.subtask);
@@ -161,6 +201,10 @@ function renderSubtasks(subtasks: Subtask[]): void {
     const subtaskTitle = document.createElement("span");
     subtaskTitle.innerHTML = `${subtask.description}    `;
 
+    // deleteSubtaskBtn.addEventListener("click", () => {
+    //   deleteSubtask(subtask, taskID, projectID)
+    // })
+
     if (subtask.done === true) {
       checkbox.checked = true;
     } else {
@@ -191,20 +235,6 @@ function renderSubtasks(subtasks: Subtask[]): void {
 
 closeTaskCardBtn.addEventListener("click", () => {
   taskmodalContainer.style.display = "none";
-});
-
-// saveNewTaskCardChanges.addEventListener("click", () => {
-//   const selectedMember = delegateToMember.value;
-//Insert patch-function for change task.status from new to ongoing
-//Insert patch member to task
-// });
-
-taskDoneBtn.addEventListener("click", () => {
-  //Insert patch-function here
-});
-
-deleteTaskBtn.addEventListener("click", () => {
-  //Insert delete-function here
 });
 
 newSubtaskForm.addEventListener("submit", () => {

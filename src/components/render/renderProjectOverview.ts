@@ -2,6 +2,7 @@ import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.
 import type { Project, Member, Task } from "../../models/models.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { renderTaskCount } from "./renderTaskCountWithMemberAndProjectID.ts";
+import { Modal } from "../modals/Modal.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -16,8 +17,8 @@ const taskmodalContainer = document.querySelector(
   ".taskmodal-container",
 ) as HTMLDivElement;
 const newTaskBtn = document.getElementById("new-task-button") as HTMLDivElement;
-const addMemberToProjectContainer = document.getElementById(
-  "add-member-to-project-container",
+const addMemberToProjectBtn = document.getElementById(
+  "add-member-to-project-button",
 ) as HTMLDivElement;
 
 //temp:
@@ -53,11 +54,15 @@ async function renderProjectOverview(
 
   for (const task in project.tasks) {
     const projectTask = await getCategoryDataFirebase("task", task);
-    renderTasksList(projectTask, task);
+    renderTasksList(projectTask, task, projectId);
   }
 
-  const allMembers = await getCategoryDataFirebase("member");
-  selectAllMembers(allMembers);
+  //hämta medlemmar till projekt med patch
+  const modal = Modal.getInstance();
+  modal.trigger(addMemberToProjectBtn, "patch-member-to-project", {
+    projectID: projectId,
+  });
+  //
 }
 
 async function renderProjectMembers(
@@ -83,7 +88,11 @@ async function renderProjectMembers(
   projectMembersUl.append(li);
 }
 
-export function renderTasksList(task: Task, taskID: string): void {
+export function renderTasksList(
+  task: Task,
+  taskID: string,
+  projectID: string,
+): void {
   //translates the ID
   const translateKey: Record<number, string> = {
     1: "one",
@@ -113,7 +122,7 @@ export function renderTasksList(task: Task, taskID: string): void {
 
   li.addEventListener("click", () => {
     taskmodalContainer.style.display = "flex";
-    renderTaskCard(task, taskID);
+    renderTaskCard(task, taskID, projectID);
   });
 
   taskmodalContainer.addEventListener("click", (e) => {
@@ -121,27 +130,6 @@ export function renderTasksList(task: Task, taskID: string): void {
       taskmodalContainer.style.display = "none";
     }
   });
-}
-
-function selectAllMembers(allMembers: Member[]): void {
-  const selectNewMember = document.createElement("select");
-  const addMemberToProjectBtn = document.createElement("button");
-  addMemberToProjectBtn.innerText = "Add member";
-
-  const membersArray = Object.values(allMembers);
-
-  for (const member of membersArray) {
-    const memberName = member.name;
-    const memberOption = document.createElement("option");
-    memberOption.innerText = memberName;
-    selectNewMember.append(memberOption);
-  }
-
-  addMemberToProjectBtn.addEventListener("click", () => {
-    //Insert patch-function here
-  });
-
-  addMemberToProjectContainer.append(selectNewMember, addMemberToProjectBtn);
 }
 
 newTaskBtn.addEventListener("click", () => {
