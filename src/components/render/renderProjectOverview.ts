@@ -2,6 +2,9 @@ import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.
 import type { Project, Member, Task } from "../../models/models.ts";
 import {filterTasks} from "../../utils/filterTasks.ts";
 import { sortTasks } from "../../utils/sortTasks.ts";
+import { renderTaskCard } from "./renderTaskCards.ts";
+import { getTasks } from "../../firebase/getTasks.ts";
+
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -12,15 +15,13 @@ const projectDescription = document.getElementById(
 const projectMembersUl = document.getElementById(
   "project-members-ul",
 ) as HTMLUListElement;
-const newTasksList = document.getElementById(
-  "new-tasks-list",
-) as HTMLUListElement;
-const ongoingTasksList = document.getElementById(
-  "ongoing-tasks-list",
-) as HTMLUListElement;
-const finishedTasksList = document.getElementById(
-  "finished-tasks-list",
-) as HTMLUListElement;
+const taskmodalContainer = document.querySelector(
+  ".taskmodal-container",
+) as HTMLDivElement;
+const newTaskBtn = document.getElementById("new-task-button") as HTMLDivElement;
+const addMemberToProjectContainer = document.getElementById(
+  "add-member-to-project-container",
+) as HTMLDivElement;
 
 //temp:
 const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
@@ -55,9 +56,6 @@ async function renderProjectOverview(project: Project): Promise<void> {
   projectTitle.innerHTML = "";
   projectDescription.innerHTML = "";
   projectMembersUl.innerHTML = "";
-  newTasksList.innerHTML = "";
-  ongoingTasksList.innerHTML = "";
-  finishedTasksList.innerHTML = "";
 
   projectTitle.textContent = project.name;
   projectDescription.textContent = project.description;
@@ -70,7 +68,7 @@ async function renderProjectOverview(project: Project): Promise<void> {
 
   // Fetch tasks
   for (const task in project.tasks) {
-    const projectTask = await getCategoryDataFirebase("task", task);
+    const projectTask = await getTasks(task);
     allTasks.push(projectTask);
   }
 
@@ -89,11 +87,9 @@ async function renderProjectOverview(project: Project): Promise<void> {
   const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
   console.log("Sorted tasks:", sortedTasks.map((task) => task.title));
   
-  // Render sorted tasks
-  for (const task of sortedTasks) {
-    renderTasks(task);
-  }
 
+  const allMembers = await getCategoryDataFirebase("member");
+  selectAllMembers(allMembers);
 }
 
 
@@ -140,19 +136,71 @@ function renderProjectMembers(projectMember: Member): void {
   }
 
   const li = document.createElement("li");
-  li.textContent = `Namn: ${projectMember.name}. Roll: ${activeRole}. Antal uppgifter: ${projectMember.tasks}.`;
+  li.textContent = `Name: ${projectMember.name}. Role: ${activeRole}. Number of tasks: ${projectMember.tasks}.`;
   projectMembersUl.append(li);
 }
 
-function renderTasks(task: Task): void {
+export function renderTasksList(task: Task): void {
+  //translates the ID
+  const translateKey: Record<number, string> = {
+    1: "one",
+    2: "two",
+    3: "three",
+  };
+
+  let statusKey = "";
+  if (task.status.new) {
+    statusKey = "new";
+  } else if (task.status.ongoing) {
+    statusKey = "ongoing";
+  } else if (task.status.done) {
+    statusKey = "done";
+  }
+  //
+
+  //Makes dynamic ID
+  const prioWord = translateKey[task.priority];
+  const listId = `${statusKey}-tasks-list-prio-${prioWord}`;
+  const chosenList = document.getElementById(listId) as HTMLUListElement;
+  //
+
   const li = document.createElement("li");
   li.innerText = task.title;
+  chosenList.append(li);
 
-  if (task.status.new === true) {
-    newTasksList.append(li);
-  } else if (task.status.ongoing === true) {
-    ongoingTasksList.append(li);
-  } else if (task.status.done === true) {
-    finishedTasksList.append(li);
-  }
+  li.addEventListener("click", () => {
+    taskmodalContainer.style.display = "flex";
+    renderTaskCard(task);
+  });
+
+  taskmodalContainer.addEventListener("click", (e) => {
+    if (e.target === taskmodalContainer) {
+      taskmodalContainer.style.display = "none";
+    }
+  });
 }
+
+function selectAllMembers(allMembers: Member[]): void {
+  const selectNewMember = document.createElement("select");
+  const addMemberToProjectBtn = document.createElement("button");
+  addMemberToProjectBtn.innerText = "Add member";
+
+  const membersArray = Object.values(allMembers);
+
+  for (const member of membersArray) {
+    const memberName = member.name;
+    const memberOption = document.createElement("option");
+    memberOption.innerText = memberName;
+    selectNewMember.append(memberOption);
+  }
+
+  addMemberToProjectBtn.addEventListener("click", () => {
+    //Insert patch-function here
+  });
+
+  addMemberToProjectContainer.append(selectNewMember, addMemberToProjectBtn);
+}
+
+newTaskBtn.addEventListener("click", () => {
+  //Insert post-function here
+});

@@ -1,0 +1,41 @@
+import { baseURL } from "./firebaseRequestURL.ts";
+import type { ModalOptions } from "../components/modals/Modal.ts";
+
+
+export async function patchMemberToProject(data: Record<string, any>, URLEndPoint: string, options: ModalOptions): Promise<boolean> {
+    if (typeof data.memberID === "string" && typeof options.projectID === "string") {
+        const projectID = options.projectID; 
+        const memberID = data.memberID;
+
+        const patchOptions = {
+            method: 'PATCH', 
+            body: JSON.stringify({[memberID]: ""}), 
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        try {
+            const response = await fetch(`${baseURL}${URLEndPoint}/${projectID}/members.json`, patchOptions);
+            if(!response.ok){
+                throw 'Something went wrong'
+            }
+            const data = await response.json(); 
+            if(data){
+                return true; 
+            }
+            else {
+                return false; 
+            }
+        }
+        catch(error){
+            console.log('PATCH gick fel', error); 
+            return false; 
+        }
+    }
+    else {
+        return false;
+    }
+
+
+}

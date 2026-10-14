@@ -1,23 +1,39 @@
-// TODO: Import baseURL 
-// TODO: take paragrams from dynamic function
-
 import { baseURL } from "./firebaseRequestURL.ts"; 
 
+interface Member {
+    name: string; 
+    category: {
+        backend: boolean;
+        frontend: boolean;
+        ux: boolean;
+    };
+    project: Record<string, string>;
+    tasks: number;
+}
+
 export async function postNewMember(data: Record<string, any>, URLEndPoint: string):Promise<boolean>{
+    
+    const member: Member = {
+        name: data.name,
+        category: {
+            backend: data.backend === true || data.backend === "true",
+            frontend: data.frontend === true || data.frontend === "true",
+            ux: data.ux === true || data.ux === "true"
+        },
+        project: {},
+        tasks: 0
+    }
+    
     const options = {
         method: 'POST', 
-        body: JSON.stringify({
-            // TODO: fix object using data
-            prop: 'value'
-        }), 
+        body: JSON.stringify(member), 
         headers: {
             'Content-Type': 'application/json'
         }
     }
 
     try{
-        // TODO: make sure the end point is attached to the baseURL 
-        const response = await fetch(URLEndPoint, options);
+        const response = await fetch(`${baseURL}${URLEndPoint}.json`, options);
         if (!response.ok){
             throw 'Something went wrong'
         }
