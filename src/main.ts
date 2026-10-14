@@ -3,7 +3,12 @@ import {
   renderMemberTaskCountInProject,
   renderMemberSubTaskCountInProject,
 } from "./components/render/renderTaskCountWithMemberAndProjectID.ts";
+
+import { updateAndCheckTaskCountMembers } from "./components/render/updateAndCheckTaskCountMembers.ts";
+
 await renderIndex();
+
+await updateAndCheckTaskCountMembers();
 
 console.log("---------🙈🙈🙈Project: Cykelprojektet🙈🙈🙈---------");
 console.log("---------Bruno---------");
