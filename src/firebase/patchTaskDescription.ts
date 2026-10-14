@@ -2,7 +2,7 @@ import { baseURL } from "./firebaseRequestURL.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 
 
-export async function patchTaskDeadline(data: Record<string, any>, URLEndPoint: string, options: ModalOptions):Promise<boolean>{
+export async function patchTaskDescription(data: Record<string, any>, URLEndPoint: string, options: ModalOptions):Promise<boolean>{
     const taskID = options.taskID;
     const newDescription = data.description; 
 
