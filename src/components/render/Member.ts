@@ -1,9 +1,9 @@
 import { getProjectsWithID } from "../../firebase/getProjectOrMembersDataWithID.ts";
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import {
-  renderTaskCount,
-  renderSubTaskCount,
-} from "../render/renderTaskCountWithMemberAndProjectID.ts";
+  renderMemberTaskCount,
+  renderMemberSubTaskCount,
+} from "./renderTaskCountWithMember.ts";
 
 export class Member {
   public readonly id: string;
@@ -90,6 +90,11 @@ export class Member {
       }
     }
 
+    const newTaskCount = await renderMemberTaskCount(this.id);
+    const newSubTaskCount = await renderMemberSubTaskCount(this.id);
+    taskCount = newTaskCount;
+    subTaskCount = newSubTaskCount;
+
     if (
       this.projects === undefined ||
       Object.keys(this.projects).length === 0
@@ -126,11 +131,6 @@ export class Member {
           memberProjetLink,
         );
         memberProjetsContainer.append(memberProjets);
-        //! maybe remove if not wrking
-        const newTaskCount = await renderTaskCount(this.id, projectId);
-        const newSubTaskCount = await renderSubTaskCount(this.id, projectId);
-        taskCount = taskCount + newTaskCount;
-        subTaskCount = subTaskCount + newSubTaskCount;
 
         // console.log("User: ", this.name);
         // console.log("newtaskCount Function: ", newTaskCount);
@@ -156,5 +156,4 @@ export class Member {
     );
     renderAllMembersContainer.append(memberContainer);
   }
-
 }
