@@ -1,22 +1,28 @@
 import { renderIndex } from "./components/render/renderIndex.ts";
 import {
-  renderTaskCount,
-  renderSubTaskCount,
+  renderMemberTaskCountInProject,
+  renderMemberSubTaskCountInProject,
 } from "./components/render/renderTaskCountWithMemberAndProjectID.ts";
-import {
-  renderProjectTaskCount,
-  renderProjectSubTaskCount,
-} from "./components/render/renderTaskCountWithProjectID.ts";
-import { getTasks } from "./firebase/getTasks.ts";
-
 await renderIndex();
 
-// const taskCount = await renderTaskCount("kjahdiuyd98ykhf", "iudshg98dy");
-// console.log("TASK COUNT------------------", taskCount);
-// const subTaskCount = await renderSubTaskCount("kjahdiuyd98ykhf", "iudshg98dy");
-// console.log("SUB TASK COUNT------------------", subTaskCount);
+console.log("---------🙈🙈🙈Project: Cykelprojektet🙈🙈🙈---------");
+console.log("---------Bruno---------");
+await renderMemberTaskCountInProject("kjahdiuyd98ykhf", "iudshg98dy");
 
-// const taskProjectCount = await renderProjectTaskCount("iudshg98dy");
-// console.log("TASK COUNT------------------", taskProjectCount);
-// const subTaskProjectCount = await renderProjectSubTaskCount("iudshg98dy");
-// console.log("SUB TASK COUNT------------------", subTaskProjectCount);
+await renderMemberSubTaskCountInProject("kjahdiuyd98ykhf", "iudshg98dy");
+
+console.log("---------Anita---------");
+await renderMemberTaskCountInProject("isughfih03j", "iudshg98dy");
+
+await renderMemberSubTaskCountInProject("isughfih03j", "iudshg98dy");
+
+console.log("---------🙈🙈🙈Project: Ett projekt🙈🙈🙈---------");
+console.log("---------Bruno---------");
+await renderMemberTaskCountInProject("kjahdiuyd98ykhf", "iuhfsiuh984");
+
+await renderMemberSubTaskCountInProject("kjahdiuyd98ykhf", "iuhfsiuh984");
+
+console.log("---------Anita---------");
+await renderMemberTaskCountInProject("isughfih03j", "iuhfsiuh984");
+
+await renderMemberSubTaskCountInProject("isughfih03j", "iuhfsiuh984");
