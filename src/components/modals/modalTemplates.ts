@@ -189,9 +189,37 @@ export const formViews: Record<string, formConfigurations> = {
         HTMLElements: `
         
         <fieldset>
-        
-            <input type="text" name="priority" required placeholder="Ny prioritet...>
-            
+            <legend>Välj prioritet:</legend>
+
+            <div class="priority-options">
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="1"
+                        required
+                    >
+                    <span>Låg (1)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="2"
+                    >
+                    <span>Medel (2)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="3"
+                    >
+                    <span>Hög (3)</span>
+                </label>
+            </div>
         </fieldset>
     
 

@@ -22,6 +22,10 @@ interface Task {
     title: string;
 }
 
+interface Id {
+    ID : string; 
+}
+
 
 export async function postNewTask(data: Record<string, any>, URLEndPoint: string, options: ModalOptions): Promise<boolean> {
 
@@ -71,18 +75,22 @@ export async function postNewTask(data: Record<string, any>, URLEndPoint: string
         const dataTask = await responseTask.json();
 
         if (dataTask) {
-            const newTaskID = dataTask.name;
+
+            const newTaskID: Id = {
+                ID: dataTask.name 
+            };
+
             const postIDOptions = {
-                method: 'POST',
-                body: JSON.stringify(newTaskID),
+                method: 'PUT',
+                body: JSON.stringify(""),
                 headers: {
                     'Content-Type': 'application/json'
                 }
 
             }
-            const response = await fetch(`${baseURL}/project/${projectID}/tasks.json`, postIDOptions);
-            if(!response.ok){
-                return false; 
+            const response = await fetch(`${baseURL}/project/${projectID}/tasks/${newTaskID.ID}.json`, postIDOptions);
+            if (!response.ok) {
+                return false;
             }
             return true;
         }
