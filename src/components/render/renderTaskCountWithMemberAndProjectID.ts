@@ -4,16 +4,15 @@ export async function renderMemberTaskCountInProject(
   memberID: string,
   projectID: string,
 ) {
-  const taskProject: {tasks: string[]} = await getCategoryDataFirebase(
+  const taskProject: { tasks: string[] } = await getCategoryDataFirebase(
     "project",
     projectID,
   );
 
-  const allTasks: Record<string, {member: unknown}> =
+  const allTasks: Record<string, { member: unknown }> =
     await getCategoryDataFirebase("task");
 
-    let taskCount: number =0;
-
+  let taskCount: number = 0;
 
   //!!! console.log(taskID, " / ", key, " / MEMBER ID DISA", tasksMemberID);
   for (const id in taskProject.tasks) {
@@ -45,12 +44,8 @@ export async function renderMemberSubTaskCountInProject(
   memberID: string,
   projectID: string,
 ) {
-
   const subTaskProject: { subtask: Record<string, unknown> } =
-    await getCategoryDataFirebase(
-      "project",
-      projectID,
-    );
+    await getCategoryDataFirebase("project", projectID);
 
   const allTasks: object = await getCategoryDataFirebase("task");
   let subTaskCount: number = 0;
@@ -61,13 +56,10 @@ export async function renderMemberSubTaskCountInProject(
         allTasks as Record<string, { subtask?: Record<string, unknown> }>
       )[taskID];
       const subtasks = taskData?.subtask ?? {};
-
       for (const subTaskID in subtasks) {
         const subTaskMemberID = (subtasks[subTaskID] as { member?: unknown })
           .member;
-
         if (subTaskID == projectSubTaskID) {
-          // const subTaskMemberIDString: string = String(subTaskMemberID);
           if (subTaskMemberID == memberID) {
             subTaskCount = subTaskCount + 1;
           }

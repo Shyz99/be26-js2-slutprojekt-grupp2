@@ -65,6 +65,7 @@ header {
 
 header a {
   text-decoration: none;
+  margin-right: 2rem;
   padding-bottom: 0.6rem;
   padding-top: 0.6rem;
   padding-left: 1.8rem;
@@ -73,6 +74,26 @@ header a {
   font-size: 0.9rem;
   border: 3px solid rgb(185, 151, 101);
   border-radius: 4px 4px 14px 14px;
+}
+
+header button {
+  background-color: rgb(227, 198, 155);
+  text-decoration: none;
+  margin-right: 2rem;
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  color: black;
+  font-size: 0.9rem;
+  border: 3px solid rgb(185, 151, 101);
+  border-radius: 4px 4px 14px 14px;
+}
+
+header button:hover {
+  background-color: rgb(177, 144, 94);
+  color: antiquewhite;
+  cursor: pointer;
 }
 
 header a:hover {
