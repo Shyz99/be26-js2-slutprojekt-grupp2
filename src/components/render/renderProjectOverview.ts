@@ -3,6 +3,7 @@ import type { Project, Member, Task } from "../../models/models.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
+import { postNewTask } from "../../firebase/postNewTask.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -57,9 +58,15 @@ async function renderProjectOverview(
     renderTasksList(projectTask, task, projectId);
   }
 
-  //hämta medlemmar till projekt med patch
+  //patcha medlemmar till projekt
   const modal = Modal.getInstance();
   modal.trigger(addMemberToProjectBtn, "patch-member-to-project", {
+    projectID: projectId,
+  });
+  //
+  //posta new task
+  const modalTwo = Modal.getInstance();
+  modalTwo.trigger(newTaskBtn, "add-new-task", {
     projectID: projectId,
   });
   //
@@ -134,7 +141,3 @@ export function renderTasksList(
     }
   });
 }
-
-newTaskBtn.addEventListener("click", () => {
-  //Insert post-function here
-});
