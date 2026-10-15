@@ -1,4 +1,5 @@
 import { filterTasks } from "./filterTasks";
+import { sortTasks } from "./sortTasks";
 
 const testTask = {
     title: "Testar",
@@ -35,3 +36,25 @@ const filteredTasks = filterTasks(
 );
 
 console.log("Antal uppgifter:", filteredTasks.length);
+
+
+const testTask2 = {
+    ...testTask,
+    title: "Banan",
+    deadline: "2026-10-15",
+};
+
+const testTask3 = {
+    ...testTask,
+    title: "Apelsin",
+    deadline: "2026-10-12",
+};
+
+const tasks = [testTask, testTask2, testTask3];
+
+const sortedTasks = sortTasks(tasks, "title", "ascending");
+
+console.log(
+    "Sorterade titlar:",
+    sortedTasks.map((task) => task.title),
+);
