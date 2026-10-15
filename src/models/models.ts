@@ -34,7 +34,9 @@ export type Task = {
     ongoing: boolean;
     done: boolean;
   };
-  subtask: Subtask[];
+  subtask: {
+    [Key: string]: Subtask;
+  };
 };
 
 export type Subtask = {

@@ -1,5 +1,6 @@
 import { baseURL } from "./firebaseRequestURL.ts"; 
 import type { ModalOptions } from "../components/modals/Modal.ts";
+import { showToast, getErrorMessage } from "../components/errors/toast.ts";
 
 
 // Catherine - när du vill koppla detta till en knapp att uppdatera status så skapa en modal: 
@@ -51,6 +52,7 @@ export async function patchTaskStatus(data: Record<string, any>, URLEndPoint: st
         }
 
     } catch (error) {
+        showToast(getErrorMessage(error));
         console.error("PATCH av status misslyckades", error);
         return false;
     }

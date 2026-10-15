@@ -149,12 +149,19 @@ export async function renderTaskCard(
 
   //
   //Rendera innuti modalerna
+  const formattedDeadline = task.deadline;
+
   if (task.status.new === true) {
     taskModal.classList.add("new-task-modal");
     cardTitle.innerHTML = `${task.title}`;
     delegateContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Priority: ${task.priority}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${formattedDeadline} <button>Change</button></p>
+    <p>Priority: ${task.priority} <button>Change</button></p>`;
+  
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
     cardTitle.innerHTML = `${task.title}`;
@@ -162,16 +169,26 @@ export async function renderTaskCard(
     subtaskContainer.classList.remove("hidden");
     newSubtaskContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Priority: ${task.priority}</p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${formattedDeadline} <button>Change</button></p>
+    <p>Priority: ${task.priority} <button>Change</button>
+    </p><p>Delegated member: ${taskMemberName}</p>`;
+  
   } else if (task.status.done === true) {
     taskModal.classList.add("done-task-modal");
     cardTitle.innerHTML = `<h3>Task done!</h3> ${task.title}`;
     deleteTaskBtn.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${formattedDeadline} <button>Change</button></p>
+    <p>Delegated member: ${taskMemberName}</p>`;
   }
 
-  renderSubtasks(task.subtask);
+  renderSubtasks(Object.values(task.subtask ?? {}));
 }
 
 function renderSubtasks(subtasks: Subtask[]): void {
