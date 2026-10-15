@@ -22,7 +22,9 @@
         <ul id="project-members-ul"></ul>
       </div>
       <p>Add member to project:</p>
-      <div id="add-member-to-project-container"></div>
+      <div id="add-member-to-project-container">
+        <button id="add-member-to-project-button">Add member</button>
+      </div>
       </div>
       <p>Add new task:</p>
       <button id="new-task-button">New task</button>
@@ -110,7 +112,8 @@
         <div id="delegate-member-container">
           <h3>Delegate to:</h3>
           <select id="delegate-to-member"></select>
-          <button id="save-task-changes-button">Save</button>
+          <button id="save-member-to-task-button">add member to task</button>
+          <button id="save-task-changes-button">Change task status</button>
         </div>
         <button id="task-done-button">Task done</button>
         <button id="delete-task-button">Delete task</button>
@@ -118,9 +121,9 @@
         <div id="new-subtask-container">
           <h4>Subtasks:</h4>
           <form id="new-subtask-form">
-            <label>Skriv ny subtask:</label>
+            <label>Write a subtask:</label>
             <input type="text" id="new-subtask" />
-            <button type="submit" id="add-subtask-button">Lägg till</button>
+            <button type="submit" id="add-subtask-button">Add</button>
           </form>
         </div>
         <div id="subtask-container">

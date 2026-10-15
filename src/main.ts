@@ -3,12 +3,13 @@ import {
   renderMemberTaskCountInProject,
   renderMemberSubTaskCountInProject,
 } from "./components/render/renderTaskCountWithMemberAndProjectID.ts";
+
+import { updateAndCheckTaskCountMembers } from "./components/render/updateAndCheckTaskCountMembers.ts";
+
 await renderIndex();
 
-// const taskCount = await renderTaskCount("kjahdiuyd98ykhf", "iudshg98dy");
-// console.log("TASK COUNT------------------", taskCount);
-// const subTaskCount = await renderSubTaskCount("kjahdiuyd98ykhf", "iudshg98dy");
-// console.log("SUB TASK COUNT------------------", subTaskCount);
+await updateAndCheckTaskCountMembers();
+
 
 // const taskProjectCount = await renderProjectTaskCount("iudshg98dy");
 // console.log("TASK COUNT------------------", taskProjectCount);
