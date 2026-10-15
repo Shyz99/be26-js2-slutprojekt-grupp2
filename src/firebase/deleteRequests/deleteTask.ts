@@ -3,6 +3,7 @@
 // delete task from member 
 // patch amount of tasks
 import {baseURL} from "../firebaseRequestURL.ts";
+import {updateAndCheckTaskCountMembers} from "../../components/render/updateAndCheckTaskCountMembers.ts";
 
 export async function deleteTask(taskID:string, projectID:string):Promise<any>{
 
@@ -27,7 +28,7 @@ export async function deleteTask(taskID:string, projectID:string):Promise<any>{
         }
         const dataDelTaskFromProject = await responseDelTaskFromProject.json(); 
         if(dataDelTask && dataDelTaskFromProject){
-            // call on patch function 
+            updateAndCheckTaskCountMembers()
             return; 
         }
     }

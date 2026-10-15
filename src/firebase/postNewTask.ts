@@ -24,8 +24,7 @@ interface Task {
 
 
 export async function postNewTask(data: Record<string, any>, URLEndPoint:string, options: ModalOptions): Promise <boolean>{
-    // TODO: code
-    // ! remember: boolean return.... on all our posts... do we need the if statements in Dynamic Post Check? 
+    
     const projectID = options.projectID; 
 
     const task: Task = {
@@ -80,7 +79,5 @@ export async function postNewTask(data: Record<string, any>, URLEndPoint:string,
         console.log('POST gick fel', error);
         return false; 
     }
-
-    
 
 }
