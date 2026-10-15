@@ -72,9 +72,40 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
-            <input type="number" name="priority" required placeholder="Prioritets nummer...">
             <input type="hidden" name="created" value="${date}">
             <input type="hidden" name="subtask" value="{}">
+            <legend>Välj prioritet:</legend>
+
+            <div class="priority-options">
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="1"
+                        required
+                    >
+                    <span>Låg (1)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="2"
+                    >
+                    <span>Medel (2)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="3"
+                    >
+                    <span>Hög (3)</span>
+                </label>
+            </div>
+        </fieldset>
 
         </fieldset>
 

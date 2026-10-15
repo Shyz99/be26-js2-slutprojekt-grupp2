@@ -43,3 +43,39 @@ footer {
   font-style: italic;
   border-radius: 1.2rem;
 }
+
+.priority-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.priority-option {
+    cursor: pointer;
+}
+
+.priority-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.priority-option span {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.priority-option input:checked + span {
+    background-color: #ff3300ae;
+    color: white;
+    border-color: #ff3300ae;
+}
+
+.priority-option input:focus-visible + span {
+    outline: 2px solid #222;
+    outline-offset: 3px;
+}

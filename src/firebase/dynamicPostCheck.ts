@@ -7,7 +7,6 @@ import { postNewTask } from "./postNewTask.ts";
 import { postNewSubtask } from "./postNewSubtask.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 import { patchMemberToProject } from "./patchMemberToProject.ts";
-import { patchMemberToTask } from "./patchMembertoTask.ts"
 import { patchTaskStatus } from "./patchTaskStatus.ts";
 import { patchTaskDeadline } from "./patchTaskDeadline.ts"; 
 import { patchTaskPriority } from "./patchTaskPriority.ts"; 
