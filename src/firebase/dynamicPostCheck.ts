@@ -7,7 +7,6 @@ import { postNewTask } from "./postNewTask.ts";
 import { postNewSubtask } from "./postNewSubtask.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 import { patchMemberToProject } from "./patchMemberToProject.ts";
-import { patchMemberToTask } from "./patchMembertoTask.ts"
 import { patchTaskStatus } from "./patchTaskStatus.ts";
 import { patchTaskDeadline } from "./patchTaskDeadline.ts"; 
 import { patchTaskPriority } from "./patchTaskPriority.ts"; 
@@ -17,10 +16,6 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
 
     if (URLEndPoint === "/project" && options.projectID && data.memberID) {
         return await patchMemberToProject(data, URLEndPoint, options);
-    }
-
-    if (URLEndPoint === "/task" && options.taskID && data.memberID) {
-        return await patchMemberToTask(data, URLEndPoint, options);
     }
 
     if (URLEndPoint === "/task" && options.taskID && data.status) {
@@ -54,7 +49,7 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
     if (URLEndPoint === "/subtask") {
         if (options.taskID) {
             const correctEndPointURL = `${options.taskID}/subtask`;
-            return await postNewSubtask(data, correctEndPointURL);
+            return await postNewSubtask(data, correctEndPointURL, options);
         }
         else {
             return false;

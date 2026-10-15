@@ -4,10 +4,11 @@
 // patch amount of tasks
 
 import {baseURL} from "../firebaseRequestURL.ts";
+import {updateAndCheckTaskCountMembers} from "../../components/render/updateAndCheckTaskCountMembers.ts";
 
 export async function deleteSubtask(subtaskID:string, taskID:string, projectID:string):Promise<any>{
 
-    if(!taskID || !projectID ||subtaskID ){
+    if(!taskID || !projectID || !subtaskID ){
         return; 
     }
 
@@ -20,17 +21,14 @@ export async function deleteSubtask(subtaskID:string, taskID:string, projectID:s
         if(!responseDelSubtask.ok){
             throw 'Raderingen fungerade inte'
         }
-        const dataDelSubtask = await responseDelSubtask.json(); 
-
+        
         const responseDelSubtaskFromProject = await fetch(`${baseURL}/project/${projectID}/subtask/${subtaskID}.json`, deleteOptions); 
         if(!responseDelSubtaskFromProject.ok){
             throw 'Raderingen fungerade inte'
+            
         }
-        const dataDelSubtaskFromProject = await responseDelSubtaskFromProject.json(); 
-        if(dataDelSubtask && dataDelSubtaskFromProject){
-            // call on patch function for member numbers 
-            return; 
-        }
+        await updateAndCheckTaskCountMembers()
+        return; 
     }
     catch(error){
         throw error; 

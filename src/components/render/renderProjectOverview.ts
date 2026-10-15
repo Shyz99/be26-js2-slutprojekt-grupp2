@@ -7,6 +7,7 @@ import { getTasks } from "../../firebase/getTasks.ts";
 
 import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
+import { postNewTask } from "../../firebase/postNewTask.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -215,7 +216,3 @@ export function renderTasksList(
     }
   });
 }
-
-newTaskBtn.addEventListener("click", () => {
-  //Insert post-function here
-});

@@ -1,5 +1,6 @@
 import type { ModalOptions } from "../components/modals/Modal.ts";
 import { baseURL } from "./firebaseRequestURL.ts";
+import { updateAndCheckTaskCountMembers } from "../components/render/updateAndCheckTaskCountMembers.ts";
 
 export async function patchMemberToSubtask(data: Record<string, any>, URLEndPoint: string, subtaskID:string, options: ModalOptions): Promise<boolean> {
 
@@ -34,11 +35,13 @@ export async function patchMemberToSubtask(data: Record<string, any>, URLEndPoin
         }
         const dataProject = await responseProject.json(); 
         if (dataTask && dataProject) {
+            await updateAndCheckTaskCountMembers();
             return true;
         }
         else {
             return false;
         }
+        
 
     } catch (error) {
         console.error("PATCH gick ej", error);
