@@ -21,21 +21,10 @@ interface Task {
     title: string;
 }
 
-<<<<<<< HEAD
 interface Id {
     ID : string; 
 }
 
-=======
-export async function postNewTask(
-  data: Record<string, any>,
-  URLEndPoint: string,
-  options: ModalOptions,
-): Promise<boolean> {
-  // TODO: code
-  // ! remember: boolean return.... on all our posts... do we need the if statements in Dynamic Post Check?
-  const projectID = options.projectID;
->>>>>>> 2a9e5d7fc10b6485e5fe718783d683a14d6404d9
 
 export async function postNewTask(data: Record<string, any>, URLEndPoint: string, options: ModalOptions): Promise<boolean> {
 
@@ -70,7 +59,7 @@ export async function postNewTask(data: Record<string, any>, URLEndPoint: string
             'Content-Type': 'application/json'
         }
     }
-    const dataProject = await responseProject.json();
+    // const dataProject = await responseProject.json();
 
     try {
         // const responseProject = await fetch(`${baseURL}/project/${projectID}/tasks.json`, postOptions);
