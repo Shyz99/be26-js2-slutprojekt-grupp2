@@ -15,9 +15,9 @@ export async function deleteSubtask(
     return;
   }
 
-  const deleteOptions = {
-    method: "DELETE",
-  };
+    if(!taskID || !projectID || !subtaskID ){
+        return; 
+    }
 
   try {
     const responseDelSubtask = await fetch(
@@ -28,12 +28,19 @@ export async function deleteSubtask(
       throw "Raderingen fungerade inte";
     }
 
-    const responseDelSubtaskFromProject = await fetch(
-      `${baseURL}/project/${projectID}/subtask/${subtaskID}.json`,
-      deleteOptions,
-    );
-    if (!responseDelSubtaskFromProject.ok) {
-      throw "Raderingen fungerade inte";
+    try{
+        const responseDelSubtask = await fetch(`${baseURL}/task/${taskID}/${subtaskID}.json`, deleteOptions); 
+        if(!responseDelSubtask.ok){
+            throw 'Raderingen fungerade inte'
+        }
+        
+        const responseDelSubtaskFromProject = await fetch(`${baseURL}/project/${projectID}/subtask/${subtaskID}.json`, deleteOptions); 
+        if(!responseDelSubtaskFromProject.ok){
+            throw 'Raderingen fungerade inte'
+            
+        }
+        await updateAndCheckTaskCountMembers()
+        return; 
     }
     updateAndCheckTaskCountMembers();
     return;

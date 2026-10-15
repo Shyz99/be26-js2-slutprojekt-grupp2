@@ -1,64 +1,68 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase";
 import { baseURL } from "../../firebase/firebaseRequestURL.ts";
 
-export async function updateAndCheckTaskCountMembers() {
-  let potentialNewTaskInput: number = 2;
-  let potentialNewSubTaskInput: number = 1;
+export async function updateAndCheckTaskCountMembers(): Promise<void> {
   try {
-    const dataMembers = await getCategoryDataFirebase("member");
-    if (!dataMembers.ok) {
-      throw new Error('Kan inte hämta Member information');
+    const [dataMembers, dataTasks] = await Promise.all([getCategoryDataFirebase("member"), getCategoryDataFirebase("task")]);
+
+    if (!dataMembers || !dataTasks) {
+      throw new Error("Kan inte hämta Member eller Task information");
     }
-    for (const id in dataMembers) {
-      potentialNewTaskInput = dataMembers[id].tasks;
-      potentialNewSubTaskInput = dataMembers[id].subtasks;
 
-      if (dataMembers[id].tasks !== potentialNewTaskInput) {
-        const patchOptions = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            tasks: potentialNewTaskInput
-          })
+    for (const memberID in dataMembers) {
+      let taskCount = 0;
+      let subtaskCount = 0;
+
+      for (const taskID in dataTasks) {
+        const task = dataTasks[taskID];
+
+        if (task.member === memberID) {
+          taskCount++;
         }
-        const response = await fetch(`${baseURL}/member/${dataMembers[id]}/tasks.json`, patchOptions);
 
-        if (!response.ok) {
-          throw new Error("Kunde inte patcha task nummer");
+        if (task.subtask) {
+          for (const subtaskID in task.subtask) {
+            if (task.subtask[subtaskID].member === memberID) {
+              subtaskCount++;
+            }
+          }
         }
       }
-      else {
-        console.log("member: ", dataMembers[id].name, ": No TASK changes needed");
+
+      const member = dataMembers[memberID];
+
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          tasks: taskCount,
+          subtasks: subtaskCount
+        })
       }
 
-      if (dataMembers[id].subtasks !== potentialNewSubTaskInput) {
-        const patchOptions = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            subtasks: potentialNewSubTaskInput
-          })
-        }
-        const response = await fetch(`${baseURL}/member/${dataMembers[id]}/subtasks.json`, patchOptions);
+
+      if (member.tasks !== taskCount || member.subtasks !== subtaskCount) {
+        const response = await fetch(`${baseURL}/member/${memberID}.json`, options);
 
         if (!response.ok) {
-          throw new Error("Kunde inte patcha subtask nummer");
+          throw new Error(
+            `Kunde inte uppdatera task count för ${memberID}`
+          );
         }
 
+        console.log(
+          `Updated ${member.name}: ${taskCount} tasks, ${subtaskCount} subtasks`
+        );
       } else {
-        console.log("member: ", dataMembers[id].name, ": No SUB changes needed");
+        console.log(
+          `Member ${member.name}: No count changes needed`
+        );
       }
     }
-  }
-  catch (error) {
-    console.log(error);
-
+  } catch (error) {
+    console.error("Error updating member task counts:", error);
+    throw error;
   }
 }
-
-
-

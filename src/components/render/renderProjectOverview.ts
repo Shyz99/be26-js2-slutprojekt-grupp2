@@ -1,5 +1,7 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import type { Project, Member, Task } from "../../models/models.ts";
+import {filterTasks} from "../../utils/filterTasks.ts";
+import { sortTasks } from "../../utils/sortTasks.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { getTasks } from "../../firebase/getTasks.ts";
 // import {filterTasks} from "../../utils/filterTasks.ts";
@@ -166,6 +168,37 @@ async function renderProjectOverview(
   //   });
 }
 
+// Listen for filter changes
+statusFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject);
+  }
+});
+
+memberFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject);
+  }
+});
+
+categoryFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject);
+  }
+});
+
+subtasksFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject);
+  }
+});
+
+sortFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject);
+  }
+});
+
 async function renderProjectMembers(
   projectMember: Member,
   memberID: string,
@@ -197,6 +230,7 @@ export function renderTasksList(
   taskID: string,
   projectID: string,
 ): void {
+
   //translates the ID
   const translateKey: Record<number, string> = {
     1: "one",

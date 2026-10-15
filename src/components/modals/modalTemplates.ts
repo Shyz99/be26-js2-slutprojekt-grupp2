@@ -146,13 +146,13 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="text" name="description" required placeholder="Beskrivning...">
         </fieldset>
 
-        `,
-  },
-
-  "patch-member-to-project": {
-    modalTitle: "Välj en medlem:",
-    URLEndPoint: "/project",
-    HTMLElements: `
+        `
+    },
+    
+    'patch-member-to-project': {
+        modalTitle: 'Välj en medlem:',
+        URLEndPoint: '/project',
+        HTMLElements: `
 
         <fieldset>
             <select id="member-selector" name="memberID" required>
