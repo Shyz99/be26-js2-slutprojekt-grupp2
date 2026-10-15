@@ -134,7 +134,7 @@ export const formViews: Record<string, formConfigurations> = {
         </fieldset>
         `
     },
-
+    
     'patch-member-to-project': {
         modalTitle: 'Välj en medlem:',
         URLEndPoint: '/project',
@@ -146,20 +146,6 @@ export const formViews: Record<string, formConfigurations> = {
             </select>
         </fieldset>
     `
-    },
-
-    'patch-member-to-task': {
-        modalTitle: 'Välj medlem:',
-        URLEndPoint: '/task',
-        HTMLElements: `
-        
-        <fieldset>
-            <select id="member-selector" name="memberID" required>
-                <option value="">Laddar medlemmar...</option>
-            </select>
-        </fieldset>
-        
-        `
     },
 
     'patch-task-status': {

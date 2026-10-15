@@ -19,10 +19,6 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
         return await patchMemberToProject(data, URLEndPoint, options);
     }
 
-    if (URLEndPoint === "/task" && options.taskID && data.memberID) {
-        return await patchMemberToTask(data, URLEndPoint, options);
-    }
-
     if (URLEndPoint === "/task" && options.taskID && data.status) {
         return await patchTaskStatus(data, URLEndPoint, options); 
     }
