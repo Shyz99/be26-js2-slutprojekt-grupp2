@@ -1,6 +1,6 @@
 import { baseURL } from "../firebaseRequestURL.ts";
 
-export async function deleteTask(memberID: string): Promise<any> {
+export async function deleteMember(memberID: string): Promise<any> {
   if (!memberID) {
     return;
   }

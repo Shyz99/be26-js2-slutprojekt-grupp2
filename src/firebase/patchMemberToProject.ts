@@ -23,12 +23,12 @@ export async function patchMemberToProject(
 
     //! Disa Test, checka med gruppen imorgon
     //* const patchOptionsMember = {
-    //     method: 'PATCH',
-    //     body: JSON.stringify({[projectID]: ""}),
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     }
-    // }
+    //*     method: 'PATCH',
+    //*     body: JSON.stringify({[projectID]: ""}),
+    //*     headers: {
+    //*         'Content-Type': 'application/json'
+    //*     }
+    //* }
 
     try {
       //* const responseMember = await fetch(`${baseURL}${URLEndPoint}/${memberID}/project.json`, patchOptionsMember);
