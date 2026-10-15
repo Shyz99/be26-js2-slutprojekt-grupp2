@@ -1,5 +1,5 @@
 // this function checks the templates and information sent through to various firebase requests to make sure
-// the correct function is called upon 
+// the correct function is called upon
 
 import { postNewMember } from "./postNewMember.ts";
 import { postNewProject } from "./postNewProject.ts";

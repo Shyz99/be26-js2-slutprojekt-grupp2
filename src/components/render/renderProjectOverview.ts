@@ -4,10 +4,11 @@ import {filterTasks} from "../../utils/filterTasks.ts";
 import { sortTasks } from "../../utils/sortTasks.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { getTasks } from "../../firebase/getTasks.ts";
+// import {filterTasks} from "../../utils/filterTasks.ts";
+// import { sortTasks } from "../../utils/sortTasks.ts";
 
 import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
-import { postNewTask } from "../../firebase/postNewTask.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
@@ -36,41 +37,41 @@ tempBtn.addEventListener("click", async () => {
       "iudshg98dy",
     );
 
+    let projectID = "iudshg98dy"; //TEMP, SLÄNG IN PROJECT-ID HÄR
     console.log("Valt projekt:", chosenProject);
 
-    renderProjectOverview(chosenProject);
+    renderProjectOverview(chosenProject, projectID);
   } catch (error) {
     console.error("Kunde inte hämta projekt:", error);
   }
-  
 });
 
 // end temp
 
+let currentProject: Project | null = null;
 
-// Filter values 
+// Filter values
 
-const statusFilter = document.getElementById("status-filter") as HTMLSelectElement;
-const memberFilter = document.getElementById("member-filter") as HTMLSelectElement;
-const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
-const subtasksFilter = document.getElementById("subtasks-filter") as HTMLSelectElement;
-const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
+// const statusFilter = document.getElementById("status-filter") as HTMLSelectElement;
+// const memberFilter = document.getElementById("member-filter") as HTMLSelectElement;
+// const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
+// const subtasksFilter = document.getElementById("subtasks-filter") as HTMLSelectElement;
+// const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
 
 // end filter values
 
-let currentProject: Project | null = null;
-
-
 //RENDER
 
-async function renderProjectOverview(project: Project): Promise<void> {
+async function renderProjectOverview(
+  project: Project,
+  projectID: string,
+): Promise<void> {
   currentProject = project;
-  let allTasks: { id: string; task: Task}[]=[];
+  let allTasks: { id: string; task: Task }[] = [];
 
   document.querySelectorAll(".prio-list").forEach((list) => {
     list.innerHTML = "";
-  }
-);
+  });
 
   projectTitle.innerHTML = "";
   projectDescription.innerHTML = "";
@@ -79,40 +80,92 @@ async function renderProjectOverview(project: Project): Promise<void> {
   projectTitle.textContent = project.name;
   projectDescription.textContent = project.description;
 
-
   for (const memberID of Object.keys(project.members ?? {})) {
-  const projectMember = await getCategoryDataFirebase("member", memberID);
-  await renderProjectMembers(projectMember, memberID, "iudshg98dy");
-}
+    const projectMember = await getCategoryDataFirebase("member", memberID);
+    await renderProjectMembers(projectMember, memberID, projectID);
+  }
 
-  // Fetch tasks
+  //posta ny task
+  const modal = Modal.getInstance();
+  modal.trigger(newTaskBtn, "add-new-task", {
+    projectID: projectID,
+  });
+
+  //patch member to project
+  const modalTwo = Modal.getInstance();
+  modalTwo.trigger(addMemberToProjectBtn, "patch-member-to-project", {
+    projectID: projectID,
+  });
+
+  // Fetch tasks (filter)
   for (const taskID of Object.keys(project.tasks ?? {})) {
     const projectTask = await getTasks(taskID);
     allTasks.push({ id: taskID, task: projectTask });
   }
 
-  const filteredTasks = filterTasks(
-    allTasks.map((item) => item.task),
+  //forts. filter
 
-    statusFilter.value as "new" | "ongoing" | "done" | "all",
-    memberFilter.value,
-    categoryFilter.value as "all" | "backend" | "frontend" | "ux",
-    subtasksFilter.value as "all" | "hasSubtasks" | "remaining"
-  );
-  
-  const sortParts = sortFilter.value.split("-");
-  const sortBy = sortParts[0] as "deadline" | "title";
-  const direction = sortParts[1] as "ascending" | "descending";
-  
-  const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
-  
-sortedTasks.forEach((task) => {
-  const taskWithID = allTasks.findLast((item) => item.task === task);
-  
-  if (taskWithID) {
-    renderTasksList(task, taskWithID.id, "iudshg98dy");}
+  // const filteredTasks = filterTasks(
+  //   allTasks.map((item) => item.task),
+
+  //   statusFilter.value as "new" | "ongoing" | "done" | "all",
+  //   memberFilter.value,
+  //   categoryFilter.value as "all" | "backend" | "frontend" | "ux",
+  //   subtasksFilter.value as "all" | "hasSubtasks" | "remaining"
+  // );
+
+  // const sortParts = sortFilter.value.split("-");
+  // const sortBy = sortParts[0] as "deadline" | "title";
+  // const direction = sortParts[1] as "ascending" | "descending";
+
+  // const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
+
+  // (filter)
+  allTasks.forEach((item) => {
+    renderTasksList(item.task, item.id, projectID);
   });
 
+  //forts. filter
+
+  //   sortedTasks.forEach((task) => {
+  //     const taskWithID = allTasks.findLast((item) => item.task === task);
+
+  //     if (taskWithID) {
+  //       renderTasksList(task, taskWithID.id, "iudshg98dy");}
+  //     });
+
+  //   } TA BORT DETTA??????
+
+  //   Listen for filter changes
+  //   statusFilter.addEventListener("change", () => {
+  //     if (currentProject) {
+  //       renderProjectOverview(currentProject);
+  //     }
+  //   });
+
+  //   memberFilter.addEventListener("change", () => {
+  //     if (currentProject) {
+  //       renderProjectOverview(currentProject);
+  //     }
+  //   });
+
+  //   categoryFilter.addEventListener("change", () => {
+  //     if (currentProject) {
+  //       renderProjectOverview(currentProject);
+  //     }
+  //   });
+
+  //   subtasksFilter.addEventListener("change", () => {
+  //     if (currentProject) {
+  //       renderProjectOverview(currentProject);
+  //     }
+  //   });
+
+  //   sortFilter.addEventListener("change", () => {
+  //     if (currentProject) {
+  //       renderProjectOverview(currentProject);
+  //     }
+  //   });
 }
 
 // Listen for filter changes

@@ -1,23 +1,22 @@
 import { date } from "./currentDate.ts";
 
 export interface formConfigurations {
-    modalTitle: string;
-    URLEndPoint: string;
-    HTMLElements: string;
+  modalTitle: string;
+  URLEndPoint: string;
+  HTMLElements: string;
 }
 
-
 export const formViews: Record<string, formConfigurations> = {
-    // IDs for each view we want - feel free to add more gang!
-    'test': {
-        modalTitle: 'test',
-        URLEndPoint: '',
-        HTMLElements: ''
-    },
-    'post-new-member': {
-        modalTitle: 'Lägg till en ny medlem:',
-        URLEndPoint: '/member',
-        HTMLElements: `
+  // IDs for each view we want - feel free to add more gang!
+  test: {
+    modalTitle: "test",
+    URLEndPoint: "",
+    HTMLElements: "",
+  },
+  "post-new-member": {
+    modalTitle: "Lägg till en ny medlem:",
+    URLEndPoint: "/member",
+    HTMLElements: `
 
         <fieldset>
             <legend>Namn</legend>
@@ -36,13 +35,12 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="hidden" name="ux" value="false">
             <label><input type="checkbox" name="ux" value="true"> UX </label>
         </fieldset>
-        `
-
-    },
-    'post-new-project': {
-        modalTitle: 'Lägg till ett nytt projekt:',
-        URLEndPoint: '/project',
-        HTMLElements: `
+        `,
+  },
+  "post-new-project": {
+    modalTitle: "Lägg till ett nytt projekt:",
+    URLEndPoint: "/project",
+    HTMLElements: `
         
         <fieldset>
             <legend>Projekt Namn</legend>
@@ -57,14 +55,14 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="text" name="deadline" required placeholder="Deadline...">
                         
         </fieldset>
-        `
-    },
+        `,
+  },
 
-    'add-new-task': {
-        modalTitle: 'Lägg till en ny uppgift',
-        URLEndPoint: '/task',
-        // TODO: Add the ability to add subtasks
-        HTMLElements: `
+  "add-new-task": {
+    modalTitle: "Lägg till en ny uppgift",
+    URLEndPoint: "/task",
+    // TODO: Add the ability to add subtasks
+    HTMLElements: `
         
         <fieldset>
             <legend>Uppgift</legend>
@@ -134,13 +132,13 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="hidden" name="done" value="false">
             <label><input type="checkbox" name="done" value="true"> Färdig </label>
         </fieldset>
-        `
-    },
+        `,
+  },
 
-    'add-new-subtask': {
-        modalTitle: 'Lägg till en ny subuppgift',
-        URLEndPoint: '/subtask',
-        HTMLElements: ` 
+  "add-new-subtask": {
+    modalTitle: "Lägg till en ny subuppgift",
+    URLEndPoint: "/subtask",
+    HTMLElements: ` 
         
         <fieldset>
             <legend> Subuppgift </legend>
@@ -161,13 +159,13 @@ export const formViews: Record<string, formConfigurations> = {
                 <option value="">Laddar medlemmar...</option>
             </select>
         </fieldset>
-    `
-    },
+    `,
+  },
 
-    'patch-task-status': {
-        modalTitle: 'Välj ny status:', 
-        URLEndPoint: '/task', 
-        HTMLElements: `
+  "patch-task-status": {
+    modalTitle: "Välj ny status:",
+    URLEndPoint: "/task",
+    HTMLElements: `
         
         <fieldset>
         
@@ -181,13 +179,13 @@ export const formViews: Record<string, formConfigurations> = {
         </fieldset>
     
 
-        `
-    },
+        `,
+  },
 
-    'patch-task-deadline': {
-        modalTitle: 'Välj ny deadline:', 
-        URLEndPoint: '/task', 
-        HTMLElements: `
+  "patch-task-deadline": {
+    modalTitle: "Välj ny deadline:",
+    URLEndPoint: "/task",
+    HTMLElements: `
         
         <fieldset>
         
@@ -196,13 +194,13 @@ export const formViews: Record<string, formConfigurations> = {
         </fieldset>
     
 
-        `
-    },
+        `,
+  },
 
-    'patch-task-priority': {
-        modalTitle: 'Välj ny prioritering:', 
-        URLEndPoint: '/task', 
-        HTMLElements: `
+  "patch-task-priority": {
+    modalTitle: "Välj ny prioritering:",
+    URLEndPoint: "/task",
+    HTMLElements: `
         
         <fieldset>
             <legend>Välj prioritet:</legend>
@@ -239,13 +237,13 @@ export const formViews: Record<string, formConfigurations> = {
         </fieldset>
     
 
-        `
-    },
+        `,
+  },
 
-    'patch-task-description': {
-        modalTitle: 'Skriv en ny beskrivning:', 
-        URLEndPoint: '/task', 
-        HTMLElements: `
+  "patch-task-description": {
+    modalTitle: "Skriv en ny beskrivning:",
+    URLEndPoint: "/task",
+    HTMLElements: `
         
         <fieldset>
         
@@ -254,10 +252,6 @@ export const formViews: Record<string, formConfigurations> = {
         </fieldset>
     
 
-        `
-    }
-
-
-}
-
-
+        `,
+  },
+};
