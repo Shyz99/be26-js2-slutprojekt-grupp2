@@ -20,17 +20,14 @@ export async function deleteTask(taskID:string, projectID:string):Promise<any>{
         if(!responseDelTask.ok){
             throw 'Raderingen fungerade inte'
         }
-        const dataDelTask = await responseDelTask.json(); 
+        
 
         const responseDelTaskFromProject = await fetch(`${baseURL}/project/${projectID}/tasks/${taskID}.json`, deleteOptions); 
         if(!responseDelTaskFromProject.ok){
             throw 'Raderingen fungerade inte'
         }
-        const dataDelTaskFromProject = await responseDelTaskFromProject.json(); 
-        if(dataDelTask && dataDelTaskFromProject){
-            updateAndCheckTaskCountMembers()
-            return; 
-        }
+        await updateAndCheckTaskCountMembers(); 
+        return;
     }
     catch(error){
         throw error; 
