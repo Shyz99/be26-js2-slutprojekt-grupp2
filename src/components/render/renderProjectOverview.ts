@@ -260,10 +260,10 @@ export function renderTasksList(
     taskmodalContainer.style.display = "flex";
     renderTaskCard(task, taskID, projectID);
   });
-
-  taskmodalContainer.addEventListener("click", (e) => {
-    if (e.target === taskmodalContainer) {
-      taskmodalContainer.style.display = "none";
-    }
-  });
 }
+
+taskmodalContainer.addEventListener("click", (e) => {
+  if (e.target === taskmodalContainer) {
+    taskmodalContainer.style.display = "none";
+  }
+});
