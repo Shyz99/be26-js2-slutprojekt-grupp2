@@ -17,7 +17,7 @@ export class Member {
   public readonly backend: boolean;
   public readonly frontend: boolean;
   public readonly ux: boolean;
-  public projects: Record<string, unknown> | undefined;
+  public projects: Record<string, unknown> | undefined | null;
   public readonly memberObj: {
     id: string;
     name: string;
@@ -97,6 +97,7 @@ export class Member {
 
     if (
       this.projects === undefined ||
+      this.projects === null ||
       Object.keys(this.projects).length === 0
     ) {
       const memberProjets = document.createElement("p") as HTMLElement;
@@ -107,42 +108,38 @@ export class Member {
         const memberProjets = document.createElement("section") as HTMLElement;
         const memberProjetName = document.createElement("h3") as HTMLElement;
         const memberProjetDeadline = document.createElement("p") as HTMLElement;
-        const memberProjetLink = document.createElement(
-          "a",
-        ) as HTMLAnchorElement;
         const memberProjetDescription = document.createElement(
           "p",
         ) as HTMLElement;
         const projectData = await getCategoryDataFirebase("project", projectId);
+        const projectDataNameString: string = String(
+          projectData?.name ?? "Unknown member",
+        );
+        const projectDataDescriptionString: string = String(
+          projectData?.description ?? "Unknown member",
+        );
+        const projectDataDeadlineString: string = String(
+          projectData?.deadline ?? "Unknown member",
+        );
 
         memberProjetName.classList.add("H3Title");
-        memberProjetLink.innerText = "[WIP] -->";
-        memberProjetLink.classList.add("linkButton");
-        memberProjetName.innerText = projectData.name;
-        // memberProjetLink.href = `/project/${encodeURIComponent(projectId)}`;
-        memberProjetLink.href = "./src/html/projectOverview.html";
-        memberProjetDescription.innerText = projectData.description;
-        memberProjetDeadline.innerText = "Deadline: " + projectData.deadline;
+        memberProjetName.innerText = projectDataNameString;
+        memberProjetDescription.innerText = projectDataDescriptionString;
+        memberProjetDeadline.innerText =
+          "Deadline: " + projectDataDeadlineString;
         memberProjets.classList.add("memberProjet");
         memberProjets.append(
           memberProjetName,
           memberProjetDescription,
           memberProjetDeadline,
-          memberProjetLink,
         );
         memberProjetsContainer.append(memberProjets);
-
-        // console.log("User: ", this.name);
-        // console.log("newtaskCount Function: ", newTaskCount);
-        // console.log("taskCount: ", taskCount);
-        // console.log("subTaskCount: ", subTaskCount);
       }
     }
 
     memberProjetsContainer.classList.add("memberProjetsContainer");
 
     memberName.innerText = this.name;
-    //! memberTasks.innerText = "Total Tasks: " + this.tasks;
     memberTasks.innerText = "Total Tasks: " + taskCount;
     memberSubTasks.innerText = "Total Sub-Tasks: " + subTaskCount;
 

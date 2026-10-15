@@ -5,8 +5,6 @@ import {
   renderProjectSubTaskCount,
 } from "../render/renderTaskCountWithProjectID.ts";
 
-//getMemnersWithID
-
 export class Project {
   public readonly id: string;
   public readonly name: string;
@@ -52,7 +50,6 @@ export class Project {
 
     const tasksCount = await renderProjectTaskCount(this.id);
     const subTasksCount = await renderProjectSubTaskCount(this.id);
-    // console.log("ProjectName", this.name, " Subtasks: ", subTasksCount);
 
     const renderAllProjectsSection = document.getElementById(
       "renderAllProjectsSection",
@@ -69,11 +66,6 @@ export class Project {
     const projectMembersContainerTitle = document.createElement(
       "h4",
     ) as HTMLElement;
-    const projetLink = document.createElement("a") as HTMLAnchorElement;
-
-    projetLink.innerText = "[WIP] -->";
-    projetLink.classList.add("linkButton");
-    projetLink.href = "./src/html/projectOverview.html";
 
     projectMembersContainerTitle.innerText = "Members";
     projectMembersContainerTitle.classList.add("H3Title");
@@ -82,9 +74,11 @@ export class Project {
 
     for (const memberId in this.members) {
       const membersData = await getCategoryDataFirebase("member", memberId);
+      const memberDataNameString: string = String(
+        membersData?.name ?? "Unknown member",
+      );
       const memberName = document.createElement("p") as HTMLElement;
-
-      memberName.innerText = membersData.name;
+      memberName.innerText = memberDataNameString;
       projectMembersContainer.append(memberName);
     }
 
@@ -103,7 +97,6 @@ export class Project {
       projectSubTasks,
       projectDeadline,
       projectMembersContainer,
-      projetLink,
     );
     renderAllProjectsSection.append(projectContainer);
   }
