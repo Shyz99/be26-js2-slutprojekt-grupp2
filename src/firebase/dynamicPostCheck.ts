@@ -1,11 +1,5 @@
-// TODO: FIX.... 
-// export async function posts(data: Record<string, any>, endPointURL: any): Promise<boolean>{
-//     switch (endPointURL) {
-//         // TODO add all the links and send to correct function
-//         case '': 
-//         return await 
-//     }
-// } 
+// this function checks the templates and information sent through to various firebase requests to make sure
+// the correct function is called upon 
 
 import { postNewMember } from "./postNewMember.ts";
 import { postNewProject } from "./postNewProject.ts";
@@ -14,6 +8,10 @@ import { postNewSubtask } from "./postNewSubtask.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 import { patchMemberToProject } from "./patchMemberToProject.ts";
 import { patchMemberToTask } from "./patchMembertoTask.ts"
+import { patchTaskStatus } from "./patchTaskStatus.ts";
+import { patchTaskDeadline } from "./patchTaskDeadline.ts"; 
+import { patchTaskPriority } from "./patchTaskPriority.ts"; 
+import { patchTaskDescription } from "./patchTaskDescription.ts"; 
 
 export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: string, options: ModalOptions) {
 
@@ -23,6 +21,22 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
 
     if (URLEndPoint === "/task" && options.taskID && data.memberID) {
         return await patchMemberToTask(data, URLEndPoint, options);
+    }
+
+    if (URLEndPoint === "/task" && options.taskID && data.status) {
+        return await patchTaskStatus(data, URLEndPoint, options); 
+    }
+
+    if(URLEndPoint === "/task" && options.taskID && data.priority){
+        return await patchTaskPriority(data, URLEndPoint, options); 
+    }
+
+    if(URLEndPoint === "/task" && options.taskID && data.description){
+        return await patchTaskDescription(data, URLEndPoint, options); 
+    }
+
+    if (URLEndPoint === "/task" && options.taskID && data.deadline){
+        return await patchTaskDeadline(data, URLEndPoint, options);
     }
 
     if (URLEndPoint === "/member") {
@@ -40,7 +54,7 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
     if (URLEndPoint === "/subtask") {
         if (options.taskID) {
             const correctEndPointURL = `${options.taskID}/subtask`;
-            return await postNewSubtask(data, correctEndPointURL, options);
+            return await postNewSubtask(data, correctEndPointURL);
         }
         else {
             return false;

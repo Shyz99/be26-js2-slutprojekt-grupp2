@@ -8,9 +8,11 @@
       },
       "name": "Anita Bath",
       "project": {
+        "iudshg98dy": "",
         "iuhfsiuh984": ""
       },
-      "tasks": 1
+      "tasks": 2 ,
+      "subtasks": 2
     },
     "kjahdiuyd98ykhf": {
       "category": {
@@ -23,7 +25,8 @@
         "iudshg98dy": "",
         "iuhfsiuh984": ""
       },
-      "tasks": 5
+      "tasks": 1 ,
+      "subtasks": 2
     }
   },
   "project": {
@@ -40,6 +43,7 @@
         "sujfhihsf8": ""
       },
       "tasks": {
+        "enjlsfwd": "",
         "jshfiuh984hf": "",
         "kjhgius8": ""
       }
@@ -48,8 +52,8 @@
       "deadline": "09/10",
       "description": "Det är ett projekt som vi jobbar på för att göra en hemsida",
       "members": {
-        "kjahdiuyd98ykhf": "",
-        "isughfih03j": ""
+        "isughfih03j": "",
+        "kjahdiuyd98ykhf": ""
       },
       "name": "Ett projekt",
       "subtask": {
@@ -72,10 +76,10 @@
       "deadline": "10/10",
       "description": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
       "member": "isughfih03j",
-      "priority": 1,
+      "priority": 2,
       "status": {
-        "done": true,
-        "new": false,
+        "done": false,
+        "new": true,
         "ongoing": false
       },
       "subtask": {
@@ -90,7 +94,7 @@
           "member": "isughfih03j"
         }
       },
-      "title": "Designa knappar"
+      "title": "Designa logga"
     },
     "jshfiuh984hf": {
       "category": {

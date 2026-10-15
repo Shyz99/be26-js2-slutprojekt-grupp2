@@ -1,11 +1,12 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import type { Member, Subtask, Task } from "../../models/models.ts";
+import { Modal } from "../modals/Modal.ts";
 
 const closeTaskCardBtn = document.getElementById(
   "close-button",
 ) as HTMLButtonElement;
 const saveNewTaskCardChanges = document.getElementById(
-  "save-button",
+  "save-task-changes-button",
 ) as HTMLButtonElement;
 const taskDoneBtn = document.getElementById(
   "task-done-button",
@@ -32,7 +33,10 @@ const taskmodalContainer = document.querySelector(
   ".taskmodal-container",
 ) as HTMLDivElement;
 
-export async function renderTaskCard(task: Task): Promise<void> {
+export async function renderTaskCard(
+  task: Task,
+  taskID: string,
+): Promise<void> {
   const cardTitle = document.getElementById(
     "card-task-title",
   ) as HTMLUListElement;
@@ -91,14 +95,33 @@ export async function renderTaskCard(task: Task): Promise<void> {
       taskMemberName = member.name;
     }
   }
+
+  //Hämta patch-funktion task-status
+  saveNewTaskCardChanges.addEventListener("click", (e) => {
+    e.preventDefault();
+    const modal = Modal.getInstance();
+    modal.trigger(saveNewTaskCardChanges, "patch-task-status", {
+      taskID: taskID,
+    });
+    console.log("hej");
+  });
+  //
+
   //
   //Rendera innuti modalerna
+  const formattedDeadline = task.deadline;
+
   if (task.status.new === true) {
     taskModal.classList.add("new-task-modal");
     cardTitle.innerHTML = `${task.title}`;
     delegateContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Priority: ${task.priority} <button>Change</button></p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${formattedDeadline} <button>Change</button></p>
+    <p>Priority: ${task.priority} <button>Change</button></p>`;
+  
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
     cardTitle.innerHTML = `${task.title}`;
@@ -106,13 +129,23 @@ export async function renderTaskCard(task: Task): Promise<void> {
     subtaskContainer.classList.remove("hidden");
     newSubtaskContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Priority: ${task.priority} <button>Change</button></p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${formattedDeadline} <button>Change</button></p>
+    <p>Priority: ${task.priority} <button>Change</button>
+    </p><p>Delegated member: ${taskMemberName}</p>`;
+  
   } else if (task.status.done === true) {
     taskModal.classList.add("done-task-modal");
     cardTitle.innerHTML = `<h3>Task done!</h3> ${task.title}`;
     deleteTaskBtn.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline} <button>Change</button></p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${formattedDeadline} <button>Change</button></p>
+    <p>Delegated member: ${taskMemberName}</p>`;
   }
 
   renderSubtasks(task.subtask);
@@ -130,9 +163,9 @@ function renderSubtasks(subtasks: Subtask[]): void {
       return taskChecked.done === true;
     });
     if (allDone || subtaskArray.length < 0) {
-      taskDoneBtn.classList.remove("disabled-button");
+      taskDoneBtn.classList.remove("disable-button");
     } else {
-      taskDoneBtn.classList.add("disabled-button");
+      taskDoneBtn.classList.add("disable-button");
     }
   }
 
@@ -177,10 +210,11 @@ closeTaskCardBtn.addEventListener("click", () => {
   taskmodalContainer.style.display = "none";
 });
 
-saveNewTaskCardChanges.addEventListener("click", () => {
-  const selectedMember = delegateToMember.value;
-  //Insert patch-function here
-});
+// saveNewTaskCardChanges.addEventListener("click", () => {
+//   const selectedMember = delegateToMember.value;
+//Insert patch-function for change task.status from new to ongoing
+//Insert patch member to task
+// });
 
 taskDoneBtn.addEventListener("click", () => {
   //Insert patch-function here

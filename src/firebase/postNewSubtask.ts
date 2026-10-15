@@ -1,5 +1,5 @@
 import { baseURL } from "./firebaseRequestURL.ts"; 
-import type { ModalOptions } from "../components/modals/Modal.ts";
+
 
 interface Subtask {
     description: string; 
@@ -29,6 +29,7 @@ export async function postNewSubtask(data: Record<string, any>, correctURLEndPoi
         }
         const data = await response.json(); 
         if(data){
+            // patcha
             return true; 
         }
         else{

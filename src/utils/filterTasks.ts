@@ -13,10 +13,10 @@ export function filterTasks(
         const hasCorrectStatus =
             selectedStatus === "all" || task.status[selectedStatus];
         
-        if (!hasCorrectStatus) {
+        if (!hasCorrectStatus) { 
             return false;
         } 
-        
+         
         const hasCorrectMember =
             selectedMember === "all" || task.member === selectedMember
 
@@ -34,11 +34,16 @@ export function filterTasks(
         const hasCorrectSubtasks =
             selectedSubtasks === "all" || 
             (selectedSubtasks === "hasSubtasks" &&
-                Object.keys(task.subtask).length > 0 ) ||
+                Object.values(task.subtask ?? {}).length > 0 ) ||
             (selectedSubtasks === "remaining" &&
-                Object.values(task.subtask).some((subtask) => !subtask.done))
-
-        
+                Object.values(task.subtask ?? {}).some((subtask) => !subtask.done)
+            )
+            
+            console.log(task.title, {
+                status: hasCorrectStatus,
+                category: hasCorrectCategory,
+                subtasks: hasCorrectSubtasks,
+            });
         if (!hasCorrectSubtasks) {
             return false;
         } else {

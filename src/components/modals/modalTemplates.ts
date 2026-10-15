@@ -69,7 +69,7 @@ export const formViews: Record<string, formConfigurations> = {
         <fieldset>
             <legend>Uppgift</legend>
 
-            <input type"text" name="title" required placeholder="Titel...">
+            <input type="text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
             <input type="number" name="priority" required placeholder="Prioritets nummer...">
@@ -163,7 +163,7 @@ export const formViews: Record<string, formConfigurations> = {
     },
 
     'patch-task-status': {
-        modalTitle: 'Välj status:', 
+        modalTitle: 'Välj ny status:', 
         URLEndPoint: '/task', 
         HTMLElements: `
         
@@ -175,6 +175,51 @@ export const formViews: Record<string, formConfigurations> = {
                 <option value="ongoing">Pågående</option>
                 <option value="done">Färdig</option>
             </select>
+            
+        </fieldset>
+    
+
+        `
+    },
+
+    'patch-task-deadline': {
+        modalTitle: 'Välj ny deadline:', 
+        URLEndPoint: '/task', 
+        HTMLElements: `
+        
+        <fieldset>
+        
+            <input type="text" name="deadline" required placeholder="Ny deadline...>
+            
+        </fieldset>
+    
+
+        `
+    },
+
+    'patch-task-priority': {
+        modalTitle: 'Välj ny prioritering:', 
+        URLEndPoint: '/task', 
+        HTMLElements: `
+        
+        <fieldset>
+        
+            <input type="text" name="priority" required placeholder="Ny prioritet...>
+            
+        </fieldset>
+    
+
+        `
+    },
+
+    'patch-task-description': {
+        modalTitle: 'Skriv en ny beskrivning:', 
+        URLEndPoint: '/task', 
+        HTMLElements: `
+        
+        <fieldset>
+        
+            <input type="text" name="description" required placeholder="Beskrivning...>
             
         </fieldset>
     

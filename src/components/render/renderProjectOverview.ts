@@ -53,6 +53,11 @@ async function renderProjectOverview(project: Project): Promise<void> {
   currentProject = project;
   let allTasks: Task[] = [];
 
+  document.querySelectorAll(".prio-list").forEach((list) => {
+    list.innerHTML = "";
+  }
+);
+
   projectTitle.innerHTML = "";
   projectDescription.innerHTML = "";
   projectMembersUl.innerHTML = "";
@@ -69,6 +74,7 @@ async function renderProjectOverview(project: Project): Promise<void> {
   // Fetch tasks
   for (const task in project.tasks) {
     const projectTask = await getTasks(task);
+    console.log("Hämtad uppgift:", projectTask);
     allTasks.push(projectTask);
   }
 
@@ -85,8 +91,11 @@ async function renderProjectOverview(project: Project): Promise<void> {
   const direction = sortParts[1] as "ascending" | "descending";
   
   const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
-  console.log("Sorted tasks:", sortedTasks.map((task) => task.title));
+
+  sortedTasks.forEach((task) => {
+    renderTasksList(task);
   
+  });
 
   const allMembers = await getCategoryDataFirebase("member");
   selectAllMembers(allMembers);
@@ -170,7 +179,7 @@ export function renderTasksList(task: Task): void {
 
   li.addEventListener("click", () => {
     taskmodalContainer.style.display = "flex";
-    renderTaskCard(task);
+    renderTaskCard(task, task.title);
   });
 
   taskmodalContainer.addEventListener("click", (e) => {
