@@ -1,69 +1,84 @@
 import { baseURL } from "./firebaseRequestURL.ts";
-import type { ModalOptions } from "../components/modals/Modal.ts"; 
-
+import type { ModalOptions } from "../components/modals/Modal.ts";
 
 interface Subtask {
     description: string;
     done: boolean;
-    member: {};
+    member: string;
 }
 
-interface Id {
-    ID: string;
-}
-
-export async function postNewSubtask(data: Record<string, any>, correctURLEndPoint: string, options: ModalOptions) {
+export async function postNewSubtask(
+    data: Record<string, any>,
+    correctURLEndPoint: string,
+    options: ModalOptions
+): Promise<boolean> {
     const projectID = options.projectID;
 
-    const task: Subtask = {
-        description: data.description,
-        done: data.done,
-        member: {}
-    }
-
-    const postOptions = {
-        method: 'POST',
-        body: JSON.stringify(task),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    if (!projectID) {
+        console.error("Project ID saknas");
+        return false;
     }
 
     try {
-        const response = await fetch(`${baseURL}/task/${correctURLEndPoint}.json`, postOptions);
-        if (!response.ok) {
-            throw 'Something went wrong';
+        const parentTaskID = correctURLEndPoint.split("/")[0];
+
+        const memberResponse = await fetch(
+            `${baseURL}/task/${parentTaskID}/member.json`
+        );
+
+        if (!memberResponse.ok) {
+            throw new Error("Kunde inte hämta medlem från parent task");
         }
 
-        const data = await response.json();
+        const memberID: string | null = await memberResponse.json();
 
-        if (data) {
-            const newSubtaskID: Id = {
-                ID: data.name
-            };
+        const subtask: Subtask = {
+            description: data.description,
+            done: data.done === true || data.done === "true",
+            member: memberID ?? ""
+        };
 
-            const postIDOptions = {
-                method: 'PUT',
-                body: JSON.stringify(" "),
+        const response = await fetch(
+            `${baseURL}/task/${correctURLEndPoint}.json`,
+            {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(subtask)
             }
-            const response = await fetch(`${baseURL}/project/${projectID}/subtask/${newSubtaskID.ID}.json`, postIDOptions);
-            if (!response.ok) {
-                return false;
-            }
+        );
 
-            return true;
+        if (!response.ok) {
+            throw new Error("Kunde inte skapa subtask");
         }
-        else {
+
+        const result = await response.json();
+        const newSubtaskID: string | undefined = result?.name;
+
+        if (!newSubtaskID) {
             return false;
         }
 
-    }
-    catch (error) {
-        console.log('POST gick fel', error);
+        const projectResponse = await fetch(
+            `${baseURL}/project/${projectID}/subtask/${newSubtaskID}.json`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify("")
+            }
+        );
+
+        if (!projectResponse.ok) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error("POST av subtask misslyckades", error);
         return false;
     }
 }

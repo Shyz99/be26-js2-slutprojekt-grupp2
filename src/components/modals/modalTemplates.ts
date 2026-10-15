@@ -144,25 +144,10 @@ export const formViews: Record<string, formConfigurations> = {
         
         <fieldset>
             <legend> Subuppgift </legend>
-
+            <input type="hidden" name="done" value="false">
             <input type="text" name="description" required placeholder="Beskrivning...">
-            <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
-            <input type="text" name="priority" required placeholder="Prioritets nummer...">
-            <input type="hidden" name="created" value="${date}">
         </fieldset>
 
-        <fieldset>
-            <legend>Kategorier</legend>
-    
-            <input type="hidden" name="backend" value="false">
-            <label><input type="checkbox" name="backend" value="true"> Backend </label>
-    
-            <input type="hidden" name="frontend" value="false">
-            <label><input type="checkbox" name="frontend" value="true"> Frontend </label>
-    
-            <input type="hidden" name="ux" value="false">
-            <label><input type="checkbox" name="ux" value="true"> UX </label>
-        </fieldset>
         `
     },
     
