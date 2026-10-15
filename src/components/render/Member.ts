@@ -105,6 +105,7 @@ export class Member {
       memberProjetsContainer.append(memberProjets);
     } else {
       for (const projectId in this.projects) {
+        console.log("projekt ID: ", projectId);
         const memberProjets = document.createElement("section") as HTMLElement;
         const memberProjetName = document.createElement("h3") as HTMLElement;
         const memberProjetDeadline = document.createElement("p") as HTMLElement;

@@ -21,8 +21,6 @@ export async function renderIndex() {
 
   for (const id in projectObj) {
     const newProject = new Project(id, projectObj[id]);
-    console.log(projectObj);
-    console.log(id);
     newProject.renderAllProjectDataIndex();
   }
 
