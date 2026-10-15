@@ -2,8 +2,8 @@ import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.
 import type { Project, Member, Task } from "../../models/models.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { getTasks } from "../../firebase/getTasks.ts";
-// import {filterTasks} from "../../utils/filterTasks.ts";
-// import { sortTasks } from "../../utils/sortTasks.ts";
+import { filterTasks } from "../../utils/filterTasks.ts";
+import { sortTasks } from "../../utils/sortTasks.ts";
 
 import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
@@ -35,10 +35,10 @@ tempBtn.addEventListener("click", async () => {
       "iudshg98dy",
     );
 
-    let projectID = "iudshg98dy"; //TEMP, SLÄNG IN PROJECT-ID HÄR
+    let currentProjectID = "iudshg98dy"; //TEMP, SLÄNG IN PROJECT-ID HÄR
     console.log("Valt projekt:", chosenProject);
 
-    renderProjectOverview(chosenProject, projectID);
+    renderProjectOverview(chosenProject, currentProjectID);
   } catch (error) {
     console.error("Kunde inte hämta projekt:", error);
   }
@@ -47,16 +47,23 @@ tempBtn.addEventListener("click", async () => {
 // end temp
 
 let currentProject: Project | null = null;
+let currentProjectID: string = "";
 
 // Filter values
 
-// const statusFilter = document.getElementById("status-filter") as HTMLSelectElement;
-// const memberFilter = document.getElementById("member-filter") as HTMLSelectElement;
-// const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
-// const subtasksFilter = document.getElementById("subtasks-filter") as HTMLSelectElement;
-// const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
-
-// end filter values
+const statusFilter = document.getElementById(
+  "status-filter",
+) as HTMLSelectElement;
+const memberFilter = document.getElementById(
+  "member-filter",
+) as HTMLSelectElement;
+const categoryFilter = document.getElementById(
+  "category-filter",
+) as HTMLSelectElement;
+const subtasksFilter = document.getElementById(
+  "subtasks-filter",
+) as HTMLSelectElement;
+const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
 
 //RENDER
 
@@ -103,99 +110,93 @@ async function renderProjectOverview(
 
   //forts. filter
 
-  // const filteredTasks = filterTasks(
-  //   allTasks.map((item) => item.task),
+  const filteredTasks = filterTasks(
+    allTasks.map((item) => item.task),
 
-  //   statusFilter.value as "new" | "ongoing" | "done" | "all",
-  //   memberFilter.value,
-  //   categoryFilter.value as "all" | "backend" | "frontend" | "ux",
-  //   subtasksFilter.value as "all" | "hasSubtasks" | "remaining"
-  // );
+    statusFilter.value as "new" | "ongoing" | "done" | "all",
+    memberFilter.value,
+    categoryFilter.value as "all" | "backend" | "frontend" | "ux",
+    subtasksFilter.value as "all" | "hasSubtasks" | "remaining",
+  );
 
-  // const sortParts = sortFilter.value.split("-");
-  // const sortBy = sortParts[0] as "deadline" | "title";
-  // const direction = sortParts[1] as "ascending" | "descending";
+  const sortParts = sortFilter.value.split("-");
+  const sortBy = sortParts[0] as "deadline" | "title";
+  const direction = sortParts[1] as "ascending" | "descending";
 
-  // const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
-
-  // (filter)
-  allTasks.forEach((item) => {
-    renderTasksList(item.task, item.id, projectID);
-  });
+  const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
 
   //forts. filter
 
-  //   sortedTasks.forEach((task) => {
-  //     const taskWithID = allTasks.findLast((item) => item.task === task);
+  sortedTasks.forEach((task) => {
+    const taskWithID = allTasks.findLast((item) => item.task === task);
 
-  //     if (taskWithID) {
-  //       renderTasksList(task, taskWithID.id, "iudshg98dy");}
-  //     });
-
-  //   } TA BORT DETTA??????
-
-  //   Listen for filter changes
-  //   statusFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   memberFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   categoryFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   subtasksFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   sortFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
+    if (taskWithID) {
+      renderTasksList(task, taskWithID.id, "iudshg98dy");
+    }
+  });
 }
 
-// Listen for filter changes
-// statusFilter.addEventListener("change", () => {
-//   if (currentProject) {
-//     renderProjectOverview(currentProject);
-//   }
-// });
+//Listen for filter changes
+statusFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
 
-// memberFilter.addEventListener("change", () => {
-//   if (currentProject) {
-//     renderProjectOverview(currentProject);
-//   }
-// });
+memberFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
 
-// categoryFilter.addEventListener("change", () => {
-//   if (currentProject) {
-//     renderProjectOverview(currentProject);
-//   }
-// });
+categoryFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
 
-// subtasksFilter.addEventListener("change", () => {
-//   if (currentProject) {
-//     renderProjectOverview(currentProject);
-//   }
-// });
+subtasksFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
 
-// sortFilter.addEventListener("change", () => {
-//   if (currentProject) {
-//     renderProjectOverview(currentProject);
-//   }
-// });
+sortFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
+
+//Listen for filter changes
+statusFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
+
+memberFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
+
+categoryFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
+
+subtasksFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
+
+sortFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
 
 async function renderProjectMembers(
   projectMember: Member,

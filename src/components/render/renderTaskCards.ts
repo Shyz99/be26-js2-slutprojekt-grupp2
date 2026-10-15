@@ -197,10 +197,16 @@ export async function renderTaskCard(
   const priorityBtnContainer = document.getElementById(
     "btn-priority-container",
   );
+
+  //skapa container för knappar
   deadlineBtnContainer?.append(changeDeadline);
   priorityBtnContainer?.append(changePriority);
 
-  renderSubtasks(task.subtask, taskID, projectID);
+  //skicka vidare rätt info
+  if (task.subtask) {
+    const subtaskArray = Object.values(task.subtask);
+    renderSubtasks(subtaskArray, taskID, projectID);
+  }
 }
 
 function renderSubtasks(
