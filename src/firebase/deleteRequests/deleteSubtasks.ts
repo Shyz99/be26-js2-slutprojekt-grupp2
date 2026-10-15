@@ -27,7 +27,7 @@ export async function deleteSubtask(subtaskID:string, taskID:string, projectID:s
             throw 'Raderingen fungerade inte'
             
         }
-        updateAndCheckTaskCountMembers()
+        await updateAndCheckTaskCountMembers()
         return; 
     }
     catch(error){
