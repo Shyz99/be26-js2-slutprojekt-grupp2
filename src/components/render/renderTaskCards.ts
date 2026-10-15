@@ -218,7 +218,9 @@ function renderSubtasks(
 ): void {
   subtaskContainer.innerHTML = "";
   console.log(subtasks);
-
+  //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+  console.log(task);
+  //!
   const subtaskArray = Object.entries(subtasks);
   //skickar med subtaskID och subtask till en array
 

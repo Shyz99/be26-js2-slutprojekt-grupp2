@@ -114,13 +114,13 @@ export class Member {
         ) as HTMLElement;
         const projectData = await getCategoryDataFirebase("project", projectId);
         const projectDataNameString: string = String(
-          projectData?.name ?? "Unknown member",
+          projectData?.name ?? "Error: Unknown project name",
         );
         const projectDataDescriptionString: string = String(
-          projectData?.description ?? "Unknown member",
+          projectData?.description ?? "Error: Unknown project description",
         );
         const projectDataDeadlineString: string = String(
-          projectData?.deadline ?? "Unknown member",
+          projectData?.deadline ?? "Error: Unknown project deadline",
         );
 
         memberProjetName.classList.add("H3Title");
