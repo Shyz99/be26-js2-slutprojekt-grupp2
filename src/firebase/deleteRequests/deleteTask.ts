@@ -1,18 +1,29 @@
-// delete task 
+// delete task
 // delete task from project
-// delete task from member 
+// delete task from member
 // patch amount of tasks
-import {baseURL} from "../firebaseRequestURL.ts";
-import {updateAndCheckTaskCountMembers} from "../../components/render/updateAndCheckTaskCountMembers.ts";
+import { baseURL } from "../firebaseRequestURL.ts";
+import { updateAndCheckTaskCountMembers } from "../../components/render/updateAndCheckTaskCountMembers.ts";
 
-export async function deleteTask(taskID:string, projectID:string):Promise<any>{
+export async function deleteTask(
+  taskID: string,
+  projectID: string,
+): Promise<any> {
+  if (!taskID || !projectID) {
+    return;
+  }
 
-    if(!taskID || !projectID ){
-        return; 
-    }
+  const deleteOptions = {
+    method: "DELETE",
+  };
 
-    const deleteOptions = {
-        method: 'DELETE'
+  try {
+    const responseDelTask = await fetch(
+      `${baseURL}/task/${taskID}.json`,
+      deleteOptions,
+    );
+    if (!responseDelTask.ok) {
+      throw "Raderingen fungerade inte";
     }
 
     try{
@@ -29,8 +40,9 @@ export async function deleteTask(taskID:string, projectID:string):Promise<any>{
         await updateAndCheckTaskCountMembers(); 
         return;
     }
-    catch(error){
-        throw error; 
-    }
-
+    await updateAndCheckTaskCountMembers();
+    return;
+  } catch (error) {
+    throw error;
+  }
 }

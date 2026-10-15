@@ -81,4 +81,10 @@ export async function postNewSubtask(
         console.error("POST av subtask misslyckades", error);
         return false;
     }
+
+    return true;
+  } catch (error) {
+    console.error("POST av subtask misslyckades", error);
+    return false;
+  }
 }
