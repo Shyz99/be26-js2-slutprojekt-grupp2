@@ -1,7 +1,6 @@
 import { baseURL } from "./firebaseRequestURL.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 
-
 interface Task {
     description: string;
     deadline: string;
@@ -22,6 +21,14 @@ interface Task {
     title: string;
 }
 
+export async function postNewTask(
+  data: Record<string, any>,
+  URLEndPoint: string,
+  options: ModalOptions,
+): Promise<boolean> {
+  // TODO: code
+  // ! remember: boolean return.... on all our posts... do we need the if statements in Dynamic Post Check?
+  const projectID = options.projectID;
 
 export async function postNewTask(data: Record<string, any>, URLEndPoint: string, options: ModalOptions): Promise<boolean> {
 
@@ -56,6 +63,7 @@ export async function postNewTask(data: Record<string, any>, URLEndPoint: string
             'Content-Type': 'application/json'
         }
     }
+    const dataProject = await responseProject.json();
 
     try {
         // const responseProject = await fetch(`${baseURL}/project/${projectID}/tasks.json`, postOptions);
