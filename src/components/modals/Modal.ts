@@ -24,9 +24,9 @@ export class Modal {
         // makes sure the user can click outside the box to close 
         // TODO: a X to close?
         this.dialog.addEventListener("click", (e: MouseEvent) => {
-        if (e.target === this.dialog) {
-            this.close();
-        }
+            if (e.target === this.dialog) {
+                this.close();
+            }
         });
 
     }
@@ -124,12 +124,16 @@ export class Modal {
 
         if (!this.activeView) return;
 
-        
+
 
         const formElement = event.target as HTMLFormElement;
         const formData = new FormData(formElement);
         const postObj: Record<string, any> = Object.fromEntries(formData.entries());
         this.dialog.innerHTML = '<p style="text-align: center;">Laddar...</p>';
+
+        if (postObj.priority !== undefined) {
+            postObj.priority = Number(postObj.priority);
+        }
 
         for (const category of ["backend", "frontend", "ux"]) {
             postObj[category] = formData.getAll(category).includes("true");

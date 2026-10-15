@@ -72,9 +72,40 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
             <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
-            <input type="number" name="priority" required placeholder="Prioritets nummer...">
             <input type="hidden" name="created" value="${date}">
             <input type="hidden" name="subtask" value="{}">
+            <legend>Välj prioritet:</legend>
+
+            <div class="priority-options">
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="1"
+                        required
+                    >
+                    <span>Låg (1)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="2"
+                    >
+                    <span>Medel (2)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="3"
+                    >
+                    <span>Hög (3)</span>
+                </label>
+            </div>
+        </fieldset>
 
         </fieldset>
 
@@ -113,28 +144,13 @@ export const formViews: Record<string, formConfigurations> = {
         
         <fieldset>
             <legend> Subuppgift </legend>
-
+            <input type="hidden" name="done" value="false">
             <input type="text" name="description" required placeholder="Beskrivning...">
-            <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
-            <input type="text" name="priority" required placeholder="Prioritets nummer...">
-            <input type="hidden" name="created" value="${date}">
         </fieldset>
 
-        <fieldset>
-            <legend>Kategorier</legend>
-    
-            <input type="hidden" name="backend" value="false">
-            <label><input type="checkbox" name="backend" value="true"> Backend </label>
-    
-            <input type="hidden" name="frontend" value="false">
-            <label><input type="checkbox" name="frontend" value="true"> Frontend </label>
-    
-            <input type="hidden" name="ux" value="false">
-            <label><input type="checkbox" name="ux" value="true"> UX </label>
-        </fieldset>
         `
     },
-
+    
     'patch-member-to-project': {
         modalTitle: 'Välj en medlem:',
         URLEndPoint: '/project',
@@ -146,20 +162,6 @@ export const formViews: Record<string, formConfigurations> = {
             </select>
         </fieldset>
     `
-    },
-
-    'patch-member-to-task': {
-        modalTitle: 'Välj medlem:',
-        URLEndPoint: '/task',
-        HTMLElements: `
-        
-        <fieldset>
-            <select id="member-selector" name="memberID" required>
-                <option value="">Laddar medlemmar...</option>
-            </select>
-        </fieldset>
-        
-        `
     },
 
     'patch-task-status': {
@@ -203,9 +205,37 @@ export const formViews: Record<string, formConfigurations> = {
         HTMLElements: `
         
         <fieldset>
-        
-            <input type="text" name="priority" required placeholder="Ny prioritet...>
-            
+            <legend>Välj prioritet:</legend>
+
+            <div class="priority-options">
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="1"
+                        required
+                    >
+                    <span>Låg (1)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="2"
+                    >
+                    <span>Medel (2)</span>
+                </label>
+
+                <label class="priority-option">
+                    <input
+                        type="radio"
+                        name="priority"
+                        value="3"
+                    >
+                    <span>Hög (3)</span>
+                </label>
+            </div>
         </fieldset>
     
 

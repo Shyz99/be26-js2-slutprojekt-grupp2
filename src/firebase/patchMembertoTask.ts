@@ -1,5 +1,5 @@
-import type { ModalOptions } from "../components/modals/Modal.ts";
 import { baseURL } from "./firebaseRequestURL.ts";
+import { updateAndCheckTaskCountMembers } from "../components/render/updateAndCheckTaskCountMembers.ts";
 
 export async function patchMemberToTask(
   taskID: string,
@@ -38,6 +38,7 @@ export async function patchMemberToTask(
     }
     const dataProject = await responseProject.json();
     if (dataTask && dataProject) {
+      await updateAndCheckTaskCountMembers();
       return true;
     } else {
       return false;

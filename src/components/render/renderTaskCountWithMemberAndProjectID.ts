@@ -4,13 +4,16 @@ export async function renderMemberTaskCountInProject(
   memberID: string,
   projectID: string,
 ) {
-  const taskProject: object = await getCategoryDataFirebase(
+  const taskProject: {tasks: string[]} = await getCategoryDataFirebase(
     "project",
     projectID,
   );
 
-  const allTasks: object = await getCategoryDataFirebase("task");
-  let taskCount: number = 0;
+  const allTasks: Record<string, {member: unknown}> =
+    await getCategoryDataFirebase("task");
+
+    let taskCount: number =0;
+
 
   //!!! console.log(taskID, " / ", key, " / MEMBER ID DISA", tasksMemberID);
   for (const id in taskProject.tasks) {
@@ -42,10 +45,12 @@ export async function renderMemberSubTaskCountInProject(
   memberID: string,
   projectID: string,
 ) {
-  const subTaskProject: object = await getCategoryDataFirebase(
-    "project",
-    projectID,
-  );
+
+  const subTaskProject: { subtask: Record<string, unknown> } =
+    await getCategoryDataFirebase(
+      "project",
+      projectID,
+    );
 
   const allTasks: object = await getCategoryDataFirebase("task");
   let subTaskCount: number = 0;
