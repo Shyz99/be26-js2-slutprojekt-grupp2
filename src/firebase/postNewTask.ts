@@ -88,11 +88,49 @@ export async function postNewTask(
           "Content-Type": "application/json",
         },
       };
-      const response = await fetch(
-        `${baseURL}/project/${projectID}/tasks/${newTaskID.ID}.json`,
-        postIDOptions,
-      );
-      if (!response.ok) {
+      // const dataProject = await responseProject.json();
+
+      try {
+        // const responseProject = await fetch(`${baseURL}/project/${projectID}/tasks.json`, postOptions);
+        // if(!responseProject.ok){
+        //     throw 'Something went wrong'
+        // }
+        // const dataProject = await responseProject.json();
+
+        const responseTask = await fetch(
+          `${baseURL}${URLEndPoint}.json`,
+          postOptions,
+        );
+        if (!responseTask.ok) {
+          throw "Something went wrong";
+        }
+        const dataTask = await responseTask.json();
+
+        if (dataTask) {
+          const newTaskID: Id = {
+            ID: dataTask.name,
+          };
+
+          const postIDOptions = {
+            method: "PUT",
+            body: JSON.stringify(""),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+          const response = await fetch(
+            `${baseURL}/project/${projectID}/tasks/${newTaskID.ID}.json`,
+            postIDOptions,
+          );
+          if (!response.ok) {
+            return false;
+          }
+          return true;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        console.log("POST gick fel", error);
         return false;
       }
       return true;

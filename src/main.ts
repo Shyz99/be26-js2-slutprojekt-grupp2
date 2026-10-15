@@ -10,24 +10,8 @@ await renderIndex();
 
 await updateAndCheckTaskCountMembers();
 
-console.log("---------🙈🙈🙈Project: Cykelprojektet🙈🙈🙈---------");
-console.log("---------Bruno---------");
-await renderMemberTaskCountInProject("kjahdiuyd98ykhf", "iudshg98dy");
 
-await renderMemberSubTaskCountInProject("kjahdiuyd98ykhf", "iudshg98dy");
-
-console.log("---------Anita---------");
-await renderMemberTaskCountInProject("isughfih03j", "iudshg98dy");
-
-await renderMemberSubTaskCountInProject("isughfih03j", "iudshg98dy");
-
-console.log("---------🙈🙈🙈Project: Ett projekt🙈🙈🙈---------");
-console.log("---------Bruno---------");
-await renderMemberTaskCountInProject("kjahdiuyd98ykhf", "iuhfsiuh984");
-
-await renderMemberSubTaskCountInProject("kjahdiuyd98ykhf", "iuhfsiuh984");
-
-console.log("---------Anita---------");
-await renderMemberTaskCountInProject("isughfih03j", "iuhfsiuh984");
-
-await renderMemberSubTaskCountInProject("isughfih03j", "iuhfsiuh984");
+// const taskProjectCount = await renderProjectTaskCount("iudshg98dy");
+// console.log("TASK COUNT------------------", taskProjectCount);
+// const subTaskProjectCount = await renderProjectSubTaskCount("iudshg98dy");
+// console.log("SUB TASK COUNT------------------", subTaskProjectCount);

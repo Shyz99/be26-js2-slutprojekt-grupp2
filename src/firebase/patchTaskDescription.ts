@@ -1,5 +1,6 @@
 import { baseURL } from "./firebaseRequestURL.ts"; 
 import type { ModalOptions } from "../components/modals/Modal.ts";
+import { showToast, getErrorMessage } from "../components/errors/toast.ts";
 
 
 export async function patchTaskDescription(data: Record<string, any>, URLEndPoint: string, options: ModalOptions):Promise<boolean>{
@@ -36,6 +37,7 @@ export async function patchTaskDescription(data: Record<string, any>, URLEndPoin
         }
 
     } catch (error) {
+        showToast(getErrorMessage(error));
         console.error("PATCH av beskrivning misslyckades", error);
         return false;
     }

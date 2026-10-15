@@ -35,7 +35,7 @@ export async function patchMemberToSubtask(data: Record<string, any>, URLEndPoin
         }
         const dataProject = await responseProject.json(); 
         if (dataTask && dataProject) {
-            updateAndCheckTaskCountMembers();
+            await updateAndCheckTaskCountMembers();
             return true;
         }
         else {

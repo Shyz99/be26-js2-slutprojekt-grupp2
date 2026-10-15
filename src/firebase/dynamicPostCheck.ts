@@ -56,5 +56,42 @@ export async function dynamicPostCheck(
     } else {
       return false;
     }
+
+    if (URLEndPoint === "/task" && options.taskID && data.status) {
+      return await patchTaskStatus(data, URLEndPoint, options);
+    }
+
+    if (URLEndPoint === "/task" && options.taskID && data.priority) {
+      return await patchTaskPriority(data, URLEndPoint, options);
+    }
+
+    if (URLEndPoint === "/task" && options.taskID && data.description) {
+      return await patchTaskDescription(data, URLEndPoint, options);
+    }
+
+    if (URLEndPoint === "/task" && options.taskID && data.deadline) {
+      return await patchTaskDeadline(data, URLEndPoint, options);
+    }
+
+    if (URLEndPoint === "/member") {
+      return await postNewMember(data, URLEndPoint);
+    }
+
+    if (URLEndPoint === "/project") {
+      return await postNewProject(data, URLEndPoint);
+    }
+
+    if (URLEndPoint === "/task") {
+      return await postNewTask(data, URLEndPoint, options);
+    }
+
+    if (URLEndPoint === "/subtask") {
+      if (options.taskID) {
+        const correctEndPointURL = `${options.taskID}/subtask`;
+        return await postNewSubtask(data, correctEndPointURL, options);
+      } else {
+        return false;
+      }
+    }
   }
 }

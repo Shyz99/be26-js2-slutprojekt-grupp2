@@ -33,9 +33,23 @@ export async function deleteTask(
     if (!responseDelTaskFromProject.ok) {
       throw "Raderingen fungerade inte";
     }
-    await updateAndCheckTaskCountMembers();
-    return;
-  } catch (error) {
-    throw error;
-  }
-}
+
+    try{
+        const responseDelTask = await fetch(`${baseURL}/task/${taskID}.json`, deleteOptions); 
+        if(!responseDelTask.ok){
+            throw 'Raderingen fungerade inte'
+        }
+        
+
+        const responseDelTaskFromProject = await fetch(`${baseURL}/project/${projectID}/tasks/${taskID}.json`, deleteOptions); 
+        if(!responseDelTaskFromProject.ok){
+            throw 'Raderingen fungerade inte'
+        }
+        await updateAndCheckTaskCountMembers(); 
+        return;
+    }
+    catch(error){
+        throw error; 
+    }
+
+}}
