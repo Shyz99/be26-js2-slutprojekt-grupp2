@@ -4,6 +4,8 @@ import { Modal } from "../modals/Modal.ts";
 import { deleteTask } from "../../firebase/deleteRequests/deleteTask.ts";
 import { patchMemberToTask } from "../../firebase/patchMembertoTask.ts";
 import { deleteSubtask } from "../../firebase/deleteRequests/deleteSubtasks.ts";
+import { getTasks } from "../../firebase/getTasks.ts";
+import { patchSubtaskDone } from "../../firebase/patchSubTaskDone.ts";
 
 const closeTaskCardBtn = document.getElementById(
   "close-button",
@@ -204,13 +206,13 @@ export async function renderTaskCard(
 
   //skicka vidare rätt info
   if (task.subtask) {
-    const subtaskArray = Object.values(task.subtask);
-    renderSubtasks(subtaskArray, taskID, projectID);
+    renderSubtasks(task.subtask, task, taskID, projectID);
   }
 }
 
 function renderSubtasks(
-  subtasks: Subtask[],
+  subtasks: Record<string, Subtask>,
+  task: Task,
   taskID: string,
   projectID: string,
 ): void {
@@ -246,20 +248,19 @@ function renderSubtasks(
       checkbox.checked = false;
     }
 
+    //patch subtask done/not done
     checkbox.addEventListener("change", () => {
       subtask.done = checkbox.checked;
-
-      if (subtask.done) {
-        //Insert patch-function here
-      }
+      patchSubtaskDone(taskID, subtaskID, subtask.done);
 
       updateCheckboxState();
     });
 
-    //delete subtask
-    deleteSubtaskBtn.addEventListener("click", () => {
-      deleteSubtask(subtaskID, taskID, projectID);
-      console.log("hej");
+    //delete subtask (en pina D'':)
+    deleteSubtaskBtn.addEventListener("click", async () => {
+      await deleteSubtask(subtaskID, taskID, projectID);
+      const updatedTask = await getTasks(taskID);
+      renderTaskCard(updatedTask, taskID, projectID);
     });
 
     li.append(checkbox, subtaskTitle, deleteSubtaskBtn);

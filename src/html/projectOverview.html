@@ -12,11 +12,11 @@
     <title>Project</title>
   </head>
   <body>
-    <div>
-      <h1>Project Overview</h1>
-      <header>
-        <a href="../../index.html">Back to Home Page</a>
-      </header>
+    <h1>Project Overview</h1>
+    <header>
+      <a href="../../index.html">Back to Home Page</a>
+    </header>
+    <div class="project-info-container">
       <button id="temp-button">Render project</button>
       <h1 id="project-title"></h1>
       <p id="project-description"></p>
@@ -27,7 +27,7 @@
       <div id="add-member-to-project-container">
         <button id="add-member-to-project-button">Add member</button>
       </div>
-      </div>
+
       <p>Add new task:</p>
       <button id="new-task-button">New task</button>
     </div>
@@ -60,19 +60,17 @@
         <option value="hasSubtasks">Har subtask</option>
         <option value="remaining">Ej klara subtasks</option>
       </select>
+    </div>
 
-      </div>
-      
-      <div>
-        <label for="sort-filter">Sortera på:</label>
-        <select id="sort-filter">
-          <option value="deadline-ascending">Deadline, stigande</option>
-          <option value="deadline-descending">Deadline, fallande</option>
-          <option value="title-ascending">Titel, A–Ö</option>
-          <option value="title-descending">Titel, Ö–A</option>
-       </select>
-     </div>
-
+    <div>
+      <label for="sort-filter">Sortera på:</label>
+      <select id="sort-filter">
+        <option value="deadline-ascending">Deadline, stigande</option>
+        <option value="deadline-descending">Deadline, fallande</option>
+        <option value="title-ascending">Titel, A–Ö</option>
+        <option value="title-descending">Titel, Ö–A</option>
+      </select>
+    </div>
 
     <div class="SCRUM-board-container">
       <div id="new-tasks-container" class="column">
@@ -122,7 +120,7 @@
 
         <div id="new-subtask-container">
           <h4>Subtasks:</h4>
-            <button id="add-subtask-button">Add subtask</button>
+          <button id="add-subtask-button">Add subtask</button>
         </div>
         <div id="subtask-container">
           <label>
