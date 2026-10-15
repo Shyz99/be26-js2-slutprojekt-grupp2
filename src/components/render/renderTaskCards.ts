@@ -2,8 +2,8 @@ import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.
 import type { Member, Subtask, Task } from "../../models/models.ts";
 import { Modal } from "../modals/Modal.ts";
 import { deleteTask } from "../../firebase/deleteRequests/deleteTask.ts";
-import { deleteSubtask } from "../../firebase/deleteRequests/deleteSubtasks.ts";
 import { patchMemberToTask } from "../../firebase/patchMembertoTask.ts";
+import { deleteSubtask } from "../../firebase/deleteRequests/deleteSubtasks.ts";
 
 const closeTaskCardBtn = document.getElementById(
   "close-button",
@@ -17,6 +17,9 @@ const taskDoneBtn = document.getElementById(
 const deleteTaskBtn = document.getElementById(
   "delete-task-button",
 ) as HTMLButtonElement;
+const addSubtaskBtn = document.getElementById(
+  "add-subtask-button",
+) as HTMLButtonElement;
 const delegateToMember = document.getElementById(
   "delegate-to-member",
 ) as HTMLSelectElement;
@@ -29,9 +32,6 @@ const subtaskContainer = document.getElementById(
 const newSubtaskContainer = document.getElementById(
   "new-subtask-container",
 ) as HTMLDivElement;
-const newSubtaskForm = document.getElementById(
-  "new-subtask-form",
-) as HTMLFormElement;
 const taskmodalContainer = document.querySelector(
   ".taskmodal-container",
 ) as HTMLDivElement;
@@ -66,7 +66,7 @@ export async function renderTaskCard(
   deleteTaskBtn.classList.add("hidden");
   subtaskContainer.classList.add("hidden");
   newSubtaskContainer.classList.add("hidden");
-  //
+
   //Lägg till kategori
   let delegatedRole: string = "";
 
@@ -77,12 +77,20 @@ export async function renderTaskCard(
   } else if (task.category.ux === true) {
     delegatedRole = "Ux";
   }
-  //
+
   //Hämta members och kolla deras kategori
   const allMembers = await getCategoryDataFirebase("member");
 
   let taskMemberName = "";
 
+  //posta new subtask
+  const modal = Modal.getInstance();
+  modal.trigger(addSubtaskBtn, "add-new-subtask", {
+    taskID: taskID,
+    projectID: projectID,
+  });
+
+  //jämnför task.category med member.category
   for (const key in allMembers) {
     const member: Member = allMembers[key];
 
@@ -102,9 +110,7 @@ export async function renderTaskCard(
       taskMemberName = member.name;
     }
 
-    //
-
-    //Hämta patch-funktion task-status (!!!!)
+    //Patch member to task
     const chosenMember = delegateToMember.value;
 
     saveMemberToTaskBtn.addEventListener("click", () => {
@@ -113,48 +119,51 @@ export async function renderTaskCard(
     });
   }
 
+  //Pach task-status
   const modalOne = Modal.getInstance();
   modalOne.trigger(taskDoneBtn, "patch-task-status", {
     taskID: taskID,
   });
 
+  //Patch task-status
   const modalTwo = Modal.getInstance();
   modalTwo.trigger(saveNewTaskCardChanges, "patch-task-status", {
     taskID: taskID,
   });
 
+  //Knapp deadline - patch
   const changeDeadline = document.createElement("button");
   changeDeadline.innerText = "Change deadline";
-  taskModal.append(changeDeadline);
-
   const modalThree = Modal.getInstance();
   modalThree.trigger(changeDeadline, "patch-task-deadline", {
     taskID: taskID,
   });
 
+  //Knapp priorty - patch
   const changePriority = document.createElement("button");
   changePriority.innerText = "Change Priority";
-  taskModal.append(changePriority);
-
   const modalFour = Modal.getInstance();
   modalFour.trigger(changePriority, "patch-task-priority", {
     taskID: taskID,
   });
-  //
 
-  //Hämta delete-funktion
+  //Hämta delete-task-funktion
   deleteTaskBtn.addEventListener("click", () => {
     deleteTask(taskID, projectID);
   });
 
-  //
-  //Rendera innuti modalerna
+  //Rendera innuti modalerna beroende på status
   if (task.status.new === true) {
     taskModal.classList.add("new-task-modal");
     cardTitle.innerHTML = `${task.title}`;
     delegateContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Priority: ${task.priority}</p>`;
+    cardInfoContainer.innerHTML = `
+    <p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>`;
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
     cardTitle.innerHTML = `${task.title}`;
@@ -162,28 +171,52 @@ export async function renderTaskCard(
     subtaskContainer.classList.remove("hidden");
     newSubtaskContainer.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Priority: ${task.priority}</p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `
+    <p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>
+    <p>Delegated member: ${taskMemberName}</p>`;
   } else if (task.status.done === true) {
     taskModal.classList.add("done-task-modal");
     cardTitle.innerHTML = `<h3>Task done!</h3> ${task.title}`;
     deleteTaskBtn.classList.remove("hidden");
 
-    cardInfoContainer.innerHTML = `<p>Description: ${task.description}</p><p>Created: ${task.created}</p><p>Category: ${delegatedRole}</p><p>Deadline: ${task.deadline}</p><p>Delegated member: ${taskMemberName}</p>`;
+    cardInfoContainer.innerHTML = `
+    <p>Description: ${task.description}</p>
+    <p>Created: ${task.created}</p>
+    <p>Category: ${delegatedRole}</p>
+    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Delegated member: ${taskMemberName}</p>`;
   }
 
-  renderSubtasks(task.subtask);
+  const deadlineBtnContainer = document.getElementById(
+    "btn-deadline-container",
+  );
+  const priorityBtnContainer = document.getElementById(
+    "btn-priority-container",
+  );
+  deadlineBtnContainer?.append(changeDeadline);
+  priorityBtnContainer?.append(changePriority);
+
+  renderSubtasks(task.subtask, taskID, projectID);
 }
 
-function renderSubtasks(subtasks: Subtask[]): void {
+function renderSubtasks(
+  subtasks: Subtask[],
+  taskID: string,
+  projectID: string,
+): void {
   subtaskContainer.innerHTML = "";
   console.log(subtasks);
 
-  const subtaskArray = Object.values(subtasks);
-  //omvandlar objekten till en array
+  const subtaskArray = Object.entries(subtasks);
+  //skickar med subtaskID och subtask till en array
 
   function updateCheckboxState() {
-    const allDone = subtaskArray.every((taskChecked) => {
-      return taskChecked.done === true;
+    const allDone = subtaskArray.every(([_, subtask]) => {
+      return subtask.done === true;
     });
     if (allDone || subtaskArray.length < 0) {
       taskDoneBtn.classList.remove("disable-button");
@@ -192,18 +225,14 @@ function renderSubtasks(subtasks: Subtask[]): void {
     }
   }
 
-  for (const subtask of subtaskArray) {
-    const label = document.createElement("label");
+  for (const [subtaskID, subtask] of subtaskArray) {
+    const li = document.createElement("li");
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     const deleteSubtaskBtn = document.createElement("button");
     deleteSubtaskBtn.innerText = "Delete";
     const subtaskTitle = document.createElement("span");
-    subtaskTitle.innerHTML = `${subtask.description}    `;
-
-    // deleteSubtaskBtn.addEventListener("click", () => {
-    //   deleteSubtask(subtask, taskID, projectID)
-    // })
+    subtaskTitle.innerHTML = `${subtask.description}`;
 
     if (subtask.done === true) {
       checkbox.checked = true;
@@ -221,12 +250,14 @@ function renderSubtasks(subtasks: Subtask[]): void {
       updateCheckboxState();
     });
 
+    //delete subtask
     deleteSubtaskBtn.addEventListener("click", () => {
-      //Insert delete-function here
+      deleteSubtask(subtaskID, taskID, projectID);
+      console.log("hej");
     });
 
-    label.append(checkbox, subtaskTitle, deleteSubtaskBtn);
-    subtaskContainer.append(label);
+    li.append(checkbox, subtaskTitle, deleteSubtaskBtn);
+    subtaskContainer.append(li);
   }
   updateCheckboxState();
 }
@@ -235,11 +266,4 @@ function renderSubtasks(subtasks: Subtask[]): void {
 
 closeTaskCardBtn.addEventListener("click", () => {
   taskmodalContainer.style.display = "none";
-});
-
-newSubtaskForm.addEventListener("submit", () => {
-  const newSubtask = document.getElementById("new-subtask") as HTMLInputElement;
-
-  const subtask = newSubtask.value;
-  //Insert post-function here
 });

@@ -3,7 +3,6 @@ import type { Project, Member, Task } from "../../models/models.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
-import { postNewTask } from "../../firebase/postNewTask.ts";
 
 const projectTitle = document.getElementById(
   "project-title",
