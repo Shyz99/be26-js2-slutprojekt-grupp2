@@ -75,7 +75,7 @@ export class Project {
     for (const memberId in this.members) {
       const membersData = await getCategoryDataFirebase("member", memberId);
       const memberDataNameString: string = String(
-        membersData?.name ?? "Unknown member",
+        membersData?.name ?? "No Members",
       );
       const memberName = document.createElement("p") as HTMLElement;
       memberName.innerText = memberDataNameString;

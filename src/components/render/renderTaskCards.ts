@@ -37,14 +37,19 @@ const newSubtaskContainer = document.getElementById(
 const taskmodalContainer = document.querySelector(
   ".taskmodal-container",
 ) as HTMLDivElement;
-const saveMemberToTaskBtn = document.getElementById(
-  "save-member-to-task-button",
-) as HTMLButtonElement;
+const delegateBtnContainer = document.getElementById(
+  "delegate-button-container",
+) as HTMLDivElement;
+
+//skapar medlemsknapp
+const saveMemberBtn = document.createElement("button");
+saveMemberBtn.innerText = "Save member";
 
 function formatDate(date: string): string {
   return new Date(date).toLocaleDateString("sv-SE");
 }
 
+//Render task card
 export async function renderTaskCard(
   task: Task,
   taskID: string,
@@ -59,6 +64,7 @@ export async function renderTaskCard(
   const taskModal = document.getElementById("taskmodal") as HTMLDivElement;
 
   //Rensa
+  subtaskContainer.innerHTML = "";
   delegateToMember.innerHTML = "";
   cardTitle.innerHTML = "";
   cardInfoContainer.innerHTML = "";
@@ -72,10 +78,16 @@ export async function renderTaskCard(
   deleteTaskBtn.classList.add("hidden");
   subtaskContainer.classList.add("hidden");
   newSubtaskContainer.classList.add("hidden");
+  saveNewTaskCardChanges.classList.remove("hidden");
 
-  //Lägg till kategori
+  //placeholder i dropdown
+  const placeholderSelectMedlem = document.createElement("option");
+  placeholderSelectMedlem.value = "";
+  placeholderSelectMedlem.innerText = "Choose member..";
+  delegateToMember.append(placeholderSelectMedlem);
+
+  //Bestäm kortets kategori
   let delegatedRole: string = "";
-
   if (task.category.frontend === true) {
     delegatedRole = "Frontend";
   } else if (task.category.backend === true) {
@@ -84,17 +96,9 @@ export async function renderTaskCard(
     delegatedRole = "Ux";
   }
 
-  //Hämta members och kolla deras kategori
+  //hämta alla medlemmar
   const allMembers = await getCategoryDataFirebase("member");
-
   let taskMemberName = "";
-
-  //posta new subtask
-  const modal = Modal.getInstance();
-  modal.trigger(addSubtaskBtn, "add-new-subtask", {
-    taskID: taskID,
-    projectID: projectID,
-  });
 
   //jämnför task.category med member.category
   for (const key in allMembers) {
@@ -114,18 +118,24 @@ export async function renderTaskCard(
 
     if (key === task.member) {
       taskMemberName = member.name;
+      delegateToMember.value = key;
     }
 
-    //Patch member to task
-    const chosenMember = delegateToMember.value;
-
-    saveMemberToTaskBtn.addEventListener("click", () => {
-      patchMemberToTask(taskID, chosenMember);
-      console.log(taskID, chosenMember);
+    //hämta medlem till task knapp och uppdatera
+    saveMemberBtn.addEventListener("click", async () => {
+      const chosenMember = delegateToMember.value;
+      await patchMemberToTask(taskID, chosenMember);
     });
   }
 
-  //Pach task-status
+  //posta new subtask
+  const modal = Modal.getInstance();
+  modal.trigger(addSubtaskBtn, "add-new-subtask", {
+    taskID: taskID,
+    projectID: projectID,
+  });
+
+  //Patch task-status
   const modalOne = Modal.getInstance();
   modalOne.trigger(taskDoneBtn, "patch-task-status", {
     taskID: taskID,
@@ -154,35 +164,40 @@ export async function renderTaskCard(
   });
 
   //Hämta delete-task-funktion
-  deleteTaskBtn.addEventListener("click", () => {
-    deleteTask(taskID, projectID);
+  deleteTaskBtn.addEventListener("click", async () => {
+    await deleteTask(taskID, projectID);
+    taskmodalContainer.style.display = "none";
+    window.location.reload();
   });
 
-  //Rendera innuti modalerna beroende på status
+  //Rendera innuti task cards beroende på status
   if (task.status.new === true) {
     taskModal.classList.add("new-task-modal");
     cardTitle.innerHTML = `${task.title}`;
     delegateContainer.classList.remove("hidden");
+    deleteTaskBtn.classList.remove("hidden");
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
     <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
-    <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>`;
+    <p>Deadline: ${formatDate(task.deadline)}<span id= "btn-deadline-container"></span></p>
+    <p>Priority: ${task.priority}<span id= "btn-priority-container"></span></p>`;
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
     cardTitle.innerHTML = `${task.title}`;
     taskDoneBtn.classList.remove("hidden");
     subtaskContainer.classList.remove("hidden");
     newSubtaskContainer.classList.remove("hidden");
+    saveNewTaskCardChanges.classList.add("hidden");
+    deleteTaskBtn.classList.remove("hidden");
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
     <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
-    <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<span id= "btn-deadline-container"></span></p>
+    <p>Priority: ${task.priority}<span id= "btn-priority-container"></span></p>
     <p>Delegated member: ${taskMemberName}</p>`;
   } else if (task.status.done === true) {
     taskModal.classList.add("done-task-modal");
@@ -193,10 +208,11 @@ export async function renderTaskCard(
     <p>Description: ${task.description}</p>
     <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<span id= "btn-deadline-container"></span></p>
     <p>Delegated member: ${taskMemberName}</p>`;
   }
 
+  //sätt in knapparna i containers
   const deadlineBtnContainer = document.getElementById(
     "btn-deadline-container",
   );
@@ -204,14 +220,30 @@ export async function renderTaskCard(
     "btn-priority-container",
   );
 
+  //rensa knappar
+  if (deadlineBtnContainer) deadlineBtnContainer.innerHTML = "";
+  if (priorityBtnContainer) priorityBtnContainer.innerHTML = "";
+  if (delegateBtnContainer) delegateBtnContainer.innerHTML = "";
+
   //skapa container för knappar
   deadlineBtnContainer?.append(changeDeadline);
   priorityBtnContainer?.append(changePriority);
+  delegateBtnContainer?.append(saveMemberBtn);
 
   //skicka vidare rätt info
   if (task.subtask) {
     renderSubtasks(task.subtask, task, taskID, projectID);
   }
+
+  //ett customevent för att lyssna efter om patch/post är klart
+  window.addEventListener("taskUpdated", async (e: Event) => {
+    const customEvent = e as CustomEvent;
+    const updatedTaskID = customEvent.detail.taskID;
+    if (updatedTaskID) {
+      const updatedTask = await getTasks(taskID);
+      await renderTaskCard(updatedTask, taskID, projectID);
+    }
+  });
 }
 
 function renderSubtasks(
@@ -255,14 +287,13 @@ function renderSubtasks(
     }
 
     //patch subtask done/not done
-    checkbox.addEventListener("change", () => {
+    checkbox.addEventListener("change", async () => {
       subtask.done = checkbox.checked;
       patchSubtaskDone(taskID, subtaskID, subtask.done);
-
       updateCheckboxState();
     });
 
-    //delete subtask (en pina D'':)
+    //delete subtask
     deleteSubtaskBtn.addEventListener("click", async () => {
       await deleteSubtask(subtaskID, taskID, projectID);
       const updatedTask = await getTasks(taskID);
@@ -275,8 +306,7 @@ function renderSubtasks(
   updateCheckboxState();
 }
 
-//Eventlisteners
-
+//Stänga taskcards
 closeTaskCardBtn.addEventListener("click", () => {
   taskmodalContainer.style.display = "none";
 });

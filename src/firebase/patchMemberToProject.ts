@@ -21,35 +21,39 @@ export async function patchMemberToProject(
       },
     };
 
-    //! Disa Test, checka med gruppen imorgon
-    //* const patchOptionsMember = {
-    //*     method: 'PATCH',
-    //*     body: JSON.stringify({[projectID]: ""}),
-    //*     headers: {
-    //*         'Content-Type': 'application/json'
-    //*     }
-    //* }
+
+    const patchOptionsMember = {
+      method: 'PATCH',
+      body: JSON.stringify({ [projectID]: "" }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
 
     try {
-      //* const responseMember = await fetch(`${baseURL}${URLEndPoint}/${memberID}/project.json`, patchOptionsMember);
+      const responseMember = await fetch(`${baseURL}/member/${memberID}/project.json`, patchOptionsMember);
 
       const response = await fetch(
         `${baseURL}${URLEndPoint}/${projectID}/members.json`,
         patchOptions,
       );
 
-      //* if(!response.ok && !responseMember.ok){
-      if (!response.ok) {
+      if (!response.ok || !responseMember.ok) {
         throw "Something went wrong";
       }
-      //* const dataMember = await responseMember.json();
+
+      const dataMember = await responseMember.json();
       const data = await response.json();
-      //* if (data && dataMember) {
-      if (data) {
+
+      if (data && dataMember) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
         return true;
       } else {
         return false;
       }
+
     } catch (error) {
       console.log("PATCH gick fel", error);
       return false;

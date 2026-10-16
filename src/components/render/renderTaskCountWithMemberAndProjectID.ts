@@ -14,7 +14,6 @@ export async function renderMemberTaskCountInProject(
 
   let taskCount: number = 0;
 
-  //!!! console.log(taskID, " / ", key, " / MEMBER ID DISA", tasksMemberID);
   for (const id in taskProject.tasks) {
     for (const taskID in allTasks) {
       if (taskID == id) {

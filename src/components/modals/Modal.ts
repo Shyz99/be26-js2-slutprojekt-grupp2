@@ -19,10 +19,6 @@ export class Modal {
     private constructor() {
         this.dialog = document.createElement('dialog');
         document.body.appendChild(this.dialog);
-        // TODO CSS styles
-
-        // makes sure the user can click outside the box to close 
-        // TODO: a X to close?
         this.dialog.addEventListener("click", (e: MouseEvent) => {
             if (e.target === this.dialog) {
                 this.close();
@@ -30,19 +26,7 @@ export class Modal {
         });
 
     }
-    // for us all to use like this: 
-    // const testBtn = document.createElement('button'); 
-    // testBtn.innerText = "test av modal"; 
-    // const testModal = Modal.getInstance(); 
-    // testModal.trigger(testBtn, 'test', id för projekt, member, task, etc); 
-    // document.body.appendChild(testBtn);
-    // eller: 
-    //const modal = Modal.getInstance();
-    // modal.trigger(addTaskButton, "add-new-task", {projectID: "project123"};
-    // project id will be sent in to certain POST functions later, it is vital this is added, gang 
 
-
-    // TODO remove comments lol 
     public static getInstance(): Modal {
         if (!Modal.instance) {
             Modal.instance = new Modal();
@@ -101,7 +85,6 @@ export class Modal {
             return;
         }
 
-        // creating the form 
         this.dialog.innerHTML = `
             <h3 style="margin: 0 0 16px 0;">${this.activeView.modalTitle}</h3>
             <form id="modal-form">

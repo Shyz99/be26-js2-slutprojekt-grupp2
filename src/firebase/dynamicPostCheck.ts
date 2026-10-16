@@ -8,9 +8,9 @@ import { postNewSubtask } from "./postNewSubtask.ts";
 import type { ModalOptions } from "../components/modals/Modal.ts";
 import { patchMemberToProject } from "./patchMemberToProject.ts";
 import { patchTaskStatus } from "./patchTaskStatus.ts";
-import { patchTaskDeadline } from "./patchTaskDeadline.ts"; 
-import { patchTaskPriority } from "./patchTaskPriority.ts"; 
-import { patchTaskDescription } from "./patchTaskDescription.ts"; 
+import { patchTaskDeadline } from "./patchTaskDeadline.ts";
+import { patchTaskPriority } from "./patchTaskPriority.ts";
+import { patchTaskDescription } from "./patchTaskDescription.ts";
 
 export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: string, options: ModalOptions) {
 
@@ -19,18 +19,18 @@ export async function dynamicPostCheck(data: Record<string, any>, URLEndPoint: s
     }
 
     if (URLEndPoint === "/task" && options.taskID && data.status) {
-        return await patchTaskStatus(data, URLEndPoint, options); 
+        return await patchTaskStatus(data, URLEndPoint, options);
     }
 
-    if(URLEndPoint === "/task" && options.taskID && data.priority){
-        return await patchTaskPriority(data, URLEndPoint, options); 
+    if (URLEndPoint === "/task" && options.taskID && data.priority) {
+        return await patchTaskPriority(data, URLEndPoint, options);
     }
 
-    if(URLEndPoint === "/task" && options.taskID && data.description){
-        return await patchTaskDescription(data, URLEndPoint, options); 
+    if (URLEndPoint === "/task" && options.taskID && Object.prototype.hasOwnProperty.call(data, "description")) {
+        return await patchTaskDescription(data, URLEndPoint, options);
     }
 
-    if (URLEndPoint === "/task" && options.taskID && data.deadline){
+    if (URLEndPoint === "/task" && options.taskID && Object.prototype.hasOwnProperty.call(data, "deadline")) {
         return await patchTaskDeadline(data, URLEndPoint, options);
     }
 

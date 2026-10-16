@@ -20,5 +20,19 @@ export function getErrorMessage(error: unknown): string {
     return "Kontrollera din internetanslutning och försök igen.";
   }
 
+  if (error instanceof Error) {
+    if (error.message.includes("401") || error.message.includes("403")) {
+      return "Du saknar behörighet att utföra detta.";
+    }
+
+    if (error.message.includes("404")) {
+      return "Informationen kunde inte hittas.";
+    }
+
+    if (error.message.includes("500")) {
+      return "Ett serverfel uppstod. Försök igen senare.";
+    }
+  }
+
   return "Något gick fel. Försök igen.";
 }

@@ -4,7 +4,7 @@ import { updateAndCheckTaskCountMembers } from "../components/render/updateAndCh
 export async function patchMemberToTask(
   taskID: string,
   memberID: string,
-): Promise<any> {
+): Promise<boolean> {
   if (!taskID || !memberID) {
     return false;
   }
@@ -27,22 +27,9 @@ export async function patchMemberToTask(
     if (!responseTask.ok) {
       return false;
     }
-    const dataTask = await responseTask.json();
+    await updateAndCheckTaskCountMembers();
+    return true;
 
-    const responseProject = await fetch(
-      `${baseURL}/project/tasks/${taskID}.json`,
-      patchOptions,
-    );
-    if (!responseProject.ok) {
-      return false;
-    }
-    const dataProject = await responseProject.json();
-    if (dataTask && dataProject) {
-      await updateAndCheckTaskCountMembers();
-      return true;
-    } else {
-      return false;
-    }
   } catch (error) {
     console.error("PATCH gick ej", error);
     return false;

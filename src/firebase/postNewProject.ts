@@ -7,8 +7,8 @@ interface Project {
   deadline: string;
   members: { placeholderMember: string };
   name: string;
-  tasks: { placeholdeTask: string };
-  subtask: { placeholderSubTask: string };
+  tasks: {};
+  subtask: {};
 }
 
 export async function postNewProject(
@@ -20,8 +20,8 @@ export async function postNewProject(
     deadline: data.deadline,
     members: { placeholderMember: "" },
     name: data.name,
-    tasks: { placeholdeTask: "" },
-    subtask: { placeholderSubTask: "" },
+    tasks: {},
+    subtask: {},
   };
 
   const options = {

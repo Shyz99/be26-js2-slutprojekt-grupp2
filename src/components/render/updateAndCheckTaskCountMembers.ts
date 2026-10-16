@@ -3,7 +3,10 @@ import { baseURL } from "../../firebase/firebaseRequestURL.ts";
 
 export async function updateAndCheckTaskCountMembers(): Promise<void> {
   try {
-    const [dataMembers, dataTasks] = await Promise.all([getCategoryDataFirebase("member"), getCategoryDataFirebase("task")]);
+    const [dataMembers, dataTasks] = await Promise.all([
+      getCategoryDataFirebase("member"),
+      getCategoryDataFirebase("task"),
+    ]);
 
     if (!dataMembers || !dataTasks) {
       throw new Error("Kan inte hämta Member eller Task information");
@@ -34,31 +37,29 @@ export async function updateAndCheckTaskCountMembers(): Promise<void> {
       const options = {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           tasks: taskCount,
-          subtasks: subtaskCount
-        })
-      }
-
+          subtasks: subtaskCount,
+        }),
+      };
 
       if (member.tasks !== taskCount || member.subtasks !== subtaskCount) {
-        const response = await fetch(`${baseURL}/member/${memberID}.json`, options);
+        const response = await fetch(
+          `${baseURL}/member/${memberID}.json`,
+          options,
+        );
 
         if (!response.ok) {
-          throw new Error(
-            `Kunde inte uppdatera task count för ${memberID}`
-          );
+          throw new Error(`Kunde inte uppdatera task count för ${memberID}`);
         }
 
         console.log(
-          `Updated ${member.name}: ${taskCount} tasks, ${subtaskCount} subtasks`
+          `Updated ${member.name}: ${taskCount} tasks, ${subtaskCount} subtasks`,
         );
       } else {
-        console.log(
-          `Member ${member.name}: No count changes needed`
-        );
+        console.log(`Member ${member.name}: No count changes needed`);
       }
     }
   } catch (error) {

@@ -19,10 +19,24 @@
 
 https://github.com/Shyz99/be26-js2-slutprojekt-grupp2.git
 
+- _Main Branch_
+- _Deploy Branch_
+
 ### [Netlify Link:](https://be26-js2-slutprojekt-grupp2.netlify.app/)
 
 https://be26-js2-slutprojekt-grupp2.netlify.app/
 
 ---
+### Firebase struktur:
 
-`BE26 | JavaScript 2 - 2026 - deployed`
+Member
+
+Projects
+
+Task
+(Subtask under task ID)
+
+![Firebase structure](src/assets/firebase.png)
+---
+
+`BE26 | JavaScript 2 - 2026`

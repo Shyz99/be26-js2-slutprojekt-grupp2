@@ -71,10 +71,13 @@ export async function postNewSubtask(
     if (!projectResponse.ok) {
       return false;
     }
-
+    const event = new CustomEvent("taskUpdated", {
+      detail: { taskID: parentTaskID },
+    });
+    window.dispatchEvent(event);
     return true;
   } catch (error) {
-    console.error("POST av subtask misslyckades", error);
+    console.error("postNewSubtask error:", error);
     return false;
   }
 }
