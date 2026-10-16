@@ -11,7 +11,7 @@ export async function getCategoryDataFirebase(category: string, id?: string) {
   try {
     const response = await fetch(`${baseURL}/${category}/${id}.json`);
     if (!response.ok) {
-      throw new Error("Fetching data from Firebase failed");
+      throw new Error(`Firebase request failed: ${response.status}`);
     }
 
     const data = await response.json();
