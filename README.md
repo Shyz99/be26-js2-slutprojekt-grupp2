@@ -29,6 +29,13 @@ https://be26-js2-slutprojekt-grupp2.netlify.app/
 ---
 ### Firebase struktur:
 
+Member
+
+Projects
+
+Task
+(Subtask under task ID)
+
 ![Firebase structure](src/assets/firebase.png)
 ---
 
