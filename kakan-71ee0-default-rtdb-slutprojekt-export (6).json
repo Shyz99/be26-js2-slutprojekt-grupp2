@@ -1,0 +1,519 @@
+{
+  "member": {
+    "-P45ORDxcURA8xNx5uy5": {
+      "category": {
+        "backend": false,
+        "frontend": false,
+        "ux": true
+      },
+      "name": "Disa",
+      "project": {
+        "-P45Oj7QfcFw9bX7wkqe": "",
+        "iuhfsiuh984": ""
+      },
+      "subtasks": 0,
+      "tasks": 0
+    },
+    "isughfih03j": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "name": "Anita Bath",
+      "project": {
+        "iudshg98dy": "",
+        "iuhfsiuh984": ""
+      },
+      "subtasks": 2,
+      "tasks": 5
+    },
+    "jhfkjsnf9": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "name": "Catherine",
+      "project": {
+        "-P45Oj7QfcFw9bX7wkqe": ""
+      },
+      "subtasks": 0,
+      "tasks": 1
+    },
+    "kjahdiuyd98ykhf": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "name": "Bruno Snygg",
+      "project": {
+        "iudshg98dy": "",
+        "iuhfsiuh984": ""
+      },
+      "subtasks": 0,
+      "tasks": 1
+    }
+  },
+  "project": {
+    "-P45Oj7QfcFw9bX7wkqe": {
+      "deadline": "2026-12-05",
+      "description": "Promenad runt parken",
+      "members": {
+        "-P45ORDxcURA8xNx5uy5": "",
+        "jhfkjsnf9": "",
+        "placeholderMember": ""
+      },
+      "name": "Gå ut med hunden",
+      "subtask": {
+        "placeholderSubTask": ""
+      },
+      "tasks": {
+        "-P45P3UlJjkBM4ZrnFN_": "",
+        "-P45PoTb_VoInPYPiHAr": "",
+        "placeholdeTask": ""
+      }
+    },
+    "iudshg98dy": {
+      "deadline": "17/12",
+      "description": "Ett projekt som handlar om vänskap och att den riktiga skatten är de vi lärde känna längst vägen.",
+      "members": {
+        "isughfih03j": "",
+        "jhfkjsnf9": "",
+        "kjahdiuyd98ykhf": ""
+      },
+      "name": "Cykelprojektet",
+      "subtask": {
+        "-P4-vV3_YJElX5OjfAf2": "",
+        "-P40D_IyAJkbeaJEk5el": "",
+        "-P40EJnBl6Q0hmTahDmt": "",
+        "-P40TDQ7gYpAEDyZV6dI": "",
+        "-P42eOuu3JtblasVejZm": "",
+        "-P433N7YtrNnKs6PGPQY": "",
+        "-P435GYXpAVLihAgqYX7": "",
+        "-P435Iv53dtGSNoVPVFc": "",
+        "-P437nezFYq4-i1ST99g": "",
+        "-P44TZ37-dkyp92IaB9K": "",
+        "-P44jo6XCwZn9BGEisN0": "",
+        "-P44jtvOuHyE_xDMspCh": "",
+        "-P458BkUnp3XJoLx4eH1": "",
+        "-P45FPyTebJQeuBOgtY3": "",
+        "-P45GEOUt18-xVrbabTc": "",
+        "hfsih994tgijdfi": "",
+        "sujfhihsf8": ""
+      },
+      "tasks": {
+        "-P42mD2teJ07D62_MYiO": "",
+        "-P42mRZx5z7lyWH4k0Lz": "",
+        "-P42my2VZZbLVerU193a": "",
+        "-P430qsMTcipzRMmLNQB": "",
+        "-P430xjse9ALAXEz0Fla": "",
+        "-P4319kGReleXbkH0m57": "",
+        "-P434MzyP2vEY7XMzGAV": "",
+        "-P434r9OhIn0Ciu0x3nu": "",
+        "-P44PlBulzN0Et0lkeIM": "",
+        "-P4513Au6BNHgsdhR_SR": "",
+        "-P4519FJJMfOnPGZ8Fwo": "",
+        "-P457_idNq9w-ERYTkKF": "",
+        "-P459P1k8S8W8t7IrdrE": "",
+        "-P45FzrC00109v-1N5MV": "",
+        "enjlsfwd": ""
+      }
+    },
+    "iuhfsiuh984": {
+      "deadline": "09/10",
+      "description": "Det är ett projekt som vi jobbar på för att göra en hemsida",
+      "members": {
+        "-P45ORDxcURA8xNx5uy5": "",
+        "isughfih03j": "",
+        "kjahdiuyd98ykhf": ""
+      },
+      "name": "Ett projekt",
+      "subtask": {
+        "adsasdas": "",
+        "feafesfsa": ""
+      },
+      "tasks": {
+        "enjlsfwd": ""
+      }
+    },
+    "tasks": {
+      "-P42mD2teJ07D62_MYiO": {
+        "member": "isughfih03j"
+      },
+      "-P42my2VZZbLVerU193a": {
+        "member": "isughfih03j"
+      },
+      "-P44PlBulzN0Et0lkeIM": {
+        "member": "jhfkjsnf9"
+      },
+      "-P4519FJJMfOnPGZ8Fwo": {
+        "member": "isughfih03j"
+      },
+      "-P457_idNq9w-ERYTkKF": {
+        "member": "kjahdiuyd98ykhf"
+      }
+    }
+  },
+  "task": {
+    "-P42mD2teJ07D62_MYiO": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2027-02-01",
+      "description": "Skapa modaler till projektet ",
+      "member": "isughfih03j",
+      "priority": 3,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "title": "Skapa modaler"
+    },
+    "-P42mRZx5z7lyWH4k0Lz": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2026-10-01",
+      "description": "hej alla kompisar",
+      "member": "isughfih03j",
+      "priority": 1,
+      "status": {
+        "done": true,
+        "new": false,
+        "ongoing": false
+      },
+      "title": "Alla kompisar"
+    },
+    "-P42my2VZZbLVerU193a": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2021-01-01",
+      "description": "kakor i massor",
+      "member": "isughfih03j",
+      "priority": 2,
+      "status": {
+        "done": true,
+        "new": false,
+        "ongoing": false
+      },
+      "subtask": {
+        "-P44jtvOuHyE_xDMspCh": {
+          "description": "test",
+          "done": true,
+          "member": "isughfih03j"
+        },
+        "-P45FPyTebJQeuBOgtY3": {
+          "description": "jag behöver göra en kaka först",
+          "done": true,
+          "member": "isughfih03j"
+        }
+      },
+      "title": "Baka kaka"
+    },
+    "-P430qsMTcipzRMmLNQB": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2027-01-01",
+      "description": "a",
+      "priority": 2,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "subtask": {
+        "-P433N7YtrNnKs6PGPQY": {
+          "description": "subtest",
+          "done": true,
+          "member": ""
+        },
+        "-P44TZ37-dkyp92IaB9K": {
+          "description": "test",
+          "done": false,
+          "member": ""
+        }
+      },
+      "title": "A - 1"
+    },
+    "-P430xjse9ALAXEz0Fla": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2027-02-01",
+      "description": "b ",
+      "priority": 2,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "subtask": {
+        "-P44jo6XCwZn9BGEisN0": {
+          "description": "test",
+          "done": true,
+          "member": ""
+        },
+        "-P458BkUnp3XJoLx4eH1": {
+          "description": "sjfb",
+          "done": false,
+          "member": ""
+        },
+        "-P45GEOUt18-xVrbabTc": {
+          "description": "en bra fin",
+          "done": false,
+          "member": ""
+        }
+      },
+      "title": "B - 2 "
+    },
+    "-P4319kGReleXbkH0m57": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2027-03-01",
+      "description": "c",
+      "priority": 2,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "title": "C - 3"
+    },
+    "-P434MzyP2vEY7XMzGAV": {
+      "category": {
+        "backend": false,
+        "frontend": false,
+        "ux": true
+      },
+      "created": "2026-10-16",
+      "deadline": "2026-11-24",
+      "description": "ux",
+      "priority": 3,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "title": "HejUX"
+    },
+    "-P434r9OhIn0Ciu0x3nu": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "10-06-2026",
+      "description": "back",
+      "priority": 1,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "subtask": {
+        "-P435GYXpAVLihAgqYX7": {
+          "description": "TBack",
+          "done": false,
+          "member": ""
+        },
+        "-P435Iv53dtGSNoVPVFc": {
+          "description": "Tback2",
+          "done": false,
+          "member": ""
+        }
+      },
+      "title": "TestBack"
+    },
+    "-P44PlBulzN0Et0lkeIM": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2026-10-01",
+      "description": "task",
+      "member": "jhfkjsnf9",
+      "priority": 2,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "title": "en task"
+    },
+    "-P4513Au6BNHgsdhR_SR": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "10-10-2026",
+      "description": "hej",
+      "priority": 2,
+      "status": {
+        "done": false,
+        "new": true,
+        "ongoing": false
+      },
+      "title": "hej"
+    },
+    "-P4519FJJMfOnPGZ8Fwo": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "10-10-2025",
+      "description": "test",
+      "member": "isughfih03j",
+      "priority": 1,
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "title": "test"
+    },
+    "-P457_idNq9w-ERYTkKF": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "10-10-2026",
+      "description": "ett",
+      "member": "kjahdiuyd98ykhf",
+      "priority": 1,
+      "status": {
+        "done": false,
+        "new": true,
+        "ongoing": false
+      },
+      "title": "A - 1"
+    },
+    "-P459P1k8S8W8t7IrdrE": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "10-10-2026",
+      "description": "fin",
+      "priority": 1,
+      "status": {
+        "done": false,
+        "new": true,
+        "ongoing": false
+      },
+      "title": "fin"
+    },
+    "-P45FzrC00109v-1N5MV": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2026-01-01",
+      "description": "BRA FIN",
+      "priority": 1,
+      "status": {
+        "done": false,
+        "new": true,
+        "ongoing": false
+      },
+      "title": "EN BRA FIN"
+    },
+    "-P45P3UlJjkBM4ZrnFN_": {
+      "category": {
+        "backend": true,
+        "frontend": false,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2026-11-20",
+      "description": "Disas Hund",
+      "member": "",
+      "priority": 3,
+      "status": {
+        "done": false,
+        "new": true,
+        "ongoing": false
+      },
+      "title": "Rey"
+    },
+    "-P45PoTb_VoInPYPiHAr": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "2026-10-16",
+      "deadline": "2026-11-22",
+      "description": "doggo",
+      "member": "",
+      "priority": 3,
+      "status": {
+        "done": false,
+        "new": true,
+        "ongoing": false
+      },
+      "title": "kakan"
+    },
+    "enjlsfwd": {
+      "category": {
+        "backend": false,
+        "frontend": true,
+        "ux": false
+      },
+      "created": "07/10",
+      "deadline": "10/11-2026",
+      "description": "Gör knappar på en hemsida som ser bra ut och gör att hemsidan funkar fint",
+      "member": "isughfih03j",
+      "priority": "3",
+      "status": {
+        "done": false,
+        "new": false,
+        "ongoing": true
+      },
+      "subtask": {
+        "feafesfsa": {
+          "description": "Gör fina gröna symboler",
+          "done": true,
+          "member": "isughfih03j"
+        }
+      },
+      "title": "Gör knappar"
+    }
+  }
+}
