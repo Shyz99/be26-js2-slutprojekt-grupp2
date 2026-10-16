@@ -117,19 +117,6 @@ export const formViews: Record<string, formConfigurations> = {
             <input type="hidden" name="ux" value="false">
             <label><input type="checkbox" name="ux" value="true"> UX </label>
         </fieldset>
-
-        <fieldset>
-            <legend>Status</legend>
-    
-            <input type="hidden" name="new" value="false">
-            <label><input type="checkbox" name="new" value="true"> Ny </label>
-    
-            <input type="hidden" name="ongoing" value="false">
-            <label><input type="checkbox" name="ongoing" value="true"> Pågående </label>
-    
-            <input type="hidden" name="done" value="false">
-            <label><input type="checkbox" name="done" value="true"> Färdig </label>
-        </fieldset>
         `,
   },
 

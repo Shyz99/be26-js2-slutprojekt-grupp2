@@ -5,7 +5,7 @@ import { cleanIndex } from "../components/render/cleanIndex.ts";
 interface Project {
   description: string;
   deadline: string;
-  members: { placeholderMember: string };
+  members: { };
   name: string;
   tasks: {};
   subtask: {};
@@ -18,7 +18,7 @@ export async function postNewProject(
   const project: Project = {
     description: data.description,
     deadline: data.deadline,
-    members: { placeholderMember: "" },
+    members: { },
     name: data.name,
     tasks: {},
     subtask: {},
