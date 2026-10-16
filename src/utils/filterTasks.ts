@@ -6,7 +6,8 @@ export function filterTasks(
     selectedStatus: "new" | "ongoing" | "done" | "all",
     selectedMember: string | "all",
     selectedCategory: "all" | "backend" | "frontend" | "ux",
-    selectedSubtasks: "all" | "hasSubtasks" | "remaining"
+    selectedSubtasks: "all" | "completed" | "remaining",
+    SelectedPriority: "all" | "priority1" | "priority2" | "priority3"
 ) {
     
     const filteredTasks = tasks.filter((task) => {
@@ -24,6 +25,7 @@ export function filterTasks(
             return false;
         }
         
+
         const hasCorrectCategory = 
             selectedCategory === "all" || task.category[selectedCategory]
         
@@ -31,9 +33,17 @@ export function filterTasks(
             return false;
         }
 
+        const hasCorrectPriority =
+            SelectedPriority === "all" ||
+            task.priority === Number(SelectedPriority.replace("priority", ""));
+
+        if (!hasCorrectPriority){
+            return false;
+        }
+
         const hasCorrectSubtasks =
             selectedSubtasks === "all" || 
-            (selectedSubtasks === "hasSubtasks" &&
+            (selectedSubtasks === "completed" &&
                 Object.values(task.subtask ?? {}).length > 0 ) ||
             (selectedSubtasks === "remaining" &&
                 Object.values(task.subtask ?? {}).some((subtask) => !subtask.done)

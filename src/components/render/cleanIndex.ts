@@ -1,11 +1,18 @@
-export async function cleanIndex() {
+// empty list if element exists 
+export async function cleanIndex(){
   const renderAllProjectsSection = document.getElementById(
     "renderAllProjectsSection",
-  ) as HTMLElement;
-  renderAllProjectsSection.innerHTML = "";
-
-  const renderAllMembersSection = document.getElementById(
+  );
+  
+  if (renderAllProjectsSection) {
+    renderAllProjectsSection.innerHTML = "";
+  }
+  
+  const renderAllMembersSection = document.getElementById( 
     "renderAllMembersSection",
-  ) as HTMLElement;
-  renderAllMembersSection.innerHTML = "";
+  );
+  
+  if (renderAllMembersSection) {
+    renderAllMembersSection.innerHTML = "";
+  }
 }

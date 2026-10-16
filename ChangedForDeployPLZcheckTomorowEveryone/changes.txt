@@ -1,0 +1,56 @@
+Everywere were I changed for Deply I have left this comment
+that we later MAY have to change for real before Deploy.
+
+    //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+    [Content changed]
+    //!
+
+
+
+Right now I have only done some scuffed sulutions to solve the problem
+before the presentation
+
+----------------------------------------------------------------------------
+
+1. ---------------
+src/components/render/renderTaskCards.ts:215
+Erro: Declared but not used 
+
+Added Consol log so the task arguemnt was used:
+console.log(task);
+
+
+2. ---------------
+src/components/render/renderTaskCountWithMember.ts:5 && :13
+Changed and declared .tasks & .subtasks
+        const taskCountData: number = Number(
+            (memberData as { tasks?: number | string }).tasks ?? "Unknown member",
+        );
+        const taskCount: number = taskCountData;
+        // const taskCount: number = memberData.tasks;
+
+        const subTaskCountData: number = Number(
+            (memberData as { subtasks?: number | string }).subtasks ?? "Unknown member",
+        );
+        const subTaskCount: number = subTaskCountData;
+        // const subtaskCount: number = memberData.subtasks;
+
+
+3. ---------------
+src/components/render/renderTaskCountWithProjectID.ts:12 && 33 && 36
+Changed and declared .tasks & .subtasks
+
+        //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+        const taskProjectData: object = (taskProject as { tasks: object }).tasks;
+        //!
+
+
+        //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+        const taskProjectData: object = (taskProject as { subtask: object }).subtask;
+        //!
+
+
+
+        //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+        const subTaskProjectData: object = (subTask as { subtask: object }).subtask;
+        //!
