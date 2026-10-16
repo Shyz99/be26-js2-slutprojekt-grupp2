@@ -40,14 +40,15 @@ export function filterTasks(
         if (!hasCorrectPriority){
             return false;
         }
-
+        
         const hasCorrectSubtasks =
-            selectedSubtasks === "all" || 
+            selectedSubtasks === "all" ||
             (selectedSubtasks === "completed" &&
-                Object.values(task.subtask ?? {}).length > 0 ) ||
+                Object.values(task.subtask ?? {}).length > 0 &&
+                Object.values(task.subtask ?? {}).every((subtask) => subtask.done)) ||
             (selectedSubtasks === "remaining" &&
-                Object.values(task.subtask ?? {}).some((subtask) => !subtask.done)
-            )
+                Object.values(task.subtask ?? {}).some((subtask) => !subtask.done));
+
             
             console.log(task.title, {
                 status: hasCorrectStatus,
