@@ -62,7 +62,7 @@ export async function postNewTask(
   };
 
   try {
-    // 1. Skapa tasken i databasen
+    
     const responseTask = await fetch(
       `${baseURL}${URLEndPoint}.json`,
       postOptions,
@@ -89,7 +89,7 @@ export async function postNewTask(
       },
     };
 
-    // 2. Koppla tasken till projektet
+   
     const response = await fetch(
       `${baseURL}/project/${projectID}/tasks/${newTaskID.ID}.json`,
       postIDOptions,
