@@ -13,6 +13,15 @@
   border: 4px groove rgb(174, 129, 88);
   margin: 10px;
 }
+#new-tasks-container h3 {
+  text-decoration: underline;
+}
+#ongoing-tasks-container h3 {
+  text-decoration: underline;
+}
+#done-tasks-container h3 {
+  text-decoration: underline;
+}
 
 .SCRUM-board-container {
   display: flex;
@@ -84,7 +93,6 @@
 .project-info-container button {
   background-color: rgb(227, 198, 155);
   text-decoration: none;
-  margin-right: 2rem;
   padding-bottom: 0.6rem;
   padding-top: 0.6rem;
   padding-left: 1.8rem;
@@ -93,6 +101,7 @@
   font-size: 0.9rem;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 1rem;
+  margin-top: 10px;
 }
 .project-info-container {
   margin: 30px;
@@ -102,4 +111,37 @@
   background-color: rgb(177, 144, 94);
   color: antiquewhite;
   cursor: pointer;
+}
+
+#delegate-member-container {
+  margin: 10px;
+}
+
+header select {
+  background-color: rgb(227, 198, 155);
+  color: black;
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 12px;
+  cursor: pointer;
+  outline: none;
+}
+select:hover {
+  background-color: #8f6f66;
+  color: white;
+}
+
+.SCRUM-board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.column {
+  width: 300px;
+  min-height: 600px;
+  padding: 10px;
 }

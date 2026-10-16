@@ -24,27 +24,56 @@ const newTaskBtn = document.getElementById("new-task-button") as HTMLDivElement;
 const addMemberToProjectBtn = document.getElementById(
   "add-member-to-project-button",
 ) as HTMLDivElement;
+const projectSelector = document.getElementById(
+  "project-selector",
+) as HTMLSelectElement;
 
-//temp: test project
-const tempBtn = document.getElementById("temp-button") as HTMLButtonElement;
+//projekt-selektorn längst upp på sidan
+async function getProjectSelector() {
+  const allProjects = await getCategoryDataFirebase("project");
+  projectSelector.innerHTML = '<option value="">Choose project..</option>';
 
-tempBtn.addEventListener("click", async () => {
+  for (const [id, proj] of Object.entries(allProjects)) {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = (proj as Project).name;
+    projectSelector.append(option);
+  }
+
+  //kolla om projektet finns sparat i local storage
+  const savedProjectID = localStorage.getItem("currentProjectID");
+  if (savedProjectID) {
+    projectSelector.value = savedProjectID;
+    const chosenProject = await getCategoryDataFirebase(
+      "project",
+      savedProjectID,
+    );
+    currentProjectID = savedProjectID;
+    currentProject = chosenProject;
+    renderProjectOverview(chosenProject, currentProjectID);
+  }
+}
+
+getProjectSelector();
+
+//spara projektet i local storage
+projectSelector.addEventListener("change", async () => {
+  const selectedProjectID = projectSelector.value;
+
   try {
     const chosenProject = await getCategoryDataFirebase(
       "project",
-      "iudshg98dy",
+      selectedProjectID,
     );
+    currentProjectID = selectedProjectID;
+    currentProject = chosenProject;
 
-    let currentProjectID = "iudshg98dy"; //TEMP, SLÄNG IN PROJECT-ID HÄR
-    console.log("Valt projekt:", chosenProject);
-
+    localStorage.setItem("currentProjectID", selectedProjectID);
     renderProjectOverview(chosenProject, currentProjectID);
   } catch (error) {
-    console.error("Kunde inte hämta projekt:", error);
+    console.error("Kunde inte hämta projektet", error);
   }
 });
-
-// end temp
 
 let currentProject: Project | null = null;
 let currentProjectID: string = "";
@@ -93,21 +122,21 @@ async function renderProjectOverview(
   projectTitle.textContent = project.name;
   projectDescription.textContent = project.description;
 
-// Add members to filter dropdown
- const allMembers = await getCategoryDataFirebase("member");
- const selectedMember = memberFilter.value;
+  // Add members to filter dropdown
+  const allMembers = await getCategoryDataFirebase("member");
+  const selectedMember = memberFilter.value;
 
- memberFilter.innerHTML = '<option value="all">All</option>';
- for (const memberID of Object.keys(allMembers ?? {})) {
-  const member = allMembers[memberID];
+  memberFilter.innerHTML = '<option value="all">All</option>';
+  for (const memberID of Object.keys(allMembers ?? {})) {
+    const member = allMembers[memberID];
 
-  const option = document.createElement("option");
-  option.value = memberID;
-  option.textContent = member.name;
+    const option = document.createElement("option");
+    option.value = memberID;
+    option.textContent = member.name;
 
-  memberFilter.append(option);
-  memberFilter.value = selectedMember;
-} 
+    memberFilter.append(option);
+    memberFilter.value = selectedMember;
+  }
 
   for (const memberID of Object.keys(project.members ?? {})) {
     const projectMember = await getCategoryDataFirebase("member", memberID);
@@ -117,10 +146,9 @@ async function renderProjectOverview(
     }
   }
 
-
   //posta ny task
-  const modal = Modal.getInstance();
-  modal.trigger(newTaskBtn, "add-new-task", {
+  const postNewTask = Modal.getInstance();
+  postNewTask.trigger(newTaskBtn, "add-new-task", {
     projectID: projectID,
   });
 
@@ -149,7 +177,7 @@ async function renderProjectOverview(
   );
 
   //Sorting options
-  const [sortBy, direction] = sortFilter.value.split("-") as[
+  const [sortBy, direction] = sortFilter.value.split("-") as [
     "deadline" | "title",
     "ascending" | "descending",
   ];
@@ -162,7 +190,7 @@ async function renderProjectOverview(
     const taskWithID = allTasks.findLast((item) => item.task === task);
 
     if (taskWithID) {
-      renderTasksList(task, taskWithID.id, "iudshg98dy");
+      renderTasksList(task, taskWithID.id, projectID);
     }
   });
 }
@@ -235,7 +263,7 @@ export function renderTasksList(
   taskID: string,
   projectID: string,
 ): void {
-  //translates the ID
+  //Översätter ID't
   const translateKey: Record<number, string> = {
     1: "one",
     2: "two",
@@ -250,13 +278,11 @@ export function renderTasksList(
   } else if (task.status.done) {
     statusKey = "done";
   }
-  //
 
-  //Makes dynamic ID
+  //Gör ett dynamiskt ID
   const prioWord = translateKey[task.priority];
   const listId = `${statusKey}-tasks-list-prio-${prioWord}`;
   const chosenList = document.getElementById(listId) as HTMLUListElement;
-  //
 
   const li = document.createElement("li");
   li.innerText = task.title;
@@ -268,8 +294,15 @@ export function renderTasksList(
   });
 }
 
-taskmodalContainer.addEventListener("click", (e) => {
+//stäng taskcardsen
+taskmodalContainer.addEventListener("click", async (e) => {
   if (e.target === taskmodalContainer) {
     taskmodalContainer.style.display = "none";
+
+    const resetProject = await getCategoryDataFirebase(
+      "project",
+      currentProjectID,
+    );
+    renderProjectOverview(resetProject, currentProjectID);
   }
 });

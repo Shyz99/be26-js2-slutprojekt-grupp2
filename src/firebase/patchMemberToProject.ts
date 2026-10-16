@@ -46,6 +46,9 @@ export async function patchMemberToProject(
       const data = await response.json();
 
       if (data && dataMember) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
         return true;
       } else {
         return false;

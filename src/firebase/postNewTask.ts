@@ -99,6 +99,8 @@ export async function postNewTask(
       return false;
     }
 
+    window.location.reload();
+
     return true;
   } catch (error) {
     console.error("POST av ny task misslyckades", error);
