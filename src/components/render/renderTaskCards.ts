@@ -150,8 +150,10 @@ export async function renderTaskCard(
   });
 
   //Hämta delete-task-funktion
-  deleteTaskBtn.addEventListener("click", () => {
-    deleteTask(taskID, projectID);
+  deleteTaskBtn.addEventListener("click", async () => {
+    await deleteTask(taskID, projectID);
+    const updatedTask = await getTasks(taskID);
+    renderTaskCard(updatedTask, taskID, projectID);
   });
 
   //Rendera innuti modalerna beroende på status
