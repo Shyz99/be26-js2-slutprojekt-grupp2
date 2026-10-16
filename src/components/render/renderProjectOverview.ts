@@ -54,15 +54,23 @@ let currentProjectID: string = "";
 const statusFilter = document.getElementById(
   "status-filter",
 ) as HTMLSelectElement;
+
 const memberFilter = document.getElementById(
   "member-filter",
 ) as HTMLSelectElement;
+
 const categoryFilter = document.getElementById(
   "category-filter",
 ) as HTMLSelectElement;
+
+const priorityFilter = document.getElementById(
+  "priority-filter",
+) as HTMLSelectElement;
+
 const subtasksFilter = document.getElementById(
   "subtasks-filter",
 ) as HTMLSelectElement;
+
 const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
 
 //RENDER
@@ -85,10 +93,30 @@ async function renderProjectOverview(
   projectTitle.textContent = project.name;
   projectDescription.textContent = project.description;
 
+// Add members to filter dropdown
+ const allMembers = await getCategoryDataFirebase("member");
+ const selectedMember = memberFilter.value;
+
+ memberFilter.innerHTML = '<option value="all">All</option>';
+ for (const memberID of Object.keys(allMembers ?? {})) {
+  const member = allMembers[memberID];
+
+  const option = document.createElement("option");
+  option.value = memberID;
+  option.textContent = member.name;
+
+  memberFilter.append(option);
+  memberFilter.value = selectedMember;
+} 
+
   for (const memberID of Object.keys(project.members ?? {})) {
     const projectMember = await getCategoryDataFirebase("member", memberID);
-    await renderProjectMembers(projectMember, memberID, projectID);
+
+    if (projectMember) {
+      await renderProjectMembers(projectMember, memberID, projectID);
+    }
   }
+
 
   //posta ny task
   const modal = Modal.getInstance();
@@ -116,12 +144,15 @@ async function renderProjectOverview(
     statusFilter.value as "new" | "ongoing" | "done" | "all",
     memberFilter.value,
     categoryFilter.value as "all" | "backend" | "frontend" | "ux",
-    subtasksFilter.value as "all" | "hasSubtasks" | "remaining",
+    subtasksFilter.value as "all" | "completed" | "remaining",
+    priorityFilter.value as "all" | "priority1" | "priority2" | "priority3",
   );
 
-  const sortParts = sortFilter.value.split("-");
-  const sortBy = sortParts[0] as "deadline" | "title";
-  const direction = sortParts[1] as "ascending" | "descending";
+  //Sorting options
+  const [sortBy, direction] = sortFilter.value.split("-") as[
+    "deadline" | "title",
+    "ascending" | "descending",
+  ];
 
   const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
 
@@ -155,32 +186,7 @@ categoryFilter.addEventListener("change", () => {
   }
 });
 
-subtasksFilter.addEventListener("change", () => {
-  if (currentProject) {
-    renderProjectOverview(currentProject, currentProjectID);
-  }
-});
-
-sortFilter.addEventListener("change", () => {
-  if (currentProject) {
-    renderProjectOverview(currentProject, currentProjectID);
-  }
-});
-
-//Listen for filter changes
-statusFilter.addEventListener("change", () => {
-  if (currentProject) {
-    renderProjectOverview(currentProject, currentProjectID);
-  }
-});
-
-memberFilter.addEventListener("change", () => {
-  if (currentProject) {
-    renderProjectOverview(currentProject, currentProjectID);
-  }
-});
-
-categoryFilter.addEventListener("change", () => {
+priorityFilter.addEventListener("change", () => {
   if (currentProject) {
     renderProjectOverview(currentProject, currentProjectID);
   }
