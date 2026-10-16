@@ -2,6 +2,28 @@ html {
   background-color: blanchedalmond;
 }
 
+dialog {
+  background-color: blanchedalmond;
+  border-color: rgb(227, 198, 155);
+}
+
+li {
+  border: 2px solid rgb(174, 129, 88);
+  border-radius: 1rem;
+  padding: 4px;
+}
+
+li:hover {
+  border: 2px solid rgb(174, 129, 88);
+  background-color: blanchedalmond;
+  border-radius: 1rem;
+  padding: 4px;
+}
+
+#taskmodal {
+  background-color: blanchedalmond;
+}
+
 .error-toast {
   position: fixed;
   bottom: 20px;
