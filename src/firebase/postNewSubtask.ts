@@ -48,6 +48,7 @@ export async function postNewSubtask(
 
     if (!response.ok) {
       throw new Error("Kunde inte skapa subtask");
+      return false; 
     }
 
     const result = await response.json();
@@ -70,6 +71,12 @@ export async function postNewSubtask(
 
     if (!projectResponse.ok) {
       return false;
+    }
+
+    catch(error){
+      console.log(error); 
+      return false; 
+
     }
   
 }
