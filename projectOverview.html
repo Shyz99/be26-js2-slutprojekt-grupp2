@@ -39,42 +39,56 @@
     <div id="task-filters">
       <label for="status-filter">Status:</label>
       <select id="status-filter">
-        <option value="all">Alla</option>
-        <option value="new">Nya</option>
-        <option value="ongoing">Pågående</option>
-        <option value="done">Slutförda</option>
+        <option value="all">All</option>
+        <option value="new">New</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="done">Completed</option>
       </select>
 
-      <label for="member-filter">Medlem:</label>
+      <label for="member-filter">Member:</label>
       <select id="member-filter">
-        <option value="all">Alla</option>
+        <option value="all">All</option>
       </select>
 
-      <label for="category-filter">Kategori:</label>
+
+      <label for="category-filter">Category:</label>
       <select id="category-filter">
-        <option value="all">Alla</option>
+        <option value="all">All</option>
         <option value="backend">Backend</option>
         <option value="frontend">Frontend</option>
         <option value="ux">UX</option>
       </select>
 
-      <label for="subtasks-filter">Deluppgifter:</label>
+
+      <label for="priority-filter">Priority:</label>
+      <select id="priority-filter">
+        <option value="all">All</option>
+        <option value="priority1">Priority 1</option>
+        <option value="priority2">Priority 2</option>
+        <option value="priority3">Priority 3</option>
+      </select>
+
+
+      <label for="subtasks-filter">Subtasks:</label>
       <select id="subtasks-filter">
-        <option value="all">Alla</option>
-        <option value="hasSubtasks">Har subtask</option>
-        <option value="remaining">Ej klara subtasks</option>
+        <option value="all">All</option>
+        <option value="completed">Completed subtasks</option>
+        <option value="remaining">Incomplete subtasks</option>
       </select>
     </div>
 
-    <div>
-      <label for="sort-filter">Sortera på:</label>
-      <select id="sort-filter">
-        <option value="deadline-ascending">Deadline, stigande</option>
-        <option value="deadline-descending">Deadline, fallande</option>
-        <option value="title-ascending">Titel, A–Ö</option>
-        <option value="title-descending">Titel, Ö–A</option>
-      </select>
-    </div>
+      </div>
+      
+      <div>
+        <label for="sort-filter">Sort by:</label>
+        <select id="sort-filter">
+          <option value="deadline-ascending">Deadline: Earliest first</option>
+          <option value="deadline-descending">Deadline: Latest first</option>
+          <option value="title-ascending">Title: A–Ö</option>
+          <option value="title-descending">Title: Ö–A</option>
+       </select>
+     </div>
+
 
     <div class="SCRUM-board-container">
       <div id="new-tasks-container" class="column">

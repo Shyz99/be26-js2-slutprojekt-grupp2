@@ -20,5 +20,5 @@ export function getErrorMessage(error: unknown): string {
     return "Kontrollera din internetanslutning och försök igen.";
   }
 
-  return "Något gick fel. Försök igen";
+  return "Något gick fel. Försök igen.";
 }

@@ -41,6 +41,10 @@ const saveMemberToTaskBtn = document.getElementById(
   "save-member-to-task-button",
 ) as HTMLButtonElement;
 
+function formatDate(date: string): string {
+  return new Date(date).toLocaleDateString("sv-SE");
+}
+
 export async function renderTaskCard(
   task: Task,
   taskID: string,
@@ -162,9 +166,9 @@ export async function renderTaskCard(
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
-    <p>Created: ${task.created}</p>
+    <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
     <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>`;
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
@@ -175,9 +179,9 @@ export async function renderTaskCard(
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
-    <p>Created: ${task.created}</p>
+    <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
     <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>
     <p>Delegated member: ${taskMemberName}</p>`;
   } else if (task.status.done === true) {
@@ -187,9 +191,9 @@ export async function renderTaskCard(
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
-    <p>Created: ${task.created}</p>
+    <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
     <p>Delegated member: ${taskMemberName}</p>`;
   }
 

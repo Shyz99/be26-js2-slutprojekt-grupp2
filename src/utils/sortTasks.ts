@@ -16,9 +16,9 @@ export function sortTasks(
       }
     } else {
       if (direction === "ascending") {
-        return taskA.title.localeCompare(taskB.title, "sv");
+        return new Date(taskA.deadline).getTime() - new Date(taskB.deadline).getTime();
       } else {
-        return taskB.title.localeCompare(taskA.title, "sv");
+        return new Date(taskB.deadline).getTime() - new Date(taskA.deadline).getTime();
       }
     }
   });
