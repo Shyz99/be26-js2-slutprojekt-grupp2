@@ -2,15 +2,15 @@ import type { ModalOptions } from "../components/modals/Modal.ts";
 import { baseURL } from "./firebaseRequestURL.ts";
 import { updateAndCheckTaskCountMembers } from "../components/render/updateAndCheckTaskCountMembers.ts";
 
-export async function patchMemberToSubtask(data: Record<string, any>, URLEndPoint: string, subtaskID:string, options: ModalOptions): Promise<boolean> {
+export async function patchMemberToSubtask(data: Record<string, any>, URLEndPoint: string, subtaskID: string, options: ModalOptions): Promise<boolean> {
 
     if (!options.taskID || !data.memberID) {
         return false;
     }
 
     const taskID = options.taskID;
-     
-    const memberID = data.memberID; 
+
+    const memberID = data.memberID;
 
     const patchOptions = {
         method: "PATCH",
@@ -27,21 +27,9 @@ export async function patchMemberToSubtask(data: Record<string, any>, URLEndPoin
         if (!responseTask.ok) {
             return false;
         }
-        const dataTask = await responseTask.json();
-        
-        const responseProject = await fetch(`${baseURL}/project/tasks/${taskID}.json`, patchOptions);
-        if(!responseProject.ok) {
-            return false; 
-        }
-        const dataProject = await responseProject.json(); 
-        if (dataTask && dataProject) {
-            await updateAndCheckTaskCountMembers();
-            return true;
-        }
-        else {
-            return false;
-        }
-        
+
+        await updateAndCheckTaskCountMembers();
+        return true;
 
     } catch (error) {
         console.error("PATCH gick ej", error);

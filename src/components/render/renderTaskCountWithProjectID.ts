@@ -5,9 +5,8 @@ export async function renderProjectTaskCount(projectID: string) {
     "project",
     projectID,
   );
-  //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+
   const taskProjectData: object = (taskProject as { tasks: object }).tasks;
-  //!
 
   const allTasks: object = await getCategoryDataFirebase("task");
 
@@ -31,9 +30,7 @@ export async function renderProjectSubTaskCount(projectID: string) {
     projectID,
   );
 
-  //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
   const taskProjectData: object = (taskProject as { subtask: object }).subtask;
-  //!
 
   const allTasks: object = await getCategoryDataFirebase("task");
 
@@ -42,10 +39,9 @@ export async function renderProjectSubTaskCount(projectID: string) {
   for (const key in taskProjectData) {
     for (const id in allTasks) {
       const subTask: object = await getCategoryDataFirebase("task", id);
-      //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
       const subTaskProjectData: object = (subTask as { subtask: object })
         .subtask;
-      //!
+
       for (const subID in subTaskProjectData) {
         if (key === subID) {
           subTaskCount = subTaskCount + 1;
