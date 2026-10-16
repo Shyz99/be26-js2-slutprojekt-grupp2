@@ -28,4 +28,4 @@ https://be26-js2-slutprojekt-grupp2.netlify.app/
 
 ---
 
-`BE26 | JavaScript 2 - 2026 - deployed`
+`BE26 | JavaScript 2 - 2026`

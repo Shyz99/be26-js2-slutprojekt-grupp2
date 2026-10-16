@@ -1,4 +1,4 @@
-import { baseURL } from "./firebaseRequestURL"; 
+import { baseURL } from "./firebaseRequestURL";
 import { showToast, getErrorMessage } from "../components/errors/toast.ts";
 
 export async function getCategoryDataFirebase(category: string, id?: string) {
@@ -15,7 +15,6 @@ export async function getCategoryDataFirebase(category: string, id?: string) {
     }
 
     const data = await response.json();
-    // console.log(data);
     return data;
   } catch (error) {
     showToast(getErrorMessage(error));
@@ -23,4 +22,3 @@ export async function getCategoryDataFirebase(category: string, id?: string) {
     throw error;
   }
 }
-
