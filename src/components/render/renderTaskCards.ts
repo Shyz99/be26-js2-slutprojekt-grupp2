@@ -125,7 +125,6 @@ export async function renderTaskCard(
     saveMemberBtn.addEventListener("click", async () => {
       const chosenMember = delegateToMember.value;
       await patchMemberToTask(taskID, chosenMember);
-      window.location.reload();
     });
   }
 
@@ -176,6 +175,7 @@ export async function renderTaskCard(
     taskModal.classList.add("new-task-modal");
     cardTitle.innerHTML = `${task.title}`;
     delegateContainer.classList.remove("hidden");
+    deleteTaskBtn.classList.remove("hidden");
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
@@ -190,6 +190,7 @@ export async function renderTaskCard(
     subtaskContainer.classList.remove("hidden");
     newSubtaskContainer.classList.remove("hidden");
     saveNewTaskCardChanges.classList.add("hidden");
+    deleteTaskBtn.classList.remove("hidden");
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
@@ -233,6 +234,16 @@ export async function renderTaskCard(
   if (task.subtask) {
     renderSubtasks(task.subtask, task, taskID, projectID);
   }
+
+  //ett customevent för att lyssna efter om patch/post är klart
+  window.addEventListener("taskUpdated", async (e: Event) => {
+    const customEvent = e as CustomEvent;
+    const updatedTaskID = customEvent.detail.taskID;
+    if (updatedTaskID) {
+      const updatedTask = await getTasks(taskID);
+      await renderTaskCard(updatedTask, taskID, projectID);
+    }
+  });
 }
 
 function renderSubtasks(
@@ -295,8 +306,7 @@ function renderSubtasks(
   updateCheckboxState();
 }
 
-//Eventlisteners
-
+//Stänga taskcards
 closeTaskCardBtn.addEventListener("click", () => {
   taskmodalContainer.style.display = "none";
 });

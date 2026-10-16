@@ -40,7 +40,7 @@ async function getProjectSelector() {
     projectSelector.append(option);
   }
 
-  //kolla om det finns sparat i local storage
+  //kolla om projektet finns sparat i local storage
   const savedProjectID = localStorage.getItem("currentProjectID");
   if (savedProjectID) {
     projectSelector.value = savedProjectID;
@@ -56,6 +56,7 @@ async function getProjectSelector() {
 
 getProjectSelector();
 
+//spara projektet i local storage
 projectSelector.addEventListener("change", async () => {
   const selectedProjectID = projectSelector.value;
 
