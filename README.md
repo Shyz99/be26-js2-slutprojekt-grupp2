@@ -27,5 +27,9 @@ https://github.com/Shyz99/be26-js2-slutprojekt-grupp2.git
 https://be26-js2-slutprojekt-grupp2.netlify.app/
 
 ---
+### Firebase struktur:
+
+![Firebase structure](src/assets/firebase.png)
+---
 
 `BE26 | JavaScript 2 - 2026`
