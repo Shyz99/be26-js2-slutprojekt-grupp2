@@ -1,11 +1,9 @@
 import { getCategoryDataFirebase } from "../../firebase/getCategoryDataFirebase.ts";
 import type { Project, Member, Task } from "../../models/models.ts";
-import {filterTasks} from "../../utils/filterTasks.ts";
-import { sortTasks } from "../../utils/sortTasks.ts";
 import { renderTaskCard } from "./renderTaskCards.ts";
 import { getTasks } from "../../firebase/getTasks.ts";
-// import {filterTasks} from "../../utils/filterTasks.ts";
-// import { sortTasks } from "../../utils/sortTasks.ts";
+import { filterTasks } from "../../utils/filterTasks.ts";
+import { sortTasks } from "../../utils/sortTasks.ts";
 
 import { renderMemberTaskCountInProject } from "./renderTaskCountWithMemberAndProjectID.ts";
 import { Modal } from "../modals/Modal.ts";
@@ -37,10 +35,10 @@ tempBtn.addEventListener("click", async () => {
       "iudshg98dy",
     );
 
-    let projectID = "iudshg98dy"; //TEMP, SLÄNG IN PROJECT-ID HÄR
+    let currentProjectID = "iudshg98dy"; //TEMP, SLÄNG IN PROJECT-ID HÄR
     console.log("Valt projekt:", chosenProject);
 
-    renderProjectOverview(chosenProject, projectID);
+    renderProjectOverview(chosenProject, currentProjectID);
   } catch (error) {
     console.error("Kunde inte hämta projekt:", error);
   }
@@ -49,16 +47,31 @@ tempBtn.addEventListener("click", async () => {
 // end temp
 
 let currentProject: Project | null = null;
+let currentProjectID: string = "";
 
 // Filter values
 
-// const statusFilter = document.getElementById("status-filter") as HTMLSelectElement;
-// const memberFilter = document.getElementById("member-filter") as HTMLSelectElement;
-// const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
-// const subtasksFilter = document.getElementById("subtasks-filter") as HTMLSelectElement;
-// const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
+const statusFilter = document.getElementById(
+  "status-filter",
+) as HTMLSelectElement;
 
-// end filter values
+const memberFilter = document.getElementById(
+  "member-filter",
+) as HTMLSelectElement;
+
+const categoryFilter = document.getElementById(
+  "category-filter",
+) as HTMLSelectElement;
+
+const priorityFilter = document.getElementById(
+  "priority-filter",
+) as HTMLSelectElement;
+
+const subtasksFilter = document.getElementById(
+  "subtasks-filter",
+) as HTMLSelectElement;
+
+const sortFilter = document.getElementById("sort-filter") as HTMLSelectElement;
 
 //RENDER
 
@@ -80,10 +93,30 @@ async function renderProjectOverview(
   projectTitle.textContent = project.name;
   projectDescription.textContent = project.description;
 
+// Add members to filter dropdown
+ const allMembers = await getCategoryDataFirebase("member");
+ const selectedMember = memberFilter.value;
+
+ memberFilter.innerHTML = '<option value="all">All</option>';
+ for (const memberID of Object.keys(allMembers ?? {})) {
+  const member = allMembers[memberID];
+
+  const option = document.createElement("option");
+  option.value = memberID;
+  option.textContent = member.name;
+
+  memberFilter.append(option);
+  memberFilter.value = selectedMember;
+} 
+
   for (const memberID of Object.keys(project.members ?? {})) {
     const projectMember = await getCategoryDataFirebase("member", memberID);
-    await renderProjectMembers(projectMember, memberID, projectID);
+
+    if (projectMember) {
+      await renderProjectMembers(projectMember, memberID, projectID);
+    }
   }
+
 
   //posta ny task
   const modal = Modal.getInstance();
@@ -105,97 +138,69 @@ async function renderProjectOverview(
 
   //forts. filter
 
-  // const filteredTasks = filterTasks(
-  //   allTasks.map((item) => item.task),
+  const filteredTasks = filterTasks(
+    allTasks.map((item) => item.task),
 
-  //   statusFilter.value as "new" | "ongoing" | "done" | "all",
-  //   memberFilter.value,
-  //   categoryFilter.value as "all" | "backend" | "frontend" | "ux",
-  //   subtasksFilter.value as "all" | "hasSubtasks" | "remaining"
-  // );
+    statusFilter.value as "new" | "ongoing" | "done" | "all",
+    memberFilter.value,
+    categoryFilter.value as "all" | "backend" | "frontend" | "ux",
+    subtasksFilter.value as "all" | "completed" | "remaining",
+    priorityFilter.value as "all" | "priority1" | "priority2" | "priority3",
+  );
 
-  // const sortParts = sortFilter.value.split("-");
-  // const sortBy = sortParts[0] as "deadline" | "title";
-  // const direction = sortParts[1] as "ascending" | "descending";
+  //Sorting options
+  const [sortBy, direction] = sortFilter.value.split("-") as[
+    "deadline" | "title",
+    "ascending" | "descending",
+  ];
 
-  // const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
-
-  // (filter)
-  allTasks.forEach((item) => {
-    renderTasksList(item.task, item.id, projectID);
-  });
+  const sortedTasks = sortTasks(filteredTasks, sortBy, direction);
 
   //forts. filter
 
-  //   sortedTasks.forEach((task) => {
-  //     const taskWithID = allTasks.findLast((item) => item.task === task);
+  sortedTasks.forEach((task) => {
+    const taskWithID = allTasks.findLast((item) => item.task === task);
 
-  //     if (taskWithID) {
-  //       renderTasksList(task, taskWithID.id, "iudshg98dy");}
-  //     });
-
-  //   } TA BORT DETTA??????
-
-  //   Listen for filter changes
-  //   statusFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   memberFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   categoryFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   subtasksFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
-
-  //   sortFilter.addEventListener("change", () => {
-  //     if (currentProject) {
-  //       renderProjectOverview(currentProject);
-  //     }
-  //   });
+    if (taskWithID) {
+      renderTasksList(task, taskWithID.id, "iudshg98dy");
+    }
+  });
 }
 
-// Listen for filter changes
+//Listen for filter changes
 statusFilter.addEventListener("change", () => {
   if (currentProject) {
-    renderProjectOverview(currentProject);
+    renderProjectOverview(currentProject, currentProjectID);
   }
 });
 
 memberFilter.addEventListener("change", () => {
   if (currentProject) {
-    renderProjectOverview(currentProject);
+    renderProjectOverview(currentProject, currentProjectID);
   }
 });
 
 categoryFilter.addEventListener("change", () => {
   if (currentProject) {
-    renderProjectOverview(currentProject);
+    renderProjectOverview(currentProject, currentProjectID);
+  }
+});
+
+priorityFilter.addEventListener("change", () => {
+  if (currentProject) {
+    renderProjectOverview(currentProject, currentProjectID);
   }
 });
 
 subtasksFilter.addEventListener("change", () => {
   if (currentProject) {
-    renderProjectOverview(currentProject);
+    renderProjectOverview(currentProject, currentProjectID);
   }
 });
 
 sortFilter.addEventListener("change", () => {
   if (currentProject) {
-    renderProjectOverview(currentProject);
+    renderProjectOverview(currentProject, currentProjectID);
   }
 });
 
@@ -230,7 +235,6 @@ export function renderTasksList(
   taskID: string,
   projectID: string,
 ): void {
-
   //translates the ID
   const translateKey: Record<number, string> = {
     1: "one",
@@ -262,10 +266,10 @@ export function renderTasksList(
     taskmodalContainer.style.display = "flex";
     renderTaskCard(task, taskID, projectID);
   });
-
-  taskmodalContainer.addEventListener("click", (e) => {
-    if (e.target === taskmodalContainer) {
-      taskmodalContainer.style.display = "none";
-    }
-  });
 }
+
+taskmodalContainer.addEventListener("click", (e) => {
+  if (e.target === taskmodalContainer) {
+    taskmodalContainer.style.display = "none";
+  }
+});

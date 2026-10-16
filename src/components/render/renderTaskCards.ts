@@ -4,6 +4,8 @@ import { Modal } from "../modals/Modal.ts";
 import { deleteTask } from "../../firebase/deleteRequests/deleteTask.ts";
 import { patchMemberToTask } from "../../firebase/patchMembertoTask.ts";
 import { deleteSubtask } from "../../firebase/deleteRequests/deleteSubtasks.ts";
+import { getTasks } from "../../firebase/getTasks.ts";
+import { patchSubtaskDone } from "../../firebase/patchSubTaskDone.ts";
 
 const closeTaskCardBtn = document.getElementById(
   "close-button",
@@ -38,6 +40,10 @@ const taskmodalContainer = document.querySelector(
 const saveMemberToTaskBtn = document.getElementById(
   "save-member-to-task-button",
 ) as HTMLButtonElement;
+
+function formatDate(date: string): string {
+  return new Date(date).toLocaleDateString("sv-SE");
+}
 
 export async function renderTaskCard(
   task: Task,
@@ -160,9 +166,9 @@ export async function renderTaskCard(
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
-    <p>Created: ${task.created}</p>
+    <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
     <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>`;
   } else if (task.status.ongoing === true) {
     taskModal.classList.add("ongoing-task-modal");
@@ -173,9 +179,9 @@ export async function renderTaskCard(
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
-    <p>Created: ${task.created}</p>
+    <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
     <p>Priority: ${task.priority}<div id= "btn-priority-container"></div></p>
     <p>Delegated member: ${taskMemberName}</p>`;
   } else if (task.status.done === true) {
@@ -185,9 +191,9 @@ export async function renderTaskCard(
 
     cardInfoContainer.innerHTML = `
     <p>Description: ${task.description}</p>
-    <p>Created: ${task.created}</p>
+    <p>Created: ${formatDate(task.created)}</p>
     <p>Category: ${delegatedRole}</p>
-    <p>Deadline: ${task.deadline}<div id= "btn-deadline-container"></div></p>
+    <p>Deadline: ${formatDate(task.deadline)}<div id= "btn-deadline-container"></div></p>
     <p>Delegated member: ${taskMemberName}</p>`;
   }
 
@@ -197,20 +203,28 @@ export async function renderTaskCard(
   const priorityBtnContainer = document.getElementById(
     "btn-priority-container",
   );
+
+  //skapa container för knappar
   deadlineBtnContainer?.append(changeDeadline);
   priorityBtnContainer?.append(changePriority);
 
-  renderSubtasks(task.subtask, taskID, projectID);
+  //skicka vidare rätt info
+  if (task.subtask) {
+    renderSubtasks(task.subtask, task, taskID, projectID);
+  }
 }
 
 function renderSubtasks(
-  subtasks: Subtask[],
+  subtasks: Record<string, Subtask>,
+  task: Task,
   taskID: string,
   projectID: string,
 ): void {
   subtaskContainer.innerHTML = "";
   console.log(subtasks);
-
+  //! CANT BUID WHEN task IS ASSINGED BUT NOT USED
+  console.log(task);
+  //!
   const subtaskArray = Object.entries(subtasks);
   //skickar med subtaskID och subtask till en array
 
@@ -240,20 +254,19 @@ function renderSubtasks(
       checkbox.checked = false;
     }
 
+    //patch subtask done/not done
     checkbox.addEventListener("change", () => {
       subtask.done = checkbox.checked;
-
-      if (subtask.done) {
-        //Insert patch-function here
-      }
+      patchSubtaskDone(taskID, subtaskID, subtask.done);
 
       updateCheckboxState();
     });
 
-    //delete subtask
-    deleteSubtaskBtn.addEventListener("click", () => {
-      deleteSubtask(subtaskID, taskID, projectID);
-      console.log("hej");
+    //delete subtask (en pina D'':)
+    deleteSubtaskBtn.addEventListener("click", async () => {
+      await deleteSubtask(subtaskID, taskID, projectID);
+      const updatedTask = await getTasks(taskID);
+      renderTaskCard(updatedTask, taskID, projectID);
     });
 
     li.append(checkbox, subtaskTitle, deleteSubtaskBtn);

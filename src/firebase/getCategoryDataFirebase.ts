@@ -19,7 +19,7 @@ export async function getCategoryDataFirebase(category: string, id?: string) {
     return data;
   } catch (error) {
     showToast(getErrorMessage(error));
-    console.error("Kunde inte hämta data från Firebase:", error);
+    console.error("Kunde inte hämta data från Firebase:", error); // error message in console
     throw error;
   }
 }

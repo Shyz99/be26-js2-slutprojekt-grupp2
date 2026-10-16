@@ -3,20 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--!  src="../components/render/renderProjectOverview.ts" -->
     <script
-      src="../components/render/renderProjectOverview.ts"
+      src="./src/components/render/renderProjectOverview.ts"
       type="module"
     ></script>
-    <link rel="stylesheet" href="../styles/global.css" />
-    <link rel="stylesheet" href="../styles/projectOverview.css" />
+    <!--! <link rel="stylesheet" href="../styles/global.css" /> -->
+    <link rel="stylesheet" href="./src/styles/global.css" />
+    <!--! <link rel="stylesheet" href="../styles/projectOverview.css" /> -->
+    <link rel="stylesheet" href="./src/styles/projectOverview.css" />
     <title>Project</title>
   </head>
   <body>
-    <div>
-      <h1>Project Overview</h1>
-      <header>
-        <a href="../../index.html">Back to Home Page</a>
-      </header>
+    <h1>Project Overview</h1>
+    <header>
+      <!--! <a href="../../index.html">Back to Home Page</a>  -->
+      <a href="/index.html">Back to Home Page</a>
+    </header>
+    <div class="project-info-container">
       <button id="temp-button">Render project</button>
       <h1 id="project-title"></h1>
       <p id="project-description"></p>
@@ -27,7 +31,7 @@
       <div id="add-member-to-project-container">
         <button id="add-member-to-project-button">Add member</button>
       </div>
-      </div>
+
       <p>Add new task:</p>
       <button id="new-task-button">New task</button>
     </div>
@@ -35,41 +39,53 @@
     <div id="task-filters">
       <label for="status-filter">Status:</label>
       <select id="status-filter">
-        <option value="all">Alla</option>
-        <option value="new">Nya</option>
-        <option value="ongoing">Pågående</option>
-        <option value="done">Slutförda</option>
+        <option value="all">All</option>
+        <option value="new">New</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="done">Completed</option>
       </select>
 
-      <label for="member-filter">Medlem:</label>
+      <label for="member-filter">Member:</label>
       <select id="member-filter">
-        <option value="all">Alla</option>
+        <option value="all">All</option>
       </select>
 
-      <label for="category-filter">Kategori:</label>
+
+      <label for="category-filter">Category:</label>
       <select id="category-filter">
-        <option value="all">Alla</option>
+        <option value="all">All</option>
         <option value="backend">Backend</option>
         <option value="frontend">Frontend</option>
         <option value="ux">UX</option>
       </select>
 
-      <label for="subtasks-filter">Deluppgifter:</label>
-      <select id="subtasks-filter">
-        <option value="all">Alla</option>
-        <option value="hasSubtasks">Har subtask</option>
-        <option value="remaining">Ej klara subtasks</option>
+
+      <label for="priority-filter">Priority:</label>
+      <select id="priority-filter">
+        <option value="all">All</option>
+        <option value="priority1">Priority 1</option>
+        <option value="priority2">Priority 2</option>
+        <option value="priority3">Priority 3</option>
       </select>
+
+
+      <label for="subtasks-filter">Subtasks:</label>
+      <select id="subtasks-filter">
+        <option value="all">All</option>
+        <option value="completed">Completed subtasks</option>
+        <option value="remaining">Incomplete subtasks</option>
+      </select>
+    </div>
 
       </div>
       
       <div>
-        <label for="sort-filter">Sortera på:</label>
+        <label for="sort-filter">Sort by:</label>
         <select id="sort-filter">
-          <option value="deadline-ascending">Deadline, stigande</option>
-          <option value="deadline-descending">Deadline, fallande</option>
-          <option value="title-ascending">Titel, A–Ö</option>
-          <option value="title-descending">Titel, Ö–A</option>
+          <option value="deadline-ascending">Deadline: Earliest first</option>
+          <option value="deadline-descending">Deadline: Latest first</option>
+          <option value="title-ascending">Title: A–Ö</option>
+          <option value="title-descending">Title: Ö–A</option>
        </select>
      </div>
 
@@ -122,7 +138,7 @@
 
         <div id="new-subtask-container">
           <h4>Subtasks:</h4>
-            <button id="add-subtask-button">Add subtask</button>
+          <button id="add-subtask-button">Add subtask</button>
         </div>
         <div id="subtask-container">
           <label>

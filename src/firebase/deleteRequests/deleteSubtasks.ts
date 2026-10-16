@@ -1,7 +1,11 @@
 import { baseURL } from "../firebaseRequestURL.ts";
 import { updateAndCheckTaskCountMembers } from "../../components/render/updateAndCheckTaskCountMembers.ts";
 
-export async function deleteSubtask(subtaskID: string, taskID: string, projectID: string,): Promise<void> {
+export async function deleteSubtask(
+  subtaskID: string,
+  taskID: string,
+  projectID: string,
+): Promise<void> {
   if (!taskID || !projectID || !subtaskID) {
     throw new Error("taskID, projectID och subtaskID måste skickas med.");
   }
@@ -11,9 +15,8 @@ export async function deleteSubtask(subtaskID: string, taskID: string, projectID
   };
 
   try {
-    
     const responseDelSubtask = await fetch(
-      `${baseURL}/task/${taskID}/${subtaskID}.json`,
+      `${baseURL}/task/${taskID}/subtask/${subtaskID}.json`,
       deleteOptions,
     );
 
@@ -21,7 +24,6 @@ export async function deleteSubtask(subtaskID: string, taskID: string, projectID
       throw new Error("kan inte radera subtask från task.");
     }
 
-    
     const responseDelSubtaskFromProject = await fetch(
       `${baseURL}/project/${projectID}/subtask/${subtaskID}.json`,
       deleteOptions,
@@ -31,9 +33,7 @@ export async function deleteSubtask(subtaskID: string, taskID: string, projectID
       throw new Error("kan inte radera subtask från projekt.");
     }
 
-
     await updateAndCheckTaskCountMembers();
-    
   } catch (error) {
     throw error;
   }
