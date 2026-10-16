@@ -9,7 +9,7 @@ interface Task {
     frontend: boolean;
     ux: boolean;
   };
-  member: {};
+  member: string;
   priority: number;
   created: string;
   status: {
@@ -41,7 +41,7 @@ export async function postNewTask(
       frontend: data.frontend === true || data.frontend === "true",
       ux: data.ux === true || data.ux === "true",
     },
-    member: {},
+    member: "",
     priority: data.priority,
     created: data.created,
     status: {

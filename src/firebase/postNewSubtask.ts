@@ -77,7 +77,7 @@ export async function postNewSubtask(
     window.dispatchEvent(event);
     return true;
   } catch (error) {
-    console.error("POST av subtask misslyckades", error);
+    console.error("postNewSubtask error:", error);
     return false;
   }
 }

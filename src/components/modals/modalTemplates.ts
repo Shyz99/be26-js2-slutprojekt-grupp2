@@ -7,7 +7,6 @@ export interface formConfigurations {
 }
 
 export const formViews: Record<string, formConfigurations> = {
-  // IDs for each view we want - feel free to add more gang!
   test: {
     modalTitle: "test",
     URLEndPoint: "",
@@ -52,7 +51,7 @@ export const formViews: Record<string, formConfigurations> = {
             <legend>Projekt Detaljer</legend>
 
             <input type="text" name="description" required placeholder="Beskrivning...">
-            <input type="text" name="deadline" required placeholder="Deadline...">
+            <input type="text" name="deadline" required placeholder="Deadline: format 2026-06-26...">
                         
         </fieldset>
         `,
@@ -61,7 +60,6 @@ export const formViews: Record<string, formConfigurations> = {
   "add-new-task": {
     modalTitle: "Lägg till en ny uppgift",
     URLEndPoint: "/task",
-    // TODO: Add the ability to add subtasks
     HTMLElements: `
         
         <fieldset>
@@ -69,7 +67,7 @@ export const formViews: Record<string, formConfigurations> = {
 
             <input type="text" name="title" required placeholder="Titel...">
             <input type="text" name="description" required placeholder="Uppgiftens beskrivning...">
-            <input type="text" name="deadline" required placeholder="Uppgiften ska vara klar...">
+            <input type="text" name="deadline" required placeholder="Deadline: format 2026-06-26...">
             <input type="hidden" name="created" value="${date}">
             <input type="hidden" name="subtask" value="{}">
             <legend>Välj prioritet:</legend>
@@ -189,7 +187,7 @@ export const formViews: Record<string, formConfigurations> = {
         
         <fieldset>
         
-            <input type="text" name="deadline" required placeholder="Ny deadline...>
+            <input type="text" name="deadline" required placeholder="Deadline: format 2026-06-26...">
             
         </fieldset>
     
